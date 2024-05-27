@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 String heart = "💞";
 String heart1 = "👀";
@@ -22,6 +23,9 @@ const appColorRed = Color(0xFFff0000);
 const appColorRed2 = Color(0xFFdc6568);
 const appColorTextGrey = Color(0xFF73787E);
 const appColorTextBlack = Color(0xFF1b1d1f);
+
+///SharedPreferences
+late SharedPreferences prefs;
 
 ///로거
 Logger logger = Logger(
