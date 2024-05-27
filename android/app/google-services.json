@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "330438498685",
+    "project_id": "pluv-16c7b",
+    "storage_bucket": "pluv-16c7b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:330438498685:android:02c39018d52bdcf1825414",
+        "android_client_info": {
+          "package_name": "com.iea.pluv"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuXljAFRbW9Q_RXmSV9b7uaCpKc1GsuP8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
