@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'controller/status_controller.dart';
 import 'firebase_options.dart';
-import 'global.dart';
+import 'global/global.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +31,8 @@ class MyApp extends StatelessWidget {
         // 전체적인 앱의 기본 폰트를 Noto Sans CJK KR 로 설정
         textTheme: GoogleFonts.notoSansKrTextTheme(
           Theme.of(context).textTheme,
-        )
+        ),
+
       ),
       home: const MainPage(),
     );
