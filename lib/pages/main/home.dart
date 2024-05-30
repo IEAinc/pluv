@@ -5,27 +5,71 @@ import 'package:pluv/global/text_styles.dart';
 
 import '../../global/global.dart';
 
-///Home
+///HomeScreen
 ///담당자 : ---
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<Home> createState() => _HomeState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
     super.initState();
-    logger.i("Home");
+    logger.i("HomeScreen");
+    _scrollControllerGrid.addListener(_onScrollGrid);
+    _scrollControllerPage.addListener(_onScrollPageDirection);
+  }
+
+  ScrollController _scrollControllerGrid = ScrollController();
+  ScrollController _scrollControllerPage = ScrollController();
+  bool gridScrollAble = true;
+  void _onScrollGrid() {
+
+    if (_scrollControllerGrid.position.atEdge) {
+      if (_scrollControllerGrid.position.pixels == 0) {
+        setState(() {
+          gridScrollAble = false;
+        });
+      }else{
+        setState(() {
+          gridScrollAble = true;
+        });
+      }
+    }
+  }
+
+  void _onScrollPageDirection() {
+    if (_scrollControllerPage.offset > _lastOffset) {
+    } else if (_scrollControllerPage.offset < _lastOffset) {
+      // 스크롤이 위로 이동
+      setState(() {
+        gridScrollAble = true;
+      });
+    }
+    _lastOffset = _scrollControllerPage.offset;
+  }
+
+  double _lastOffset = 0;
+
+  @override
+  void dispose() {
+    _scrollControllerGrid.removeListener(_onScrollGrid);
+    _scrollControllerGrid.dispose();
+    _scrollControllerPage.removeListener(_onScrollPageDirection);
+    _scrollControllerPage.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      controller: _scrollControllerPage,
+      physics: ClampingScrollPhysics(),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
         child: Column(
@@ -33,14 +77,15 @@ class _HomeState extends State<Home> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text("오늘의 카드" , style: TextStyles.title1,),
+                Text("오늘의 카드" , style: TextStyles.title1_b,),
               ],
             ),
             SizedBox(height: 10,),
             Container(
               height: Get.height/2,
               child: GridView.builder(
-
+                controller: _scrollControllerGrid,
+                physics: gridScrollAble?ClampingScrollPhysics():NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2, // 그리드 열 수
                     childAspectRatio: 3/4,
@@ -62,15 +107,15 @@ class _HomeState extends State<Home> {
                           fit: BoxFit.cover,
                           errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
                             return Container(
-                              color: appColorGray,
+                              color: appColorGray1,
       
                             );
                           },
                         )
                     ),
-                  ); // 여기서 YourGridItemWidget은 각 그리드 아이템을 나타내는 위젯입니다.
+                  ); //
                 },
-                itemCount: 6, // 그리드에 표시할 전체 아이템 수
+                itemCount: 6, //
               ),
             ),
             SizedBox(height: 20,),
@@ -78,8 +123,8 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text("나에게 꼭 맞는\n이상형을 찾아드려요!" , style: TextStyles.title1,),
-                Text("더보기  >" , style: TextStyles.subTitle1,),
+                Text("나에게 꼭 맞는\n이상형을 찾아드려요!" , style: TextStyles.title1_b,),
+                Text("더보기  >" , style: TextStyles.title1_b,),
 
               ],
             ),
@@ -91,7 +136,7 @@ class _HomeState extends State<Home> {
                     height: 82,
                     width: Get.width,
                   decoration: BoxDecoration(
-                      color: appColorWhiteGray2.withOpacity(0.25),
+                      color: appColorGray2.withOpacity(0.25),
                       borderRadius: BorderRadius.only(bottomRight: Radius.circular(30))
                   ),
                   child: Row(
@@ -100,7 +145,7 @@ class _HomeState extends State<Home> {
                     children: [
                       SvgPicture.asset('assets/images/icon/medal.svg',),
                       SizedBox(width: 10,),
-                      Text("프로톡 상위 4% 이성 만나기",style: TextStyles.title2,),
+                      Text("프로톡 상위 4% 이성 만나기",style: TextStyles.title1_b,),
                       SizedBox(width: 10,),
                       SvgPicture.asset('assets/images/icon/hot.svg',),
                     ],
@@ -112,7 +157,7 @@ class _HomeState extends State<Home> {
                   height: 82,
                   width: Get.width,
                   decoration: BoxDecoration(
-                      color: appColorWhiteGray2.withOpacity(0.25),
+                      color: appColorGray2.withOpacity(0.25),
                       borderRadius: BorderRadius.only(bottomRight: Radius.circular(30))
                   ),
                   child: Row(
@@ -121,7 +166,7 @@ class _HomeState extends State<Home> {
                     children: [
                       SvgPicture.asset('assets/images/icon/medal.svg',),
                       SizedBox(width: 10,),
-                      Text("프로톡 상위 4% 이성 만나기",style: TextStyles.title2,),
+                      Text("프로톡 상위 4% 이성 만나기",style: TextStyles.title1_b,),
                       SizedBox(width: 10,),
                       SvgPicture.asset('assets/images/icon/hot.svg',),
                     ],
@@ -133,7 +178,7 @@ class _HomeState extends State<Home> {
                   height: 82,
                   width: Get.width,
                   decoration: BoxDecoration(
-                      color: appColorWhiteGray2.withOpacity(0.25),
+                      color: appColorGray2.withOpacity(0.25),
                       borderRadius: BorderRadius.only(bottomRight: Radius.circular(30))
                   ),
                   child: Row(
@@ -142,7 +187,7 @@ class _HomeState extends State<Home> {
                     children: [
                       SvgPicture.asset('assets/images/icon/medal.svg',),
                       SizedBox(width: 10,),
-                      Text("프로톡 상위 4% 이성 만나기",style: TextStyles.title2,),
+                      Text("프로톡 상위 4% 이성 만나기",style: TextStyles.title1_b,),
                       SizedBox(width: 10,),
                       SvgPicture.asset('assets/images/icon/hot.svg',),
                     ],
@@ -154,7 +199,7 @@ class _HomeState extends State<Home> {
                   height: 82,
                   width: Get.width,
                   decoration: BoxDecoration(
-                      color: appColorWhiteGray2.withOpacity(0.25),
+                      color: appColorGray2.withOpacity(0.25),
                       borderRadius: BorderRadius.only(bottomRight: Radius.circular(30))
                   ),
                   child: Row(
@@ -163,7 +208,7 @@ class _HomeState extends State<Home> {
                     children: [
                       SvgPicture.asset('assets/images/icon/medal.svg',),
                       SizedBox(width: 10,),
-                      Text("프로톡 상위 4% 이성 만나기",style: TextStyles.title2,),
+                      Text("프로톡 상위 4% 이성 만나기",style: TextStyles.title1_b,),
                       SizedBox(width: 10,),
                       SvgPicture.asset('assets/images/icon/hot.svg',),
                     ],

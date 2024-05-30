@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pluv/pages/main/my_lounge_page.dart';
-import 'package:pluv/pages/main/party.dart';
-import 'package:pluv/pages/main/rounge.dart';
+import 'package:pluv/pages/main/party_screen.dart';
+import 'package:pluv/pages/main/rounge_screen.dart';
 import 'package:pluv/pages/main/search_page.dart';
 
 import '../../global/global.dart';
@@ -47,7 +47,7 @@ class _CommunityState extends State<Community> {
                         _currentIndex = 0;
                       });
                       _pageController.jumpToPage(0);
-                    }, child: Text("Lounge",style:_currentIndex==0? TextStyle(fontSize: 18,color: appColorTextBlack ,fontWeight: FontWeight.w700):TextStyle(fontSize: 18,color: appColorGray ,fontWeight: FontWeight.w500),),),
+                    }, child: Text("Lounge",style:_currentIndex==0? TextStyle(fontSize: 18,color: appColorBlack ,fontWeight: FontWeight.w700):TextStyle(fontSize: 18,color: appColorGray1 ,fontWeight: FontWeight.w500),),),
 
                     Text("|"),
                     TextButton(
@@ -57,7 +57,7 @@ class _CommunityState extends State<Community> {
                           });
                           _pageController.jumpToPage(1);
                         },
-                        child: Text("Party",style:_currentIndex==1? TextStyle(fontSize: 18,color: appColorTextBlack ,fontWeight: FontWeight.w700):TextStyle(fontSize: 18,color: appColorGray ,fontWeight: FontWeight.w500),),),
+                        child: Text("Party",style:_currentIndex==1? TextStyle(fontSize: 18,color: appColorBlack ,fontWeight: FontWeight.w700):TextStyle(fontSize: 18,color: appColorGray1 ,fontWeight: FontWeight.w500),),),
                   ],
                 ),
                 Row(
@@ -76,7 +76,7 @@ class _CommunityState extends State<Community> {
                             Get.to(MyPartyPage());
                           }
                         },
-                        child: Text("MY",style:TextStyle(fontSize: 15,color: appColorTextBlack ,fontWeight: FontWeight.w500),))
+                        child: Text("MY",style:TextStyle(fontSize: 15,color: appColorBlack ,fontWeight: FontWeight.w500),))
                   ],
                 ),
               ],
@@ -86,8 +86,8 @@ class _CommunityState extends State<Community> {
             child: PageView(
               controller: _pageController,
               children: <Widget>[
-                Rounge(),
-                Party(),
+                RoungeScreen(),
+                PartyScreen(),
               ],
               onPageChanged: (index) {
                 setState(() {

@@ -3,6 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pluv/pages/main/community.dart';
+import 'package:pluv/pages/main/my_screen.dart';
+import 'package:pluv/pages/main/rating_screen.dart';
 import 'package:pluv/text_logo.dart';
 
 import '../../controller/status_controller.dart';
@@ -53,11 +55,11 @@ class _MainPageState extends State<MainPage> {
                 body: PageView(
                   controller: _pageController,
                   children: <Widget>[
-                    Home(),
-                    Text("S"),
+                    HomeScreen(),
+                    RatingScreen(),
                     Text("S"),
                     Community(),
-                    Text("S"),
+                    MyScreen()
 
                   ],
                   onPageChanged: (index) {
@@ -78,33 +80,27 @@ class _MainPageState extends State<MainPage> {
                   showSelectedLabels: false,
                   showUnselectedLabels: false,
                   items: [
-                    // BottomNavigationBarItem(
-                    //     icon: SvgPicture.asset('assets/images/icon/free.svg',color: Colors.red,),
-                    //     activeIcon:
-                    //     SvgPicture.asset('assets/images/icon/home_icon_focus.svg'),
-                    //     label: 'Section A'),
-                    BottomNavigationBarItem(
-                        icon: SvgPicture.asset('assets/images/myicon/home.svg',colorFilter: ColorFilter.mode(_currentIndex ==0 ?appColorTextBlack :appColorGray, BlendMode.srcIn)),
-                        label: ''
-                    ),
-                    BottomNavigationBarItem(
-                        icon: SvgPicture.asset('assets/images/myicon/heart.svg',colorFilter: ColorFilter.mode(_currentIndex ==1 ?appColorTextBlack :appColorGray, BlendMode.srcIn)),
-                        label: ''
-                    ),
-                    BottomNavigationBarItem(
-                        icon: SvgPicture.asset('assets/images/myicon/document.svg',colorFilter: ColorFilter.mode(_currentIndex ==2 ?appColorTextBlack :appColorGray, BlendMode.srcIn)),
-                        label: ''
-                    ),
-                    BottomNavigationBarItem(
-                        icon: SvgPicture.asset('assets/images/myicon/rounge.svg',colorFilter: ColorFilter.mode(_currentIndex ==3 ?appColorTextBlack :appColorGray, BlendMode.srcIn)),
-                        label: ''
-                    ),
-                    BottomNavigationBarItem(
-                        icon: SvgPicture.asset('assets/images/myicon/man.svg',colorFilter: ColorFilter.mode(_currentIndex ==4 ?appColorTextBlack :appColorGray, BlendMode.srcIn)),
-                        label: ''
-                    ),
 
-
+                    BottomNavigationBarItem(
+                        icon: SvgPicture.asset('assets/images/myicon/home.svg',colorFilter: ColorFilter.mode(_currentIndex ==0 ?appColorBlack :appColorGray1, BlendMode.srcIn)),
+                        label: ''
+                    ),
+                    BottomNavigationBarItem(
+                        icon: SvgPicture.asset('assets/images/myicon/heart.svg',colorFilter: ColorFilter.mode(_currentIndex ==1 ?appColorBlack :appColorGray1, BlendMode.srcIn)),
+                        label: ''
+                    ),
+                    BottomNavigationBarItem(
+                        icon: SvgPicture.asset('assets/images/myicon/document.svg',colorFilter: ColorFilter.mode(_currentIndex ==2 ?appColorBlack :appColorGray1, BlendMode.srcIn)),
+                        label: ''
+                    ),
+                    BottomNavigationBarItem(
+                        icon: SvgPicture.asset('assets/images/myicon/rounge.svg',colorFilter: ColorFilter.mode(_currentIndex ==3 ?appColorBlack :appColorGray1, BlendMode.srcIn)),
+                        label: ''
+                    ),
+                    BottomNavigationBarItem(
+                        icon: SvgPicture.asset('assets/images/myicon/man.svg',colorFilter: ColorFilter.mode(_currentIndex ==4 ?appColorBlack :appColorGray1, BlendMode.srcIn)),
+                        label: ''
+                    ),
 
                   ],
                 )

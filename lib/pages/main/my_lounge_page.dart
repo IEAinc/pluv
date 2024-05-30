@@ -50,7 +50,7 @@ import '../../global/global.dart';
                          decoration: BoxDecoration(
                              border: Border(bottom: BorderSide(color:_currentIndex==0? appColorPrimary:Colors.transparent,width: 3))
                          ),
-                         child: Center(child: Text("내가 작성한 글",style:_currentIndex==0?TextStyles.tab1Select: TextStyles.tab1Unselect,)),
+                         child: Center(child: Text("내가 작성한 글",style:_currentIndex==0?TextStyles.title1_b: TextStyles.title1_b,)),
                        ),
                      ),
                    ),
@@ -70,7 +70,7 @@ import '../../global/global.dart';
                          decoration: BoxDecoration(
                              border: Border(bottom: BorderSide(color:_currentIndex==1? appColorPrimary:Colors.transparent,width: 3))
                          ),
-                         child: Center(child: Text("프로필 교환 내역",style:_currentIndex==1?TextStyles.tab1Select: TextStyles.tab1Unselect,)),
+                         child: Center(child: Text("프로필 교환 내역",style:_currentIndex==1?TextStyles.title1_b: TextStyles.title1_b,)),
                        ),
                      ),
                    ),

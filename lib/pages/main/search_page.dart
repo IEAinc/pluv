@@ -31,7 +31,7 @@ class _SearchPageState extends State<SearchPage> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            Text("제목을 검색해주세요!",style: TextStyles.title1,),
+            Text("제목을 검색해주세요!",style: TextStyles.title1_b,),
 
           ],
         ),

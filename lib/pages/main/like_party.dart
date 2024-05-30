@@ -53,7 +53,7 @@ class _LikePartyState extends State<LikeParty> {
                             fit: BoxFit.cover,
                             errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
                               return Container(
-                                color: appColorGray,
+                                color: appColorGray1,
                               );
                             },
                           )
@@ -95,14 +95,14 @@ class _LikePartyState extends State<LikeParty> {
                   ),
                 ],
               ),
-              Text("파티제목 텍스트파티제목목목",style: TextStyles.subTitle1,),
+              Text("파티제목 텍스트파티제목목목",style: TextStyles.title1_b,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("19분 전"),
                   Container(
                     width: 16,height: 16,
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(50),color:appColorPurple2),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(50),color:appColorPrimary2),
                     child: Center(child: Text("남",style: TextStyle(fontSize: 8,fontWeight: FontWeight.w500,height: 1,color: Colors.white),)),
                   )
                 ],

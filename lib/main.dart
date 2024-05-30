@@ -28,11 +28,8 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // 전체적인 앱의 기본 폰트를 Noto Sans CJK KR 로 설정
-        textTheme: GoogleFonts.notoSansKrTextTheme(
-          Theme.of(context).textTheme,
-        ),
-
+        // 전체적인 앱의 기본 폰트를 Pretendard 로 설정
+        fontFamily: 'Pretendard',
       ),
       home: const MainPage(),
     );

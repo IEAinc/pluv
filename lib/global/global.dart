@@ -5,27 +5,21 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-String heart = "💞";
-String heart1 = "👀";
-String heart2 = "💌";
-String heart3 = "💞";
-String heart4 = "💞";
-String heart5 = "💞";
-String heart6 = "💞";
-String heart7 = "💞";
-
 ///앱 칼라
 
-const appColorPrimary = Color(0xFF100556);
-const appColorPurple = Color(0xFF5E49FF);
-const appColorPurple2 = Color(0xFF5C4DD1);
-const appColorWhiteGray = Color(0xFFF8F8F8);
-const appColorWhiteGray2 = Color(0xFFececec);
-const appColorGray = Color(0xFF8E8E8E);
-const appColorRed = Color(0xFFff0000);
-const appColorRed2 = Color(0xFFdc6568);
-const appColorTextGrey = Color(0xFF73787E);
-const appColorTextBlack = Color(0xFF1b1d1f);
+const appColorPrimary = Color(0xFF5C4DD1);
+const appColorPrimary2 = Color(0xFF100556);
+const appColorBlack = Color(0xFF1B1D1F);
+const appColorWhite = Color(0xFFFFFFFF);
+const appColorDeepGray = Color(0xFF555555);
+const appColorGray1 = Color(0xFF73787E);
+const appColorGray2 = Color(0xFF929292);
+const appColorGray3 = Color(0xFF9FA4A8);
+const appColorGray4 = Color(0xFFCCCCCC);
+const appColorGray5 = Color(0xFFD9D9D9);
+const appColorGray6 = Color(0xFFE1E1E1);
+const appColorRed1 = Color(0xFFFF0000);
+const appColorRed2 = Color(0xFFDC6568);
 
 
 ///SharedPreferences
@@ -43,12 +37,14 @@ Logger logger = Logger(
   ),
 );
 
-AppBar customAppBar({String? title}) {
+AppBar customAppBar({String? title , List<Widget>? actions}) {
   return AppBar(
     title:title==null?null:Text(title!,style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),) ,
       centerTitle: true,
       leading: IconButton(onPressed: (){
         Get.back();
-      },icon: SvgPicture.asset('assets/images/myicon/arrowleft.svg',width: 16,height: 16,),)
+      },icon: SvgPicture.asset('assets/images/myicon/arrowleft.svg',width: 16,height: 16,),),
+      actions: actions,
+
   );
 }
