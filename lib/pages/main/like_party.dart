@@ -95,7 +95,7 @@ class _LikePartyState extends State<LikeParty> {
                   ),
                 ],
               ),
-              Text("파티제목 텍스트파티제목목목",style: TextStyles.title1_b,),
+              Text("파티제목 텍스트파티제목목목",style: TextStyles.title24_b,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

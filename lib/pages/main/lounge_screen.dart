@@ -6,22 +6,22 @@ import 'package:pluv/global/text_styles.dart';
 
 import '../../global/global.dart';
 
-///RoungeScreen
+///LoungeScreen
 ///담당자 : ---
 
-class RoungeScreen extends StatefulWidget {
-  const RoungeScreen({Key? key}) : super(key: key);
+class LoungeScreen extends StatefulWidget {
+  const LoungeScreen({Key? key}) : super(key: key);
 
   @override
-  State<RoungeScreen> createState() => _RoungeScreenState();
+  State<LoungeScreen> createState() => _RoungeScreenState();
 }
 
-class _RoungeScreenState extends State<RoungeScreen> {
+class _RoungeScreenState extends State<LoungeScreen> {
 
   @override
   void initState() {
     super.initState();
-    logger.i("RoungeScreen");
+    logger.i("LoungeScreen");
   }
 
   int _currentIndex = 0;
@@ -53,7 +53,7 @@ class _RoungeScreenState extends State<RoungeScreen> {
                           decoration: BoxDecoration(
                               border:_currentIndex == index? Border(bottom: BorderSide(color: appColorPrimary,width: 3)):null
                           ),
-                          child: Text("전체",style:_currentIndex == index?TextStyles.title1_b: TextStyles.title1_b,)),
+                          child: Text("전체",style:_currentIndex == index?TextStyles.sub_title15_b.copyWith(color: appColorPrimary2): TextStyles.sub_title15_g1,)),
                     ],
                   ),
                 );

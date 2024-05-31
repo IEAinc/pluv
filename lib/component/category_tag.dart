@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pluv/global/global.dart';
+import 'package:pluv/global/text_styles.dart';
 
 ///CategoryTag
 ///담당자 : ---
@@ -28,7 +30,7 @@ class _CategoryTagState extends State<CategoryTag> {
           border: Border.all(width: 1,),
           borderRadius: BorderRadius.circular(50)
       ),
-      child: Center(child: Text("자유",style: TextStyle(fontSize: 10,height: 1),)),
+      child: Center(child: Text("자유",style:TextStyles.sub_title10_b.copyWith(color: appColorPrimary))),
     );
   }
 }

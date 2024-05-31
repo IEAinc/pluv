@@ -32,6 +32,7 @@ class _PartyCardState extends State<PartyCard> {
         Get.to(()=>PartyDetailPage());
       },
       child: Container(
+        //1 = big , 2 =small
         child:widget.type==1? Column(
           children: [
             Stack(
@@ -84,12 +85,12 @@ class _PartyCardState extends State<PartyCard> {
               width: (Get.width-50)/2,
               child: Column(
                 children: [
-                  Text("파티제목파티제목파티제목파티제목파티제목",style: TextStyles.title1_b,),
+                  Text("파티제목파티제목파티제목파티제목파티제목",style: TextStyles.sub_title14_b,),
                   SizedBox(height: 10,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("19분 전",style: TextStyles.title1_b,),
+                      Text("19분 전",style: TextStyles.contenets12_g1,),
                       Container(
                         width: 24,height: 24,
                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(50),color:appColorPrimary2),
@@ -160,11 +161,11 @@ class _PartyCardState extends State<PartyCard> {
                 ),
               ],
             ),
-            Text("파티제목 텍스트파티제목목목",style: TextStyles.title1_b,),
+            Text("파티제목 텍스트파티제목목목",style: TextStyles.sub_title12_b,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("19분 전"),
+    Text("19분 전",style: TextStyles.contenets12_g1,),
                 Container(
                   width: 16,height: 16,
                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(50),color:appColorPrimary2),

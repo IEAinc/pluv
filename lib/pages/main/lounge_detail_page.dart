@@ -71,7 +71,7 @@ class _LoungeDetailPageState extends State<LoungeDetailPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   CategoryTag(),
-                                  Text("라운지 등록된 제목 텍스트 최대 한줄",style: TextStyles.title1_b,),
+                                  Text("라운지 등록된 제목 텍스트 최대 한줄",style: TextStyles.title24_b,),
                                   SizedBox(height: 10,),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
@@ -125,9 +125,9 @@ class _LoungeDetailPageState extends State<LoungeDetailPage> {
                                             children: [
                                               SvgPicture.asset('assets/images/myicon/heart.svg',colorFilter: ColorFilter.mode(appColorRed2 , BlendMode.srcIn),height: 15,),
                                               SizedBox(width: 4,),
-                                              Text("공감",style: TextStyles.title1_b,),
+                                              Text("공감",style: TextStyles.title24_b,),
                                               SizedBox(width: 4,),
-                                              Text("0",style: TextStyles.title1_b,),
+                                              Text("0",style: TextStyles.title24_b,),
                                             ],
                                           )),
                                     ),
@@ -149,9 +149,9 @@ class _LoungeDetailPageState extends State<LoungeDetailPage> {
                                             children: [
                                               SvgPicture.asset('assets/images/icon/chatbubble.svg',colorFilter: ColorFilter.mode(appColorPrimary , BlendMode.srcIn)),
                                               SizedBox(width: 4,),
-                                              Text("댓글",style: TextStyles.title1_b,),
+                                              Text("댓글",style: TextStyles.title24_b,),
                                               SizedBox(width: 4,),
-                                              Text("0",style: TextStyles.title1_b,),
+                                              Text("0",style: TextStyles.title24_b,),
                                             ],
                                           )),
                                     ),
@@ -169,7 +169,7 @@ class _LoungeDetailPageState extends State<LoungeDetailPage> {
                                     ),
                                   ),
                                   onPressed: (){},
-                                  child: Text("프로필 교환 신청",style: TextStyles.title1_b,),
+                                  child: Text("프로필 교환 신청",style: TextStyles.title24_b,),
                                 )
                               ],
                             ),

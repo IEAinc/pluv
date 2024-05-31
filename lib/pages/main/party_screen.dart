@@ -56,7 +56,7 @@ class _PartyScreenState extends State<PartyScreen> {
                           decoration: BoxDecoration(
                               border:_currentIndex == index? Border(bottom: BorderSide(color: appColorPrimary,width: 3)):null
                           ),
-                          child: Text("전체",style:_currentIndex == index?TextStyles.title1_b: TextStyles.title1_b,)),
+                          child: Text("전체",style:_currentIndex == index?TextStyles.sub_title15_b.copyWith(color: appColorPrimary2): TextStyles.sub_title15_g1,)),
                     ],
                   ),
                 );
@@ -78,7 +78,7 @@ class _PartyScreenState extends State<PartyScreen> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("인기파티",style: TextStyles.title1_b,),
+                            Text("인기파티",style: TextStyles.title24_b,),
                             SizedBox(height: 10,),
                             Container(
                               height: (Get.width-50)/2 + 75,

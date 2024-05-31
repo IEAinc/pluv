@@ -54,7 +54,7 @@ class _MyPartyPageState extends State<MyPartyPage> {
                         decoration: BoxDecoration(
                             border: Border(bottom: BorderSide(color:_currentIndex==0? appColorPrimary:Colors.transparent,width: 3))
                         ),
-                        child: Center(child: Text("내 파티",style:_currentIndex==0?TextStyles.title1_b: TextStyles.title1_b,)),
+                        child: Center(child: Text("내 파티",style:_currentIndex==0?TextStyles.title24_b: TextStyles.title24_b,)),
                       ),
                     ),
                   ),
@@ -74,7 +74,7 @@ class _MyPartyPageState extends State<MyPartyPage> {
                         decoration: BoxDecoration(
                             border: Border(bottom: BorderSide(color:_currentIndex==1? appColorPrimary:Colors.transparent,width: 3))
                         ),
-                        child: Center(child: Text("참여한 파티",style:_currentIndex==1?TextStyles.title1_b: TextStyles.title1_b,)),
+                        child: Center(child: Text("참여한 파티",style:_currentIndex==1?TextStyles.title24_b: TextStyles.title24_b,)),
                       ),
                     ),
                   ),
@@ -94,7 +94,7 @@ class _MyPartyPageState extends State<MyPartyPage> {
                         decoration: BoxDecoration(
                             border: Border(bottom: BorderSide(color:_currentIndex==2? appColorPrimary:Colors.transparent,width: 3))
                         ),
-                        child: Center(child: Text("찜 목록",style:_currentIndex==2?TextStyles.title1_b: TextStyles.title1_b,)),
+                        child: Center(child: Text("찜 목록",style:_currentIndex==2?TextStyles.title24_b: TextStyles.title24_b,)),
                       ),
                     ),
                   ),

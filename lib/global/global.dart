@@ -11,13 +11,16 @@ const appColorPrimary = Color(0xFF5C4DD1);
 const appColorPrimary2 = Color(0xFF100556);
 const appColorBlack = Color(0xFF1B1D1F);
 const appColorWhite = Color(0xFFFFFFFF);
-const appColorDeepGray = Color(0xFF555555);
+const appColorDeepGray1 = Color(0xFF555555);
+
 const appColorGray1 = Color(0xFF73787E);
-const appColorGray2 = Color(0xFF929292);
-const appColorGray3 = Color(0xFF9FA4A8);
-const appColorGray4 = Color(0xFFCCCCCC);
-const appColorGray5 = Color(0xFFD9D9D9);
-const appColorGray6 = Color(0xFFE1E1E1);
+const appColorGray2 = Color(0xFF7C7C7C);
+const appColorGray3 = Color(0xFF929292);
+const appColorGray4 = Color(0xFF9FA4A8);
+const appColorGray5 = Color(0xFFBBBBBB);
+const appColorGray6 = Color(0xFFCCCCCC);
+const appColorGray7 = Color(0xFFD9D9D9);
+const appColorGray8 = Color(0xFFE1E1E1);
 const appColorRed1 = Color(0xFFFF0000);
 const appColorRed2 = Color(0xFFDC6568);
 

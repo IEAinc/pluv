@@ -3,10 +3,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pluv/pages/main/my_lounge_page.dart';
 import 'package:pluv/pages/main/party_screen.dart';
-import 'package:pluv/pages/main/rounge_screen.dart';
+import 'package:pluv/pages/main/lounge_screen.dart';
 import 'package:pluv/pages/main/search_page.dart';
 
 import '../../global/global.dart';
+import '../../global/text_styles.dart';
 import 'my_party_page.dart';
 
 ///Community
@@ -47,7 +48,7 @@ class _CommunityState extends State<Community> {
                         _currentIndex = 0;
                       });
                       _pageController.jumpToPage(0);
-                    }, child: Text("Lounge",style:_currentIndex==0? TextStyle(fontSize: 18,color: appColorBlack ,fontWeight: FontWeight.w700):TextStyle(fontSize: 18,color: appColorGray1 ,fontWeight: FontWeight.w500),),),
+                    }, child: Text("Lounge",style:_currentIndex==0? TextStyles.title18_b:TextStyles.sub_title18_b,),),
 
                     Text("|"),
                     TextButton(
@@ -76,7 +77,7 @@ class _CommunityState extends State<Community> {
                             Get.to(MyPartyPage());
                           }
                         },
-                        child: Text("MY",style:TextStyle(fontSize: 15,color: appColorBlack ,fontWeight: FontWeight.w500),))
+                        child: Text("MY",style:TextStyles.sub_title15_b,))
                   ],
                 ),
               ],
@@ -86,7 +87,7 @@ class _CommunityState extends State<Community> {
             child: PageView(
               controller: _pageController,
               children: <Widget>[
-                RoungeScreen(),
+                LoungeScreen(),
                 PartyScreen(),
               ],
               onPageChanged: (index) {

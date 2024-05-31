@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pluv/pages/main/community.dart';
+import 'package:pluv/pages/main/community_screen.dart';
 import 'package:pluv/pages/main/my_screen.dart';
 import 'package:pluv/pages/main/rating_screen.dart';
 import 'package:pluv/text_logo.dart';
 
 import '../../controller/status_controller.dart';
 import '../../global/global.dart';
-import 'home.dart';
+import 'home_screen.dart';
 
 ///MainPage
 ///담당자 : ---
@@ -82,23 +82,23 @@ class _MainPageState extends State<MainPage> {
                   items: [
 
                     BottomNavigationBarItem(
-                        icon: SvgPicture.asset('assets/images/myicon/home.svg',colorFilter: ColorFilter.mode(_currentIndex ==0 ?appColorBlack :appColorGray1, BlendMode.srcIn)),
+                        icon: SvgPicture.asset('assets/images/myicon/home.svg',colorFilter: ColorFilter.mode(_currentIndex ==0 ?appColorBlack :appColorGray4, BlendMode.srcIn)),
                         label: ''
                     ),
                     BottomNavigationBarItem(
-                        icon: SvgPicture.asset('assets/images/myicon/heart.svg',colorFilter: ColorFilter.mode(_currentIndex ==1 ?appColorBlack :appColorGray1, BlendMode.srcIn)),
+                        icon: SvgPicture.asset('assets/images/myicon/heart.svg',colorFilter: ColorFilter.mode(_currentIndex ==1 ?appColorBlack :appColorGray4, BlendMode.srcIn)),
                         label: ''
                     ),
                     BottomNavigationBarItem(
-                        icon: SvgPicture.asset('assets/images/myicon/document.svg',colorFilter: ColorFilter.mode(_currentIndex ==2 ?appColorBlack :appColorGray1, BlendMode.srcIn)),
+                        icon: SvgPicture.asset('assets/images/myicon/document.svg',colorFilter: ColorFilter.mode(_currentIndex ==2 ?appColorBlack :appColorGray4, BlendMode.srcIn)),
                         label: ''
                     ),
                     BottomNavigationBarItem(
-                        icon: SvgPicture.asset('assets/images/myicon/rounge.svg',colorFilter: ColorFilter.mode(_currentIndex ==3 ?appColorBlack :appColorGray1, BlendMode.srcIn)),
+                        icon: SvgPicture.asset('assets/images/myicon/rounge.svg',colorFilter: ColorFilter.mode(_currentIndex ==3 ?appColorBlack :appColorGray4, BlendMode.srcIn)),
                         label: ''
                     ),
                     BottomNavigationBarItem(
-                        icon: SvgPicture.asset('assets/images/myicon/man.svg',colorFilter: ColorFilter.mode(_currentIndex ==4 ?appColorBlack :appColorGray1, BlendMode.srcIn)),
+                        icon: SvgPicture.asset('assets/images/myicon/man.svg',colorFilter: ColorFilter.mode(_currentIndex ==4 ?appColorBlack :appColorGray4, BlendMode.srcIn)),
                         label: ''
                     ),
 

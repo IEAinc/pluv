@@ -31,7 +31,7 @@ class _InPartyState extends State<InParty> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("초대받은 파티",style: TextStyles.title1_b,),
+              Text("초대받은 파티",style: TextStyles.title24_b,),
               SizedBox(height: 10,),
               Container(
                 height: (Get.width-60)/3 + 75,
@@ -97,12 +97,12 @@ class _InPartyState extends State<InParty> {
                             width: (Get.width-60)/3,
                             child: Column(
                               children: [
-                                Text("파티제목파티제목파티제목파티제목파티제목",style: TextStyles.title1_b,maxLines: 2,overflow: TextOverflow.ellipsis,),
+                                Text("파티제목파티제목파티제목파티제목파티제목",style: TextStyles.title24_b,maxLines: 2,overflow: TextOverflow.ellipsis,),
                                 SizedBox(height: 10,),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("19분 전",style: TextStyles.title1_b,),
+                                    Text("19분 전",style: TextStyles.title24_b,),
                                     Container(
                                       width: 16,height: 16,
                                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(50),color:appColorPrimary2),

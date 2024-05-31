@@ -38,7 +38,7 @@ class _LoungeCardState extends State<LoungeCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CategoryTag(),
-            Text("라운지 등록된 제목 텍스트 최대 한줄",style: TextStyles.title1_b,),
+            Text("라운지 등록된 제목 텍스트 최대 한줄",style: TextStyles.title20_b,),
             SizedBox(height: 10,),
             ViewStatus()
           ],

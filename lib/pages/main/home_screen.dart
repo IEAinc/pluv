@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text("오늘의 카드" , style: TextStyles.title1_b,),
+                Text("오늘의 카드" , style: TextStyles.title20_b,),
               ],
             ),
             SizedBox(height: 10,),
@@ -123,8 +123,8 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text("나에게 꼭 맞는\n이상형을 찾아드려요!" , style: TextStyles.title1_b,),
-                Text("더보기  >" , style: TextStyles.title1_b,),
+                Text("나에게 꼭 맞는\n이상형을 찾아드려요!" , style: TextStyles.title20_b,),
+                Text("더보기  >" , style: TextStyles.sub_title14_b.copyWith(color: appColorGray2),),
 
               ],
             ),
@@ -145,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       SvgPicture.asset('assets/images/icon/medal.svg',),
                       SizedBox(width: 10,),
-                      Text("프로톡 상위 4% 이성 만나기",style: TextStyles.title1_b,),
+                      Text("프로톡 상위 4% 이성 만나기",style: TextStyles.sub_title16_b,),
                       SizedBox(width: 10,),
                       SvgPicture.asset('assets/images/icon/hot.svg',),
                     ],
@@ -166,54 +166,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       SvgPicture.asset('assets/images/icon/medal.svg',),
                       SizedBox(width: 10,),
-                      Text("프로톡 상위 4% 이성 만나기",style: TextStyles.title1_b,),
+                      Text("프로톡 상위 4% 이성 만나기",style: TextStyles.sub_title16_b,),
                       SizedBox(width: 10,),
                       SvgPicture.asset('assets/images/icon/hot.svg',),
                     ],
                   ),
                 ),
                 SizedBox(height: 10,),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20 ),
-                  height: 82,
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                      color: appColorGray2.withOpacity(0.25),
-                      borderRadius: BorderRadius.only(bottomRight: Radius.circular(30))
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset('assets/images/icon/medal.svg',),
-                      SizedBox(width: 10,),
-                      Text("프로톡 상위 4% 이성 만나기",style: TextStyles.title1_b,),
-                      SizedBox(width: 10,),
-                      SvgPicture.asset('assets/images/icon/hot.svg',),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 10,),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20 ),
-                  height: 82,
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                      color: appColorGray2.withOpacity(0.25),
-                      borderRadius: BorderRadius.only(bottomRight: Radius.circular(30))
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset('assets/images/icon/medal.svg',),
-                      SizedBox(width: 10,),
-                      Text("프로톡 상위 4% 이성 만나기",style: TextStyles.title1_b,),
-                      SizedBox(width: 10,),
-                      SvgPicture.asset('assets/images/icon/hot.svg',),
-                    ],
-                  ),
-                ),
 
               ],
             )

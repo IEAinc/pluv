@@ -29,16 +29,16 @@ class _ViewStatusState extends State<ViewStatus> {
         Container(
           width: 24,height: 24,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(50),color:appColorPrimary2),
-          child: Center(child: Text("남",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w500,height: 1,color: Colors.white),)),
+          child: Center(child: Text("남",style: TextStyles.sub_title12_w,)),
         ),
         SizedBox(width: 5,),
-        Text("19분 전",style: TextStyles.title1_b,),
+        Text("19분 전",style: TextStyles.sub_title12_g1,),
         Dot(),
         Row(
           children: [
             SvgPicture.asset('assets/images/myicon/eye.svg',width: 13,colorFilter: ColorFilter.mode(appColorPrimary2, BlendMode.srcIn)),
             SizedBox(width: 5,),
-            Text("19,000",style: TextStyles.title1_b,),
+            Text("19,000",style: TextStyles.sub_title12_g1,),
           ],
         ),
         Dot(),
@@ -46,7 +46,7 @@ class _ViewStatusState extends State<ViewStatus> {
           children: [
             SvgPicture.asset('assets/images/icon/chatbubble.svg',colorFilter: ColorFilter.mode(appColorPrimary2, BlendMode.srcIn)),
             SizedBox(width: 5,),
-            Text("19,000",style: TextStyles.title1_b,),
+            Text("19,000",style: TextStyles.sub_title12_g1,),
           ],
         ),
       ],
