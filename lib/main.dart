@@ -17,6 +17,8 @@ void main() async{
   );
   prefs = await SharedPreferences.getInstance();
   Get.put(StatusController());
+  StatusController _statusController = Get.find<StatusController>();
+  _statusController.getAppInfo();
   runApp(const MyApp());
 }
 

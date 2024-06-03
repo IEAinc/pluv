@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:pluv/component/custom_input_filed.dart';
-import 'package:pluv/global/text_styles.dart';
 
 import '../../global/global.dart';
+import '../../global/text_styles.dart';
 
-///LoungeWritePage
+///PartyWritePage
 ///담당자 : ---
 
-class LoungeWritePage extends StatefulWidget {
-  const LoungeWritePage({Key? key}) : super(key: key);
+class PartyWritePage extends StatefulWidget {
+  const PartyWritePage({Key? key}) : super(key: key);
 
   @override
-  State<LoungeWritePage> createState() => _LoungeWritePageState();
+  State<PartyWritePage> createState() => _PartyWritePageState();
 }
 
-class _LoungeWritePageState extends State<LoungeWritePage> {
+class _PartyWritePageState extends State<PartyWritePage> {
 
   @override
   void initState() {
     super.initState();
-    logger.i("LoungeWritePage");
+    logger.i("PartyWritePage");
   }
 
   @override
@@ -30,7 +29,7 @@ class _LoungeWritePageState extends State<LoungeWritePage> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        appBar: customAppBar(title: "라운지 글쓰기"),
+        appBar: customAppBar(title: "파티 만들기",actions: [Text('등록'),SizedBox(width: 16,)]),
         body: Column(
           children: [
             Divider(height: 1,),
@@ -55,13 +54,13 @@ class _LoungeWritePageState extends State<LoungeWritePage> {
               child: Column(
                 children: [
                   TextFormField(
-                    style: TextStyles.sub_title15_b,
+                      style: TextStyles.sub_title15_b,
                       decoration: InputDecoration(
-                          hintText: "라운지 제목을 입력해주세요.",
+                        hintText: "파티 제목을 입력해주세요.",
                         enabledBorder: UnderlineInputBorder(
 
                             borderSide: BorderSide(
-                                color: appColorGray2,)
+                              color: appColorGray2,)
                         ),
                         focusedBorder: UnderlineInputBorder(
 
@@ -71,10 +70,10 @@ class _LoungeWritePageState extends State<LoungeWritePage> {
 
                   ),
                   TextFormField(
-                    maxLines: 10,
-                    style: TextStyles.contents15_b,
+                      maxLines: 10,
+                      style: TextStyles.contents15_b,
                       decoration: InputDecoration(
-                          hintText: "내용을 입력해주세요.",
+                        hintText: "내용을 입력해주세요.",
                         enabledBorder: UnderlineInputBorder(
 
                             borderSide: BorderSide(
@@ -92,7 +91,44 @@ class _LoungeWritePageState extends State<LoungeWritePage> {
 
               ),
             ),
-            Divider(),
+
+
+            Container(
+              padding: EdgeInsets.symmetric(horizontal:16),
+              child: Column(
+                children: [
+                  TextFormField(
+                      style: TextStyles.sub_title15_b,
+                      decoration: InputDecoration(
+                        hintText: "위치를 입력해주세요.",
+                        prefixIcon: Text(pin),
+                        hintStyle: TextStyles.contents15_g1,
+                        prefixIconConstraints: BoxConstraints(),
+                        isDense: true,
+                        enabledBorder: UnderlineInputBorder(
+
+                            borderSide: BorderSide(
+                              color: appColorGray2,)
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+
+                            borderSide: BorderSide(color: appColorGray2)
+                        ),
+                      )
+
+                  ),
+                  SizedBox(height: 10,),
+                  Row(
+                    children: [
+                      Text(calender),
+                      Text("날짜를 선택해주세요.",style: TextStyles.contents15_g1,)
+                    ],
+                  ),
+                  Divider()
+                ]
+              ),
+            ),
+
             Container(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: Row(
@@ -129,8 +165,8 @@ class _LoungeWritePageState extends State<LoungeWritePage> {
                             height: 12,
                             padding: EdgeInsets.all(3),
                             decoration: BoxDecoration(
-                              color: appColorGray1.withOpacity(0.9),
-                              borderRadius: BorderRadius.only(topRight: Radius.circular(5))
+                                color: appColorGray1.withOpacity(0.9),
+                                borderRadius: BorderRadius.only(topRight: Radius.circular(5))
                             ),
 
                             child: SvgPicture.asset('assets/images/myicon/ax.svg',colorFilter: ColorFilter.mode(appColorWhite, BlendMode.srcIn)),
@@ -179,6 +215,7 @@ class _LoungeWritePageState extends State<LoungeWritePage> {
               ),
             ),
             Divider(),
+
             Container(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: Row(
@@ -198,4 +235,3 @@ class _LoungeWritePageState extends State<LoungeWritePage> {
     );
   }
 }
-

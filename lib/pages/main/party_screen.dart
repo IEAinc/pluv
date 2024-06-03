@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pluv/component/party_card.dart';
+import 'package:pluv/pages/main/party_write_page.dart';
 
 import '../../component/dot.dart';
 import '../../global/global.dart';
@@ -129,7 +130,7 @@ class _PartyScreenState extends State<PartyScreen> {
                       padding: EdgeInsets.all(12), // 버튼 크기
                     ),
                     onPressed: () {
-                      // 버튼 클릭 시 동작
+                      Get.to(()=>PartyWritePage());
                     },
                     child: SvgPicture.asset('assets/images/myicon/pen.svg',colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn)),
                   ),
