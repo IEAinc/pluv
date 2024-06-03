@@ -4,22 +4,22 @@ import 'package:get/get.dart';
 import '../../global/global.dart';
 import '../../global/text_styles.dart';
 
-///InParty
+///InPartyScreen
 ///담당자 : ---
 
-class InParty extends StatefulWidget {
-  const InParty({Key? key}) : super(key: key);
+class InPartyScreen extends StatefulWidget {
+  const InPartyScreen({Key? key}) : super(key: key);
 
   @override
-  State<InParty> createState() => _InPartyState();
+  State<InPartyScreen> createState() => _InPartyScreenState();
 }
 
-class _InPartyState extends State<InParty> {
+class _InPartyScreenState extends State<InPartyScreen> {
 
   @override
   void initState() {
     super.initState();
-    logger.i("InParty");
+    logger.i("InPartyScreen");
   }
   String sample = "https://media.istockphoto.com/id/1827291486/ko/%EC%82%AC%EC%A7%84/%EC%A0%84%EB%8B%B4-%EB%A9%98%ED%86%A0%EA%B0%80-%ED%9A%8C%EC%82%AC-%ED%9A%8C%EC%9D%98%EC%8B%A4%EC%97%90-%EC%95%89%EC%95%84-%EB%A9%98%ED%8B%B0%EB%93%A4%EC%97%90%EA%B2%8C-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%9D%98-%EC%A4%91%EC%9A%94%EC%84%B1%EC%9D%84-%EC%84%A4%EB%AA%85%ED%95%98%EA%B3%A0-%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4.jpg?s=1024x1024&w=is&k=20&c=-5zIBAjhFs34gMPafx5iQ-QhFP8IfQ8OUQrweW7c4tM=";
   @override

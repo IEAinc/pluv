@@ -9,6 +9,7 @@ import 'package:pluv/text_logo.dart';
 
 import '../../controller/status_controller.dart';
 import '../../global/global.dart';
+import 'history_screen.dart';
 import 'home_screen.dart';
 
 ///MainPage
@@ -57,8 +58,8 @@ class _MainPageState extends State<MainPage> {
                   children: <Widget>[
                     HomeScreen(),
                     RatingScreen(),
-                    Text("S"),
-                    Community(),
+                    HistoryScreen(),
+                    CommunityScreen(),
                     MyScreen()
 
                   ],

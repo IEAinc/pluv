@@ -3,22 +3,22 @@ import 'package:flutter/material.dart';
 import '../../global/global.dart';
 import '../../global/text_styles.dart';
 
-///MyPartyMy
+///MyPartyMyScreen
 ///담당자 : ---
 
-class MyPartyMy extends StatefulWidget {
-  const MyPartyMy({Key? key}) : super(key: key);
+class MyPartyMyScreen extends StatefulWidget {
+  const MyPartyMyScreen({Key? key}) : super(key: key);
 
   @override
-  State<MyPartyMy> createState() => _MyPartyMyState();
+  State<MyPartyMyScreen> createState() => _MyPartyMyScreenState();
 }
 
-class _MyPartyMyState extends State<MyPartyMy> {
+class _MyPartyMyScreenState extends State<MyPartyMyScreen> {
 
   @override
   void initState() {
     super.initState();
-    logger.i("MyPartyMy");
+    logger.i("MyPartyMyScreen");
   }
 
   @override

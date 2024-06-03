@@ -106,9 +106,9 @@ class _MyPartyPageState extends State<MyPartyPage> {
               child: PageView(
                 controller: _pageController,
                 children: <Widget>[
-                  MyPartyMy(),
-                  InParty(),
-                  LikeParty()
+                  MyPartyMyScreen(),
+                  InPartyScreen(),
+                  LikePartyScreen()
                 ],
                 onPageChanged: (index) {
                   setState(() {

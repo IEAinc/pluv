@@ -3,22 +3,22 @@ import 'package:flutter/material.dart';
 import '../../global/global.dart';
 import '../../global/text_styles.dart';
 
-///LikeParty
+///LikePartyScreen
 ///담당자 : ---
 
-class LikeParty extends StatefulWidget {
-  const LikeParty({Key? key}) : super(key: key);
+class LikePartyScreen extends StatefulWidget {
+  const LikePartyScreen({Key? key}) : super(key: key);
 
   @override
-  State<LikeParty> createState() => _LikePartyState();
+  State<LikePartyScreen> createState() => _LikePartyScreenState();
 }
 
-class _LikePartyState extends State<LikeParty> {
+class _LikePartyScreenState extends State<LikePartyScreen> {
 
   @override
   void initState() {
     super.initState();
-    logger.i("LikeParty");
+    logger.i("LikePartyScreen");
   }
 
   @override

@@ -5,6 +5,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+///icon
+
+String calender = "🗓";
+String watch = "⏰";
+String pin = "📍";
+String meeting = "👩‍❤️‍👨";
+
 ///앱 칼라
 
 const appColorPrimary = Color(0xFF5C4DD1);

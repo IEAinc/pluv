@@ -169,7 +169,7 @@ class _LoungeDetailPageState extends State<LoungeDetailPage> {
                                     ),
                                   ),
                                   onPressed: (){},
-                                  child: Text("프로필 교환 신청",style: TextStyles.title24_b,),
+                                  child: Text("v",style: TextStyles.title24_b,),
                                 )
                               ],
                             ),

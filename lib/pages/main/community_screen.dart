@@ -10,22 +10,22 @@ import '../../global/global.dart';
 import '../../global/text_styles.dart';
 import 'my_party_page.dart';
 
-///Community
+///CommunityScreen
 ///담당자 : ---
 
-class Community extends StatefulWidget {
-  const Community({Key? key}) : super(key: key);
+class CommunityScreen extends StatefulWidget {
+  const CommunityScreen({Key? key}) : super(key: key);
 
   @override
-  State<Community> createState() => _CommunityState();
+  State<CommunityScreen> createState() => _CommunityScreenState();
 }
 
-class _CommunityState extends State<Community> {
+class _CommunityScreenState extends State<CommunityScreen> {
 
   @override
   void initState() {
     super.initState();
-    logger.i("Community");
+    logger.i("CommunityScreen");
   }
   int _currentIndex = 0;
   final PageController _pageController = PageController(initialPage: 0);
