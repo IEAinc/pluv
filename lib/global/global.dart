@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -57,4 +59,94 @@ AppBar customAppBar({String? title , List<Widget>? actions}) {
       actions: actions,
 
   );
+}
+
+//랜덤 한글 문자열 얻기
+String generateKoreanText(int wordCount) {
+  const words = [
+    '안녕하세요', '반갑습니다', '여러분', '플러터', '예제', '랜덤', '문자열',
+    '생성', '테스트', '한국어', '로렘', '입숨', '텍스트', '입니다', '좋은', '하루',
+    '되세요', '감사합니다', '즐거운', '시간', '보내세요', '행복하세요', '건강하세요'
+  ];
+  final random = Random();
+  return List.generate(wordCount, (index) => words[random.nextInt(words.length)]).join(' ');
+}
+
+//랜덤영문문자열
+String generateRandomString(int number) {
+  const String chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  final Random random = Random.secure();
+
+  // 길이가 number인 랜덤 문자열 생성
+  String randomString = '';
+  for (int i = 0; i < number; i++) {
+    randomString += chars[random.nextInt(chars.length)];
+  }
+
+  return randomString;
+}
+
+String generateRandomKoreanNickname(int length) {
+  const List<String> chosung = [
+    'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
+  ];
+  const List<String> jungsung = [
+    'ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ', 'ㅣ'
+  ];
+  const List<String> jongsung = [
+    '', 'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
+  ];
+
+  final Random random = Random();
+  StringBuffer nickname = StringBuffer();
+
+  for (int i = 0; i < length; i++) {
+    String char = generateKoreanCharacter(random, chosung, jungsung, jongsung);
+    nickname.write(char);
+  }
+
+  return nickname.toString();
+}
+
+String generateKoreanCharacter(Random random, List<String> chosung, List<String> jungsung, List<String> jongsung) {
+  String chosungChar = chosung[random.nextInt(chosung.length)];
+  String jungsungChar = jungsung[random.nextInt(jungsung.length)];
+  String jongsungChar = jongsung[random.nextInt(jongsung.length)];
+
+  int chosungIndex = chosung.indexOf(chosungChar);
+  int jungsungIndex = jungsung.indexOf(jungsungChar);
+  int jongsungIndex = jongsung.indexOf(jongsungChar);
+
+  int unicode = 0xAC00 + (chosungIndex * 21 * 28) + (jungsungIndex * 28) + jongsungIndex;
+  return String.fromCharCode(unicode);
+}
+
+//3자리마다 콤마
+String formatCommaNumber(num num) {
+  return num.toString().replaceAllMapped(RegExp(r'(\d)(?=(\d{3})+$)'), (Match match) {
+    return '${match[1]},';
+  });
+}
+
+String timeAgo(DateTime timestamp) {
+  final now = DateTime.now();
+  final difference = now.difference(timestamp);
+
+
+
+  if (difference.inMinutes < 1){
+    return '방금 전';
+  } else if (difference.inMinutes < 60) {
+    return '${difference.inMinutes}분 전';
+  } else if (difference.inHours < 24) {
+    return '${difference.inHours}시간 전';
+  } else if (difference.inDays < 30) {
+    return '${difference.inDays}일 전';
+  } else if (difference.inDays < 365) {
+    final months = difference.inDays ~/ 30;
+    return '${months}개월 전';
+  } else {
+    final years = difference.inDays ~/ 365;
+    return '${years}년 전';
+  }
 }

@@ -7,7 +7,7 @@ class LoungeDto {
 
   LoungeVo? loungeVo;
   num? commentCount;
-  num? writerGender;
+  bool? writerGender;
 
 
   //상세 - 리스트 호출시에는 담을 필요는 없고 상세조회에서 활용하기

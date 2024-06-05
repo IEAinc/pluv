@@ -24,5 +24,49 @@ class CommentVo {
     this.test,
   });
 
+  CommentVo.fromSnapshot(DocumentSnapshot documentSnapshot) {
+    Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
+    commentKey = data['commentKey']??"";
+    targetCommunityKey = data['targetCommunityKey']??"";
+    replyDepth = data['replyDepth']??1;
+    upperReplyKey = data['upperReplyKey']??null;
+    writerUid = data['writerUid']??"";
+    commentDescription = data['commentDescription']??"";
+    commentStatus = data['commentStatus']??1;
+    commentCreateDate = data['commentCreateDate']??Timestamp.now();
+    test = data['test']??true;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+
+    data['commentKey'] = this.commentKey??"";
+    data['targetCommunityKey'] = this.targetCommunityKey??"";
+    data['replyDepth'] = this.replyDepth??1;
+    data['upperReplyKey'] = this.upperReplyKey??null;
+    data['writerUid'] = this.writerUid??"";
+    data['commentDescription'] = this.commentDescription??"";
+    data['commentStatus'] = this.commentStatus??1;
+    data['commentCreateDate'] = this.commentCreateDate??Timestamp.now();
+    data['test'] = this.test??true;
+
+    return data;
+  }
+
+
+
+  CommentVo.sample() {
+
+    commentKey = "";
+    targetCommunityKey = "targetCommunityKey";
+    replyDepth = 1;
+    upperReplyKey = "";
+    writerUid = "writerUid";
+    commentDescription = "commentDescription";
+    commentStatus = 1;
+    commentCreateDate = Timestamp.now();
+    test = true;
+  }
+
 
 }

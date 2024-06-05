@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -6,6 +7,7 @@ import 'package:pluv/component/view_status.dart';
 
 import '../global/global.dart';
 import '../global/text_styles.dart';
+import '../model/dto/lounge_dto.dart';
 import '../pages/main/lounge_detail_page.dart';
 import 'dot.dart';
 
@@ -13,7 +15,8 @@ import 'dot.dart';
 ///담당자 : ---
 
 class LoungeCard extends StatefulWidget {
-  const LoungeCard({Key? key}) : super(key: key);
+  final LoungeDto item;
+  const LoungeCard({Key? key , required this.item}) : super(key: key);
 
   @override
   State<LoungeCard> createState() => _LoungeCardState();
@@ -24,7 +27,6 @@ class _LoungeCardState extends State<LoungeCard> {
   @override
   void initState() {
     super.initState();
-    logger.i("LoungeCard");
   }
 
   @override
@@ -37,10 +39,15 @@ class _LoungeCardState extends State<LoungeCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CategoryTag(),
-            Text("라운지 등록된 제목 텍스트 최대 한줄",style: TextStyles.title20_b,),
+            CategoryTag(text: widget.item.loungeVo?.loungeCategoryCodeKorean??"",),
+            Text(widget.item.loungeVo!.loungeTitle??"",style: TextStyles.title20_b,),
             SizedBox(height: 10,),
-            ViewStatus()
+            ViewStatus(
+                gender :widget.item.writerGender??true,
+                time:widget.item.loungeVo?.loungeCreateDate??Timestamp.now(),
+                viewCount : widget.item.loungeVo?.viewCount??0,
+                commentCount:widget.item.commentCount??0
+            ),
           ],
         ),
       ),

@@ -6,7 +6,9 @@ import 'package:pluv/component/lounge_card.dart';
 import 'package:pluv/global/text_styles.dart';
 import 'package:pluv/pages/main/lounge_write_page.dart';
 
+import '../../controller/data_controller.dart';
 import '../../global/global.dart';
+import '../../model/dto/lounge_dto.dart';
 
 ///LoungeScreen
 ///담당자 : ---
@@ -23,10 +25,18 @@ class _RoungeScreenState extends State<LoungeScreen> {
   @override
   void initState() {
     super.initState();
+    getLoungeList();
     logger.i("LoungeScreen");
-  }
 
+  }
+  DataController _dataController = Get.find<DataController>();
   int _currentIndex = 0;
+  List<LoungeDto>? items;
+
+  void getLoungeList() async{
+    items = await _dataController.searchLoungeList(categoryType: "", page: 0);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,16 +75,18 @@ class _RoungeScreenState extends State<LoungeScreen> {
               },
             ),
           ),
-          Expanded(
+          items==null
+              ?SizedBox()
+              :Expanded(
             child: Stack(
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: ListView.separated(
-                    itemCount: 10,
+                    itemCount: items!.length,
                     padding: EdgeInsets.only(top: 20,bottom: 20),
                     itemBuilder: (context, index) {
-                      return LoungeCard();
+                      return LoungeCard(item:items![index]);
                     },
                     separatorBuilder: (context, index) {
                       return Divider(height: 30,color: appColorGray5,);

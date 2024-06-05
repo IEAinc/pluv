@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pluv/pages/main/main_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'controller/auth_controller.dart';
+import 'controller/data_controller.dart';
 import 'controller/status_controller.dart';
 import 'firebase_options.dart';
 import 'global/global.dart';
@@ -17,8 +19,10 @@ void main() async{
   );
   prefs = await SharedPreferences.getInstance();
   Get.put(StatusController());
+  Get.put(DataController());
+  Get.put(AuthController());
   StatusController _statusController = Get.find<StatusController>();
-  _statusController.getAppInfo();
+  await _statusController.getAppInfo();
   runApp(const MyApp());
 }
 

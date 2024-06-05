@@ -70,13 +70,13 @@ class _LoungeDetailPageState extends State<LoungeDetailPage> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  CategoryTag(),
+                                  // CategoryTag(),
                                   Text("라운지 등록된 제목 텍스트 최대 한줄",style: TextStyles.title24_b,),
                                   SizedBox(height: 10,),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
-                                      ViewStatus(),
+                                      // ViewStatus(),
                                     ],
                                   )
                                 ],
