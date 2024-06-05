@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:pluv/pages/main/member_profile_page.dart';
 
 import '../../component/party_card.dart';
 import '../../component/profile_card.dart';

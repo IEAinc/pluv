@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluv/component/d_day_tag.dart';
+import 'package:pluv/pages/main/member_profile_page.dart';
 
 import '../global/text_styles.dart';
 
@@ -29,6 +30,7 @@ class _ProfileCardState extends State<ProfileCard> {
     return GestureDetector(
       onTap: (){
 
+        Get.to(()=>MemberProfilePage());
       },
       child: Container(
         width: (Get.width-20-20)/3,

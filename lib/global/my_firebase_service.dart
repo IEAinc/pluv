@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:pluv/model/vo/lounge_vo.dart';
@@ -28,7 +29,7 @@ FirebaseFirestore firestore = FirebaseFirestore.instance;
 final FirebaseAuth auth = FirebaseAuth.instance;
 FirebaseStorage storage = FirebaseStorage.instance;
 FirebaseFunctions functions = FirebaseFunctions.instanceFor(region: 'us-central1'); //아이오와
-
+FirebaseMessaging messaging = FirebaseMessaging.instance;
 CollectionReference masterCollection = firestore.collection('MASTER');
 CollectionReference loungeCollection = firestore.collection('COMMUNITY_LOUNGE');
 CollectionReference commentCollection = firestore.collection('COMMUNITY_COMMENT');
@@ -49,7 +50,57 @@ class MyFirebaseService{
     }
   }
 
+
+
   ///----멤버 ----
+
+  //로그인
+  Future<MemberVo> signInWithEmailAndPassword(String email, String password) async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      String? memberUid = userCredential.user?.uid;
+
+
+      //사용자 fcmToken 최신화
+      String? token = await messaging.getToken();
+      await memberCollection.doc(memberUid).update({
+        'fcmToken': token,
+      });
+      //사용자 가져오기
+      DocumentSnapshot documentSnapshot = await memberCollection.doc(memberUid).get();
+
+      return MemberVo.fromSnapshot(documentSnapshot);
+    } catch (error) {
+
+      if (error is FirebaseAuthException) {
+
+        if (error.code == 'INVALID_LOGIN_CREDENTIALS') {
+          throw '계정정보를 찾을 수 없습니다. 이메일,비밀번호를 확인해주세요.';
+        }
+
+      }else{
+
+
+        throw error;
+      }
+      throw error;
+    }
+  }
+
+  //로그아웃
+  Future<void> logout() async {
+
+    try {
+      auth.signOut();
+    } catch (error) {
+      throw error;
+    }
+
+  }
+
 
   ///----유저-------
 
@@ -66,7 +117,10 @@ class MyFirebaseService{
 
       // 문서 참조를 만들고 자동으로 생성된 문서 ID를 가져옴
       final DocumentReference docReference = memberCollection.doc(memberUid);
+      String? token = await messaging.getToken();
+
       memberVo.memberUid = memberUid;
+      memberVo.fcmToken = token;
 
       await docReference.set(memberVo.toJson());
 

@@ -9,7 +9,7 @@ class MemberVo {
   String? memberUid; //	유저고유UID
   String? memberEmail; //	이메일
   String? memberName; //	이름
-  Timestamp? memberBirth; //	생년월일
+  String? memberBirth; //	생년월일
   bool? memberGender; //	성별
   String? memberPhone; //	휴대폰번호
   String? yourInviteCode; //	내가등록한초대코드
@@ -28,26 +28,26 @@ class MemberVo {
   bool? smoke; //	흡연
   String? religionCode; //	종교코드
   String? personalityCode; //	성격코드
-  List<String>?	interestCode; //	관심코드
-  List<String>?	attractionCode; //	매력코드
-  List<String>?	dateStyleCode; // 데이트 스타일코드
-  Map<String,String>? mbti; //	MBTI
-  List<String>?	profileImageList; // 프로필사진
+  List<dynamic>?	interestCode; //	관심코드
+  List<dynamic>?	attractionCode; //	매력코드
+  List<dynamic>?	dateStyleCode; // 데이트 스타일코드
+  Map<String,dynamic>? mbti; //	MBTI
+  List<dynamic>?	profileImageList; // 프로필사진
   String?	selfIntroduce;	// 자기소개
-  List<String>?	phoneBlockList; // 휴대폰차단리스트
-  MinMaxVo? idealAgeSection; //	이상형나이구간
-  MinMaxVo? idealDistanceSection; //	이상형거리구간
-  MinMaxVo? idealHeightSection; //	이상형키구간
+  List<dynamic>?	phoneBlockList; // 휴대폰차단리스트
+  Map<String,dynamic>? idealAgeSection; //	이상형나이구간
+  Map<String,dynamic>? idealDistanceSection; //	이상형거리구간
+  Map<String,dynamic>? idealHeightSection; //	이상형키구간
   String?	idealBodyFormCode; //	이상형체형코드
   String?	idealDrinkCode; //	이상형음주코드
   bool?	idealSmoke; //	이상형흡연여부
   String?	idealReligionCode; //	이상형종교코드
-  List<String>?	idealPersonalityCode; //	이상형성격코드
-  List<String>?	idealInterestCode; //	이상형관심코드
-  List<String>?	idealAttractionCode; //	이상형매력코드
-  List<String>?	idealDateStyleCode; // 이상형데이트코드
-  Map<String,String>? idealMbti; // 이상형 MBTI
-  Map<String,bool>? idealSettingStatus; //	구간별이상형설정상태
+  List<dynamic>?	idealPersonalityCode; //	이상형성격코드
+  List<dynamic>?	idealInterestCode; //	이상형관심코드
+  List<dynamic>?	idealAttractionCode; //	이상형매력코드
+  List<dynamic>?	idealDateStyleCode; // 이상형데이트코드
+  Map<String,dynamic>? idealMbti; // 이상형 MBTI
+  Map<String,dynamic>? idealSettingStatus; //	구간별이상형설정상태
   List<UseableProfileVo>? useableProfileList; //	볼수있는 프로필 리스트
   List<PaperInfoVo>? paperInfo; //	인증서류및뱃지
   Timestamp? joinDate; //	가입일
@@ -57,7 +57,7 @@ class MemberVo {
   bool?	promotionAgree; //	홍보 및 마케팅 동의여부
   bool?	adAgree; //	광고성 정보수신 동의여부
   bool?	test; //	테스트 여부
-  List<AlarmCodeVo>? alarmStatus; //	알람온오프여부
+  Map<String,dynamic>? alarmStatus; //	알람온오프여부
 
 
   //***멤버 변수로만 존재
@@ -65,14 +65,14 @@ class MemberVo {
 
   MemberVo({
     this.memberUid,
-    this.memberEmail,
-    this.memberName,
-    this.memberBirth,
-    this.memberGender,
-    this.memberPhone,
+    required this.memberEmail,
+    required this.memberName,
+    required this.memberBirth,
+    required this.memberGender,
+    required this.memberPhone,
     this.yourInviteCode,
     this.myInviteCode,
-    this.fcmToken,
+    required this.fcmToken,
     this.memberStatus,
     this.screeningDivision,
     this.profileStatus,
@@ -123,42 +123,43 @@ class MemberVo {
   MemberVo.fromSnapshot(DocumentSnapshot documentSnapshot) {
     Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
 
-    memberUid = data['memberUid']??"";
-    memberEmail = data['memberEmail']??"";
-    memberName = data['memberName']??"";
-    memberBirth = data['memberBirth']??Timestamp.now();
-    memberGender = data['memberGender']??true;
-    memberPhone = data['memberPhone']??"";
-    yourInviteCode = data['yourInviteCode']??"";
-    myInviteCode = data['myInviteCode']??"";
-    fcmToken = data['fcmToken']??"";
+    logger.e(data);
+    memberUid = data['memberUid'];
+    memberEmail = data['memberEmail'];
+    memberName = data['memberName'];
+    memberBirth = data['memberBirth'];
+    memberGender = data['memberGender'];
+    memberPhone = data['memberPhone'];
+    yourInviteCode = data['yourInviteCode'];
+    myInviteCode = data['myInviteCode'];
+    fcmToken = data['fcmToken'];
     memberStatus = data['memberStatus']??1;
     screeningDivision = data['screeningDivision']??1;
     profileStatus = data['profileStatus']??0;
-    nickName = data['nickName']??"";
-    areaCode = data['areaCode']??"";
-    areaDetailCode = data['areaDetailCode']??"";
-    memberHeight = data['memberHeight']??0;
-    memberJob = data['memberJob']??"";
-    bodyFormCode = data['bodyFormCode']??"";
-    drinkCode = data['drinkCode']??"";
-    smoke = data['smoke']??false;
-    religionCode = data['religionCode']??"";
-    personalityCode = data['personalityCode']??"";
+    nickName = data['nickName'];
+    areaCode = data['areaCode'];
+    areaDetailCode = data['areaDetailCode'];
+    memberHeight = data['memberHeight'];
+    memberJob = data['memberJob'];
+    bodyFormCode = data['bodyFormCode'];
+    drinkCode = data['drinkCode'];
+    smoke = data['smoke'];
+    religionCode = data['religionCode'];
+    personalityCode = data['personalityCode'];
     interestCode = data['interestCode']??[];
     attractionCode = data['attractionCode']??[];
     dateStyleCode = data['dateStyleCode']??[];
     mbti = data['mbti']??{};
     profileImageList = data['profileImageList']??[];
-    selfIntroduce = data['selfIntroduce']??"";
+    selfIntroduce = data['selfIntroduce'];
     phoneBlockList = data['phoneBlockList']??[];
-    idealAgeSection = MinMaxVo.fromJson(data['idealAgeSection']);
-    idealDistanceSection = MinMaxVo.fromJson(data['idealDistanceSection']);
-    idealHeightSection = MinMaxVo.fromJson(data['idealHeightSection']);
-    idealBodyFormCode = data['idealBodyFormCode']??"";
-    idealDrinkCode = data['idealDrinkCode']??"";
+    idealAgeSection = data['idealAgeSection'];
+    idealDistanceSection = data['idealDistanceSection'];
+    idealHeightSection = data['idealHeightSection'];
+    idealBodyFormCode = data['idealBodyFormCode'];
+    idealDrinkCode = data['idealDrinkCode'];
     idealSmoke = data['idealSmoke']??false;
-    idealReligionCode = data['idealReligionCode']??"";
+    idealReligionCode = data['idealReligionCode'];
     idealPersonalityCode = data['idealPersonalityCode']??[];
     idealInterestCode = data['idealInterestCode']??[];
     idealAttractionCode = data['idealAttractionCode']??[];
@@ -181,76 +182,69 @@ class MemberVo {
     joinDate = data['joinDate']??Timestamp.now();
     activeState = data['activeState']??1;
     memberDivision = data['memberDivision']??1;
-    outDate = data['outDate']??null;
+    outDate = data['outDate'];
     promotionAgree = data['promotionAgree']??false;
     adAgree = data['adAgree']??false;
     test = data['test']??false;
-    if (data['alarmStatus'] != null && data['alarmStatus'] is List) {
-      alarmStatus = (data['alarmStatus'] as List).map((item) {
-        return AlarmCodeVo.fromJson(item);}).toList();
-    } else {
-      alarmStatus = [];
-    }
-
-
+    alarmStatus = data['alarmStatus'];
 
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
 
-    data['memberUid'] = this.memberUid??"";
-    data['memberEmail'] = this.memberEmail??"";
-    data['memberName'] = this.memberName??"";
-    data['memberBirth'] = this.memberBirth??Timestamp.now();
-    data['memberGender'] = this.memberGender??true;
-    data['memberPhone'] = this.memberPhone??"";
-    data['yourInviteCode'] = this.yourInviteCode??"";
-    data['myInviteCode'] = this.myInviteCode??"";
-    data['fcmToken'] = this.fcmToken??"";
-    data['memberStatus'] = this.memberStatus??1;
-    data['screeningDivision'] = this.screeningDivision??1;
-    data['profileStatus'] = this.profileStatus??0;
-    data['nickName'] = this.nickName??"";
-    data['areaCode'] = this.areaCode??"";
-    data['areaDetailCode'] = this.areaDetailCode??"";
-    data['memberHeight'] = this.memberHeight??0;
-    data['memberJob'] = this.memberJob??"";
-    data['bodyFormCode'] = this.bodyFormCode??"";
-    data['drinkCode'] = this.drinkCode??"";
-    data['smoke'] = this.smoke??false;
-    data['religionCode'] = this.religionCode??"";
-    data['personalityCode'] = this.personalityCode??"";
-    data['interestCode'] = this.interestCode??"";
-    data['attractionCode'] = this.attractionCode??"";
-    data['dateStyleCode'] = this.dateStyleCode??"";
-    data['mbti'] = this.mbti??{};
-    data['profileImageList'] = this.profileImageList??[];
-    data['selfIntroduce'] = this.selfIntroduce??"";
-    data['phoneBlockList'] = this.phoneBlockList??[];
-    data['idealAgeSection'] = this.idealAgeSection?.toJson()??null;
-    data['idealDistanceSection'] = this.idealDistanceSection?.toJson()??null;
-    data['idealHeightSection'] = this.idealHeightSection?.toJson()??null;
-    data['idealBodyFormCode'] = this.idealBodyFormCode??"";
-    data['idealDrinkCode'] = this.idealDrinkCode??"";
-    data['idealSmoke'] = this.idealSmoke??false;
-    data['idealReligionCode'] = this.idealReligionCode??"";
-    data['idealPersonalityCode'] = this.idealPersonalityCode??[];
-    data['idealInterestCode'] = this.idealInterestCode??[];
-    data['idealAttractionCode'] = this.idealAttractionCode??[];
-    data['idealDateStyleCode'] = this.idealDateStyleCode??[];
-    data['idealMbti'] = this.idealMbti??{};
-    data['idealSettingStatus'] = this.idealSettingStatus??{};
-    data['useableProfileList'] = this.useableProfileList?.map((item) {return item.toJson();})?.toList()??[];
-    data['paperInfo'] = this.paperInfo?.map((item) {return item.toJson();})?.toList()??[];
-    data['joinDate'] = this.joinDate??Timestamp.now();
-    data['activeState'] = this.activeState??1;
-    data['memberDivision'] = this.memberDivision??1;
-    data['outDate'] = this.outDate??null;
-    data['promotionAgree'] = this.promotionAgree??false;
-    data['adAgree'] = this.adAgree??false;
-    data['test'] = this.test??false;
-    data['alarmStatus'] = this.alarmStatus?.map((item) {return item.toJson();})?.toList()??[];
+    data['memberUid'] = memberUid;
+    data['memberEmail'] = memberEmail;
+    data['memberName'] = memberName;
+    data['memberBirth'] = memberBirth;
+    data['memberGender'] = memberGender;
+    data['memberPhone'] = memberPhone;
+    data['yourInviteCode'] = yourInviteCode??"";
+    data['myInviteCode'] = myInviteCode??"";
+    data['fcmToken'] = fcmToken;
+    data['memberStatus'] = memberStatus??1;
+    data['screeningDivision'] = screeningDivision??1;
+    data['profileStatus'] = profileStatus??0;
+    data['nickName'] = nickName??"";
+    data['areaCode'] = areaCode??"";
+    data['areaDetailCode'] = areaDetailCode??"";
+    data['memberHeight'] = memberHeight??0;
+    data['memberJob'] = memberJob??"";
+    data['bodyFormCode'] = bodyFormCode??"";
+    data['drinkCode'] = drinkCode??"";
+    data['smoke'] = smoke??false;
+    data['religionCode'] = religionCode??"";
+    data['personalityCode'] = personalityCode??"";
+    data['interestCode'] = interestCode??[];
+    data['attractionCode'] = attractionCode??[];
+    data['dateStyleCode'] = dateStyleCode??[];
+    data['mbti'] = mbti??{};
+    data['profileImageList'] = profileImageList??[];
+    data['selfIntroduce'] = selfIntroduce??"";
+    data['phoneBlockList'] = phoneBlockList??[];
+    data['idealAgeSection'] = idealAgeSection??{};
+    data['idealDistanceSection'] = idealDistanceSection??{};
+    data['idealHeightSection'] = idealHeightSection??{};
+    data['idealBodyFormCode'] = idealBodyFormCode??"";
+    data['idealDrinkCode'] = idealDrinkCode??"";
+    data['idealSmoke'] = idealSmoke??false;
+    data['idealReligionCode'] = idealReligionCode??"";
+    data['idealPersonalityCode'] = idealPersonalityCode??[];
+    data['idealInterestCode'] = idealInterestCode??[];
+    data['idealAttractionCode'] = idealAttractionCode??[];
+    data['idealDateStyleCode'] = idealDateStyleCode??[];
+    data['idealMbti'] = idealMbti??{};
+    data['idealSettingStatus'] = idealSettingStatus??{};
+    data['useableProfileList'] = useableProfileList?.map((item) {return item.toJson();})?.toList()??[];
+    data['paperInfo'] = paperInfo?.map((item) {return item.toJson();})?.toList()??[];
+    data['joinDate'] = joinDate??Timestamp.now();
+    data['activeState'] = activeState??1;
+    data['memberDivision'] = memberDivision??1;
+    data['outDate'] = outDate;
+    data['promotionAgree'] = promotionAgree??false;
+    data['adAgree'] = adAgree??false;
+    data['test'] = test??false;
+    data['alarmStatus'] = alarmStatus;
 
     return data;
   }
@@ -260,7 +254,7 @@ class MemberVo {
     memberUid = "";
     memberEmail = "ieatest${generateRandomString(7)}@iea.co.kr";
     memberName = generateRandomKoreanNickname(3);
-    memberBirth = Timestamp.now();
+    memberBirth = "900317";
     memberGender = true;
     memberPhone = "010-9999-9999";
     yourInviteCode = "";
@@ -286,9 +280,9 @@ class MemberVo {
     profileImageList = [];
     selfIntroduce = "안녕하세요 테스터입니다";
     phoneBlockList = [];
-    idealAgeSection = MinMaxVo(min: 20,max: 30);
-    idealDistanceSection = MinMaxVo(min: 0,max: 50);
-    idealHeightSection = MinMaxVo(min: 150,max: 170);
+    idealAgeSection = {};
+    idealDistanceSection = {};
+    idealHeightSection = {};
     idealBodyFormCode = "";
     idealDrinkCode = "";
     idealSmoke = true;
@@ -308,7 +302,7 @@ class MemberVo {
     promotionAgree = false;
     adAgree = false;
     test = true;
-    alarmStatus = [];
+    alarmStatus = {};
   }
 
 
@@ -416,58 +410,6 @@ class PaperDetailVo {
 
     data['code'] = this.code??"";
     data['image'] = this.image??[];
-
-    return data;
-  }
-
-}
-class AlarmCodeVo {
-
-  String?	alarmCode; // 알람코드
-  bool?	onOff; //온오프
-
-  AlarmCodeVo({
-    this.alarmCode,
-    this.onOff,
-
-  });
-
-  AlarmCodeVo.fromJson(Map<String , dynamic> data) {
-    alarmCode = data['alarmCode']??"";
-    onOff = data['onOff']??false;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-
-    data['alarmCode'] = this.alarmCode??"";
-    data['onOff'] = this.onOff??false;
-
-    return data;
-  }
-
-}
-class MinMaxVo {
-
-  num? min; // 최소값
-  num? max; // 최대값
-
-  MinMaxVo({
-    this.min,
-    this.max,
-
-  });
-
-  MinMaxVo.fromJson(Map<String , dynamic> data) {
-    min = data['min']??0;
-    max = data['max']??0;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-
-    data['min'] = this.min??0;
-    data['max'] = this.max??0;
 
     return data;
   }

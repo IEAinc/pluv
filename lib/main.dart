@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pluv/pages/main/main_page.dart';
+import 'package:pluv/pages/start/landing_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'controller/auth_controller.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
         // 전체적인 앱의 기본 폰트를 Pretendard 로 설정
         fontFamily: 'Pretendard',
       ),
-      home: const MainPage(),
+      home: const LandingPage(),
     );
   }
 }
