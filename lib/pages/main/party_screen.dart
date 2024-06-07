@@ -5,6 +5,7 @@ import 'package:pluv/component/party_card.dart';
 import 'package:pluv/pages/main/party_write_page.dart';
 
 import '../../component/dot.dart';
+import '../../controller/status_controller.dart';
 import '../../global/global.dart';
 import '../../global/text_styles.dart';
 
@@ -28,7 +29,14 @@ class _PartyScreenState extends State<PartyScreen> {
 
 
   int _currentIndex = 0;
+  List<String> partyCategoryList =[
+    "전체","best","CT_PT_01", "CT_PT_02",
+  ];
 
+  String findCode(String code){
+    return _statusController.appInfo.partyCategoryCode?[code]??code;
+  }
+  StatusController _statusController = Get.find<StatusController>();
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +49,7 @@ class _PartyScreenState extends State<PartyScreen> {
             color: Color(0xFFfafafa),
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              itemCount: 20,
+              itemCount: partyCategoryList.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: (){
@@ -57,7 +65,7 @@ class _PartyScreenState extends State<PartyScreen> {
                           decoration: BoxDecoration(
                               border:_currentIndex == index? Border(bottom: BorderSide(color: appColorPrimary,width: 3)):null
                           ),
-                          child: Text("전체",style:_currentIndex == index?TextStyles.sub_title15_b.copyWith(color: appColorPrimary2): TextStyles.sub_title15_g1,)),
+                          child: Text(findCode(partyCategoryList[index]),style:_currentIndex == index?TextStyles.sub_title15_b.copyWith(color: appColorPrimary2): TextStyles.sub_title15_g1,)),
                     ],
                   ),
                 );

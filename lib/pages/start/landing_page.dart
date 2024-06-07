@@ -37,7 +37,8 @@ class _LandingPageState extends State<LandingPage> {
       if(success){
         Get.offAll(MainPage());
       }else{
-
+        //일단
+        Get.offAll(MainPage());
       }
     });
 

@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pluv/component/dot.dart';
 import 'package:pluv/component/lounge_card.dart';
+import 'package:pluv/controller/status_controller.dart';
 import 'package:pluv/global/text_styles.dart';
 import 'package:pluv/pages/main/lounge_write_page.dart';
 
@@ -30,6 +31,7 @@ class _RoungeScreenState extends State<LoungeScreen> {
 
   }
   DataController _dataController = Get.find<DataController>();
+  StatusController _statusController = Get.find<StatusController>();
   int _currentIndex = 0;
   List<LoungeDto>? items;
 
@@ -38,6 +40,13 @@ class _RoungeScreenState extends State<LoungeScreen> {
     setState(() {});
   }
 
+  List<String> loungeCategoryList =[
+    "전체","best","CT_RO_01", "CT_RO_02", "CT_RO_03",
+  ];
+
+  String findCode(String code){
+    return _statusController.appInfo.loungeCategoryCode?[code]??code;
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,8 +58,9 @@ class _RoungeScreenState extends State<LoungeScreen> {
             color: Color(0xFFfafafa),
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              itemCount: 20,
+              itemCount: loungeCategoryList.length,
               itemBuilder: (context, index) {
+
                 return GestureDetector(
                   onTap: (){
                     setState(() {
@@ -65,7 +75,7 @@ class _RoungeScreenState extends State<LoungeScreen> {
                           decoration: BoxDecoration(
                               border:_currentIndex == index? Border(bottom: BorderSide(color: appColorPrimary,width: 3)):null
                           ),
-                          child: Text("전체",style:_currentIndex == index?TextStyles.sub_title15_b.copyWith(color: appColorPrimary2): TextStyles.sub_title15_g1,)),
+                          child: Text(findCode(loungeCategoryList[index]),style:_currentIndex == index?TextStyles.sub_title15_b.copyWith(color: appColorPrimary2): TextStyles.sub_title15_g1,)),
                     ],
                   ),
                 );

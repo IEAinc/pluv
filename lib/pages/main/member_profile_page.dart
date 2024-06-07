@@ -37,7 +37,7 @@ class _MemberProfilePageState extends State<MemberProfilePage> {
               child: Column(
                 children: [
                   AspectRatio(
-                    aspectRatio: 5/4,
+                    aspectRatio: 1,
                     child: Container(
                       width: Get.width,
                       color: Colors.red,

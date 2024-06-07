@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         // 전체적인 앱의 기본 폰트를 Pretendard 로 설정
         fontFamily: 'Pretendard',
+
       ),
       home: const LandingPage(),
     );

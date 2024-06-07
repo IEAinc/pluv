@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pluv/pages/main/community_screen.dart';
 import 'package:pluv/pages/main/my_screen.dart';
 import 'package:pluv/pages/main/rating_screen.dart';
+import 'package:pluv/pages/my/alarm_list_page.dart';
 import 'package:pluv/text_logo.dart';
 
 import '../../controller/status_controller.dart';
@@ -48,7 +49,9 @@ class _MainPageState extends State<MainPage> {
                   actions: [
                     IconButton(
                       icon: SvgPicture.asset('assets/images/icon/alarm_ico.svg'),
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(()=>AlarmListPage());
+                      },
                     ),
 
                   ],

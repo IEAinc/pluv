@@ -5,8 +5,12 @@ import 'package:pluv/component/avatar_image.dart';
 import 'package:pluv/component/basic_botton.dart';
 import 'package:pluv/component/rectangle_button.dart';
 import 'package:pluv/global/text_styles.dart';
+import 'package:pluv/pages/my/block_page.dart';
+import 'package:pluv/pages/my/invite_friend_page.dart';
+import 'package:pluv/pages/system/setting_page.dart';
 
 import '../../global/global.dart';
+import '../my/my_point_page.dart';
 
 ///MyScreen
 ///담당자 : ---
@@ -98,29 +102,71 @@ class _MyScreenState extends State<MyScreen> {
                       ],
                     ),
                   ),
-                  Container(
+                  GestureDetector(
+                    onTap: (){
+                      Get.to(()=>BlockPage());
+                    },
+                    child: Container(
 
-                    padding: EdgeInsets.symmetric(vertical: 15,horizontal: 10),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset('assets/images/icon/envelope_icon.svg',width: 20,),
-                        SizedBox(width: 10,),
-                        Text("초대 코드",style: TextStyles.sub_title15_b,)
-                      ],
+                      padding: EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+                      child: Row(
+                        children: [
+                          Image.asset('assets/images/icon/stop.png',width: 20,),
+                          SizedBox(width: 10,),
+                          Text("아는 사람 피하기",style: TextStyles.sub_title15_b,)
+                        ],
+                      ),
                     ),
                   ),
 
+                  GestureDetector(
+                    onTap: (){
+                      Get.to(()=>InviteFriendPage());
+                    },
+                    child: Container(
+
+                      padding: EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset('assets/images/icon/envelope_icon.svg',width: 20,),
+                          SizedBox(width: 10,),
+                          Text("친구 초대",style: TextStyles.sub_title15_b,)
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: (){
+                      Get.to(()=>MyPointPage());
+                    },
+                    child: Container(
+
+                      padding: EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset('assets/images/icon/point_icon.svg',width: 20,),
+                          SizedBox(width: 10,),
+                          Text("내 포인트",style: TextStyles.sub_title15_b,)
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
               Divider(thickness: 6,color: appColorGray8,height: 40,),
-              Container(
+              GestureDetector(
+                onTap: (){
+                  Get.to(()=>SettingPage());
+                },
+                child: Container(
 
-                padding: EdgeInsets.symmetric(vertical: 15,horizontal: 10),
-                child: Row(
-                  children: [
+                  padding: EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+                  child: Row(
+                    children: [
 
-                    Text("설정",style: TextStyles.sub_title15_b,)
-                  ],
+                      Text("설정",style: TextStyles.sub_title15_b,)
+                    ],
+                  ),
                 ),
               ),
               Container(
