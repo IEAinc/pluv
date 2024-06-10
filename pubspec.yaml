@@ -20,6 +20,7 @@ dependencies:
   extended_image: ^8.1.1 #외부 이미지 표현
   intl: ^0.19.0
   flutter_svg: ^2.0.10+1
+  flutter_switch: ^0.3.2
 
   # firebase
   firebase_core: ^2.31.1

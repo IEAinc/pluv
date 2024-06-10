@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:pluv/global/text_styles.dart';
+import 'package:pluv/pages/my/alarm_setting_page.dart';
 
 import '../../global/global.dart';
 
@@ -32,6 +34,7 @@ class _SettingPageState extends State<SettingPage> {
             children: [
               GestureDetector(
                 onTap: (){
+                  Get.to(()=>AlarmSettingPage());
 
                 },
                 child: Container(

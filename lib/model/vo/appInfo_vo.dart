@@ -25,6 +25,9 @@ class AppInfoVo {
   Map<String,dynamic>?	loungeCategoryCode; // 라운지카테고리코드
   Map<String,dynamic>?	communityReportCode; // 커뮤니티신고코드
   Map<String,dynamic>?	partyCategoryCode; // 파티카테고리코드
+  Map<String,dynamic>?	reportCode; // 신고코드
+  Map<String,dynamic>?	alarmCode; // 알람코드
+
   
   AppInfoVo({
     this.appName,
@@ -48,6 +51,10 @@ class AppInfoVo {
     this.loungeCategoryCode,
     this.communityReportCode,
     this.partyCategoryCode,
+    this.reportCode,
+    this.alarmCode,
+
+
   }); 
 
   AppInfoVo.fromSnapshot(DocumentSnapshot documentSnapshot) {
@@ -74,6 +81,8 @@ class AppInfoVo {
     loungeCategoryCode = data['loungeCategoryCode']??{};
     communityReportCode = data['communityReportCode']??{};
     partyCategoryCode = data['partyCategoryCode']??{};
+    reportCode = data['reportCode']??{};
+    alarmCode = data['alarmCode']??{};
 
   }
 
@@ -102,6 +111,8 @@ class AppInfoVo {
     data['loungeCategoryCode'] = this.loungeCategoryCode??{};
     data['communityReportCode'] = this.communityReportCode??{};
     data['partyCategoryCode'] = this.partyCategoryCode??{};
+    data['reportCode'] = this.reportCode??{};
+    data['alarmCode'] = this.alarmCode??{};
 
     return data;
   }
