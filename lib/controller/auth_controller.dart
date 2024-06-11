@@ -62,6 +62,19 @@ class AuthController extends GetxController {
     }
   }
 
+  //로그아웃
+  Future<void> logout() async{
+    try{
+      myInfo = null;
+      await myFirebaseService.logout();
+      update();
+      await prefs.remove('myEmail');
+      await prefs.remove('myPassword');
+
+    }catch(error){
+      throw Exception('Error : $error');
+    }
+  }
 
   ///멤버등록
   Future<void> addMember(MemberVo memberVo) async{

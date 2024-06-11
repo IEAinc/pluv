@@ -7,6 +7,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+
+String loadingProgress ='assets/lottie/loading.json';
+
 ///icon
 
 String calender = "🗓";
@@ -150,3 +153,139 @@ String timeAgo(DateTime timestamp) {
     return '${years}년 전';
   }
 }
+
+
+///스낵바
+void getCommonSnackbar(String title , String subTitle){
+  if(Get.isSnackbarOpen){
+    Get.closeAllSnackbars();
+  }
+  Get.snackbar(
+    title,
+    subTitle,
+    snackPosition: SnackPosition.BOTTOM,
+    backgroundColor: Colors.black54,
+    colorText: Colors.white,
+
+    duration: Duration(seconds: 2),
+  );
+}
+
+void getCustomSnackbar(String message){
+  if(Get.isSnackbarOpen){
+    Get.closeAllSnackbars();
+  }
+  Get.snackbar(
+    message,
+    message,
+    snackPosition: SnackPosition.BOTTOM,
+    backgroundColor: appColorGray1,
+    colorText: Colors.white,
+    margin: EdgeInsets.symmetric(horizontal: 50,vertical: 10),
+
+
+    titleText: Container(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Image.asset(mainImageLogo,width: 30,height: 30,),
+          SizedBox(width: 10,),
+          Expanded(child: Text(message,softWrap: true,)),
+        ],
+      ),
+    ),
+    messageText: SizedBox(),
+
+    // titleText: SizedBox(),
+
+    duration: Duration(seconds: 2),
+  );
+}
+
+//성공 스넥바
+void getSuccessSnackbar(String message){
+  if(Get.isSnackbarOpen){
+    Get.closeAllSnackbars();
+  }
+  Get.snackbar(
+    message,
+    message,
+    snackPosition: SnackPosition.BOTTOM,
+    backgroundColor: appColorPrimary,
+    colorText: Color(0xff558961),
+    titleText: Text(message,softWrap: true,),
+    messageText: SizedBox(),
+    duration: Duration(seconds: 2),
+  );
+}
+
+//정보 스넥바
+void getInfoSnackbar(String message){
+  if(Get.isSnackbarOpen){
+    Get.closeAllSnackbars();
+  }
+  Get.snackbar(
+    message,
+    message,
+    snackPosition: SnackPosition.BOTTOM,
+    backgroundColor: appColorGray1,
+    colorText: appColorBlack,
+    titleText: Text(message,softWrap: true,),
+    messageText: SizedBox(),
+    duration: Duration(seconds: 2),
+  );
+}
+
+
+//실패 스넥바
+void getFailSnackbar(String message){
+  if(Get.isSnackbarOpen){
+    Get.closeAllSnackbars();
+  }
+  Get.snackbar(
+    message,
+    message,
+    snackPosition: SnackPosition.BOTTOM,
+    backgroundColor: appColorRed1,
+    colorText: Colors.red,
+    titleText: Text(message,softWrap: true,),
+    messageText: SizedBox(),
+    duration: Duration(seconds: 2),
+  );
+}
+
+void getErrorSnackbar(String message){
+  if(Get.isSnackbarOpen){
+    Get.closeAllSnackbars();
+  }
+  Get.snackbar(
+    message,
+    message,
+    snackPosition: SnackPosition.BOTTOM,
+    backgroundColor: appColorWhite.withOpacity(0.7),
+    colorText: Colors.black,
+    margin: EdgeInsets.symmetric(horizontal: 50,vertical: 10),
+
+
+    titleText: Container(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Image.asset(mainImageLogo,width: 30,height: 30,),
+          SizedBox(width: 10,),
+          Expanded(child: Text(message,softWrap: true,)),
+        ],
+      ),
+    ),
+    messageText: SizedBox(),
+
+    // titleText: SizedBox(),
+
+    duration: Duration(seconds: 2),
+  );
+}
+
+
+///정규식
+
+RegExp RegExpEmail = RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');

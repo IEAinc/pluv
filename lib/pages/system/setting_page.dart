@@ -3,8 +3,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pluv/global/text_styles.dart';
 import 'package:pluv/pages/my/alarm_setting_page.dart';
+import 'package:pluv/pages/my/password_change_page.dart';
 
+import '../../controller/auth_controller.dart';
 import '../../global/global.dart';
+import '../my/email_change_page.dart';
 
 ///SettingPage
 ///담당자 : ---
@@ -23,6 +26,8 @@ class _SettingPageState extends State<SettingPage> {
     super.initState();
     logger.i("SettingPage");
   }
+
+  AuthController _authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +59,7 @@ class _SettingPageState extends State<SettingPage> {
               ),
               GestureDetector(
                 onTap: (){
+                  Get.to(()=>EmailChangePage());
 
                 },
                 child: Container(
@@ -73,7 +79,7 @@ class _SettingPageState extends State<SettingPage> {
               ),
               GestureDetector(
                 onTap: (){
-
+                  Get.to(()=>PasswordChangePage());
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 15),
@@ -111,7 +117,8 @@ class _SettingPageState extends State<SettingPage> {
               ),
               GestureDetector(
                 onTap: (){
-
+                  _authController.logout();
+                  Get.back();
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 15),

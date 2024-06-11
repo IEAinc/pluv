@@ -57,6 +57,7 @@ class _MainPageState extends State<MainPage> {
                   ],
                 ),
                 body: PageView(
+
                   controller: _pageController,
                   children: <Widget>[
                     HomeScreen(),
