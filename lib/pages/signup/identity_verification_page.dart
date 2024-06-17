@@ -72,9 +72,12 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
             Column(
               children: [
                 RectangleButton(action: (){
-
                   Get.to(()=>SignUpPage());
-                },name: "본인인증 하기",textStyle: TextStyles.sub_title16_w,backgroundColor: appColorPrimary2,),
+                },
+                  name: "본인인증 하기",
+                  textStyle: TextStyles.sub_title16_w,
+                  backgroundColor: appColorPrimary2,),
+
                 SizedBox(height: 30,)
               ],
             )

@@ -15,8 +15,9 @@ class RectangleButton extends StatefulWidget {
 
   double? radius;
   TextStyle? textStyle;
+  int? mode;
 
-  RectangleButton({Key? key , required this.name , this.action , this.backgroundColor ,this.radius , this.textStyle}) : super(key: key);
+  RectangleButton({Key? key , required this.name , this.action , this.backgroundColor ,this.radius , this.textStyle ,this.mode}) : super(key: key);
 
   @override
   State<RectangleButton> createState() => _RectangleButtonState();
@@ -34,7 +35,24 @@ class _RectangleButtonState extends State<RectangleButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: ElevatedButton(
+      child:widget.mode==1?ElevatedButton(
+        style: ElevatedButton.styleFrom(
+
+          foregroundColor: appColorWhite,
+          backgroundColor: appColorPrimary2,
+          overlayColor: appColorWhite,
+          fixedSize: Size(Get.width,48), // 높이를 50으로 설정
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(widget.radius??5 ), // 모서리를 직각으로 설정
+          ),
+        ),
+        onPressed: (){
+          if(widget.action !=null){
+            widget.action!();
+          }
+        },
+        child: Text(widget.name,style: TextStyles.sub_title16_w),
+      ): ElevatedButton(
         style: ElevatedButton.styleFrom(
 
           foregroundColor: Colors.black,
