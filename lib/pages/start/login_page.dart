@@ -54,6 +54,35 @@ class _LoginPageState extends State<LoginPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
+                    GestureDetector(
+                      onTap: () async{
+
+                        setState(() {
+                          isLoading = true;
+                        });
+                        try{
+                          bool result = await authController.login(
+                              "matoda4113@gmail.com",
+                              "12341234"
+                          );
+                          if(result){
+                            getCommonSnackbar('반갑습니다. ${"어드민사마"}님',"");
+                            Get.offAll(MainPage());
+                          }else{
+                            getFailSnackbar('로그인 실패 . 탈퇴한 회원입니다.');
+                          }
+
+                        }catch(error){
+                          logger.e(error);
+                          getCommonSnackbar('로그인에 실패 하였습니다',error.toString());
+                        }finally{
+                          setState(() {
+                            isLoading = false;
+                          });
+                        }
+                      },
+                      child: Text("어드민 로그인 임시"),
+                    ),
                     SizedBox(height: 30,),
                     //form
                     Form(

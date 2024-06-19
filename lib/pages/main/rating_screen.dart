@@ -140,14 +140,14 @@ class _RatingScreenState extends State<RatingScreen> {
           'PR_DA_17':'같이 만화책 보기',
         },
         'areaCode' : {
-          'RE_GU_SE':'서울',
-          'RE_GU_GY':'경기',
-          'RE_GU_IN':'인천부천권',
-          'RE_GU_CH':'충천권',
-          'RE_GU_GW':'강원권',
-          'RE_GU_JR':'전라권',
-          'RE_GU_GS':'경상권',
-          'RE_GU_JJ':'제주권',
+          'RE_GU_SE_00':'서울',
+          'RE_GU_GY_00':'경기',
+          'RE_GU_IN_00':'인천부천권',
+          'RE_GU_CH_00':'충청권',
+          'RE_GU_GW_00':'강원권',
+          'RE_GU_JR_00':'전라권',
+          'RE_GU_GS_00':'경상권',
+          'RE_GU_JJ_00':'제주권',
           'RE_GU_SE_01':'강남서초',
           'RE_GU_SE_02':'이태원한남',
           'RE_GU_SE_03':'송파잠실',
@@ -196,7 +196,7 @@ class _RatingScreenState extends State<RatingScreen> {
           'RE_GU_GS_04':'포항경주영천',
           'RE_GU_GS_05':'김천구미의성',
           'RE_GU_GS_06':'안성영천청도',
-          'RE_GU_GS_ETC':'경상권기타',
+          'RE_GU_GS_99':'경상권기타',
           'RE_GU_JJ_01':'제주시',
           'RE_GU_JJ_02':'서귀포시',
 
@@ -289,21 +289,21 @@ class _RatingScreenState extends State<RatingScreen> {
 
         },
         'paperCode' : {
-          'PEPER_INCOME':'소득',
+          'PEPER_INCOME_00':'소득',
           'PEPER_INCOME_01':'자산',
           'PEPER_INCOME_02':'부동산',
           'PEPER_INCOME_03':'현금',
           'PEPER_INCOME_04':'주식',
           'PEPER_INCOME_05':'기타소득',
-          'PEPER_HOME':'집안',
-          'PEPER_JOB':'직업',
+          'PEPER_HOME_00':'집안',
+          'PEPER_JOB_00':'직업',
           'PEPER_JOB_01':'전문직',
           'PEPER_JOB_02':'사업가',
           'PEPER_JOB_03':'대기업',
           'PEPER_JOB_04':'공무원',
           'PEPER_JOB_05':'외국계',
-          'PEPER_CAR':'차량',
-          'PEPER_SCHOOL':'학벌',
+          'PEPER_CAR_00':'차량',
+          'PEPER_SCHOOL_00':'학벌',
         },
 
       });
@@ -322,8 +322,8 @@ class _RatingScreenState extends State<RatingScreen> {
               GestureDetector(
 
                   onTap: () async{
-
-                    logger.e(controller.appInfo.toJson());
+                    setAppInfo();
+                    // logger.e(controller.appInfo.toJson());
                     // MemberVo my = MemberVo(
                     //     memberEmail: "matoda4113@gmail.com",
                     //     memberName: "이성훈",

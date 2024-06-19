@@ -17,7 +17,7 @@ class MemberVo {
   String? fcmToken; //	FCM토큰
   num? memberStatus; //	회원상태
   num? screeningDivision; //	심사구분
-  num? profileStatus; //	프로필입력상태
+  StepStatus? profileStatus; //	프로필입력상태
   String? nickName; //	닉네임
   String? areaCode; //	지역구코드
   String? areaDetailCode; //	지역구상세코드
@@ -27,7 +27,7 @@ class MemberVo {
   String? drinkCode; //	음주코드
   bool? smoke; //	흡연
   String? religionCode; //	종교코드
-  String? personalityCode; //	성격코드
+  List<dynamic>? personalityCode; //	성격코드
   List<dynamic>?	interestCode; //	관심코드
   List<dynamic>?	attractionCode; //	매력코드
   List<dynamic>?	dateStyleCode; // 데이트 스타일코드
@@ -47,7 +47,7 @@ class MemberVo {
   List<dynamic>?	idealAttractionCode; //	이상형매력코드
   List<dynamic>?	idealDateStyleCode; // 이상형데이트코드
   Map<String,dynamic>? idealMbti; // 이상형 MBTI
-  Map<String,dynamic>? idealSettingStatus; //	구간별이상형설정상태
+  StepStatus? idealSettingStatus; //	구간별이상형설정상태
   List<UseableProfileVo>? useableProfileList; //	볼수있는 프로필 리스트
   List<PaperInfoVo>? paperInfo; //	인증서류및뱃지
   Timestamp? joinDate; //	가입일
@@ -123,7 +123,6 @@ class MemberVo {
   MemberVo.fromSnapshot(DocumentSnapshot documentSnapshot) {
     Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
 
-    logger.e(data);
     memberUid = data['memberUid'];
     memberEmail = data['memberEmail'];
     memberName = data['memberName'];
@@ -135,7 +134,7 @@ class MemberVo {
     fcmToken = data['fcmToken'];
     memberStatus = data['memberStatus']??1;
     screeningDivision = data['screeningDivision']??1;
-    profileStatus = data['profileStatus']??0;
+    profileStatus = StepStatus.fromJson(data['profileStatus']??{});
     nickName = data['nickName'];
     areaCode = data['areaCode'];
     areaDetailCode = data['areaDetailCode'];
@@ -145,7 +144,7 @@ class MemberVo {
     drinkCode = data['drinkCode'];
     smoke = data['smoke'];
     religionCode = data['religionCode'];
-    personalityCode = data['personalityCode'];
+    personalityCode = data['personalityCode']??[];
     interestCode = data['interestCode']??[];
     attractionCode = data['attractionCode']??[];
     dateStyleCode = data['dateStyleCode']??[];
@@ -165,7 +164,7 @@ class MemberVo {
     idealAttractionCode = data['idealAttractionCode']??[];
     idealDateStyleCode = data['idealDateStyleCode']??[];
     idealMbti = data['idealMbti']??{};
-    idealSettingStatus = data['idealSettingStatus']??{};
+    idealSettingStatus = StepStatus.fromJson(data['idealSettingStatus']??{});
     if (data['useableProfileList'] != null && data['useableProfileList'] is List) {
       useableProfileList = (data['useableProfileList'] as List).map((item) {
         return UseableProfileVo.fromJson(item);}).toList();
@@ -204,7 +203,7 @@ class MemberVo {
     data['fcmToken'] = fcmToken;
     data['memberStatus'] = memberStatus??1;
     data['screeningDivision'] = screeningDivision??1;
-    data['profileStatus'] = profileStatus??0;
+    data['profileStatus'] = profileStatus?.toJson()??{};
     data['nickName'] = nickName??"";
     data['areaCode'] = areaCode??"";
     data['areaDetailCode'] = areaDetailCode??"";
@@ -214,7 +213,7 @@ class MemberVo {
     data['drinkCode'] = drinkCode??"";
     data['smoke'] = smoke??false;
     data['religionCode'] = religionCode??"";
-    data['personalityCode'] = personalityCode??"";
+    data['personalityCode'] = personalityCode??[];
     data['interestCode'] = interestCode??[];
     data['attractionCode'] = attractionCode??[];
     data['dateStyleCode'] = dateStyleCode??[];
@@ -234,7 +233,7 @@ class MemberVo {
     data['idealAttractionCode'] = idealAttractionCode??[];
     data['idealDateStyleCode'] = idealDateStyleCode??[];
     data['idealMbti'] = idealMbti??{};
-    data['idealSettingStatus'] = idealSettingStatus??{};
+    data['idealSettingStatus'] = idealSettingStatus?.toJson()??{};
     data['useableProfileList'] = useableProfileList?.map((item) {return item.toJson();})?.toList()??[];
     data['paperInfo'] = paperInfo?.map((item) {return item.toJson();})?.toList()??[];
     data['joinDate'] = joinDate??Timestamp.now();
@@ -262,7 +261,7 @@ class MemberVo {
     fcmToken = "";
     memberStatus = 3;
     screeningDivision = 2;
-    profileStatus = 3;
+    profileStatus = StepStatus();
     nickName = "테스터";
     areaCode = "";
     areaDetailCode = "";
@@ -272,7 +271,7 @@ class MemberVo {
     drinkCode = "";
     smoke = true;
     religionCode = "";
-    personalityCode = "";
+    personalityCode = [];
     interestCode = [];
     attractionCode = [];
     dateStyleCode = [];
@@ -292,7 +291,7 @@ class MemberVo {
     idealAttractionCode = [];
     idealDateStyleCode = [];
     idealMbti = {"a":"i","b":"n","c":"f","d":"p",};
-    idealSettingStatus = {"step1" : false ,"step2" : false , "step3" : false };
+    idealSettingStatus = StepStatus();
     useableProfileList = [];
     paperInfo = [];
     joinDate = Timestamp.now();
@@ -411,6 +410,57 @@ class PaperDetailVo {
     data['code'] = this.code??"";
     data['image'] = this.image??[];
 
+    return data;
+  }
+
+}
+class StepStatus {
+
+  bool?	step1;
+  bool?	step2;
+  bool?	step3;
+  bool?	step4;
+  bool?	step5;
+  bool?	step6;
+  bool?	step7;
+  bool?	step8;
+
+
+  StepStatus({
+    this.step1=false,
+    this.step2=false,
+    this.step3=false,
+    this.step4=false,
+    this.step5=false,
+    this.step6=false,
+    this.step7=false,
+    this.step8=false,
+
+  });
+
+  StepStatus.fromJson(Map<String , dynamic> data) {
+    step1 = data['step1']??false;
+    step2 = data['step2']??false;
+    step3 = data['step3']??false;
+    step4 = data['step4']??false;
+    step5 = data['step5']??false;
+    step6 = data['step6']??false;
+    step7 = data['step7']??false;
+    step8 = data['step8']??false;
+  }
+
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+
+    data['step1'] = step1??false;
+    data['step2'] = step2??false;
+    data['step3'] = step3??false;
+    data['step4'] = step4??false;
+    data['step5'] = step5??false;
+    data['step6'] = step6??false;
+    data['step7'] = step7??false;
+    data['step8'] = step8??false;
     return data;
   }
 

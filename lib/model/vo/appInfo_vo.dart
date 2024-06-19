@@ -28,6 +28,27 @@ class AppInfoVo {
   Map<String,dynamic>?	reportCode; // 신고코드
   Map<String,dynamic>?	alarmCode; // 알람코드
 
+
+  List<MapEntry<String, dynamic>>?	bodyFormCodeEntryList; // 체형코드 엔트리 리스트
+  List<MapEntry<String, dynamic>>?	drinkCodeEntryList; // 음주코드 엔트리 리스트
+  List<MapEntry<String, dynamic>>?	religionCodeEntryList; // 종교코드 엔트리 리스트
+  List<MapEntry<String, dynamic>>?	personalityCodeEntryList; // 성격코드 엔트리 리스트
+  List<MapEntry<String, dynamic>>?	interestCodeEntryList; // 관심코드 엔트리 리스트
+  List<MapEntry<String, dynamic>>?	attractionCodeEntryList; // 매력코드 엔트리 리스트
+  List<MapEntry<String, dynamic>>?	dateStyleCodeEntryList; // 데이트스타일코드 엔트리 리스트
+  List<MapEntry<String, dynamic>>?	areaCodeEntryList; // 지역구코드 엔트리 리스트
+
+  List<MapEntry<String, dynamic>>?	pointCodeEntryList; // 포인트코드 엔트리 리스트
+  List<MapEntry<String, dynamic>>?	adminAccessCodeEntryList; // 관리자접근권한코드 엔트리 리스트
+  List<MapEntry<String, dynamic>>?	loungeCategoryCodeEntryList; // 라운지카테고리코드 엔트리 리스트
+  List<MapEntry<String, dynamic>>?	communityReportCodeEntryList; // 커뮤니티신고코드 엔트리 리스트
+  List<MapEntry<String, dynamic>>?	partyCategoryCodeEntryList; // 파티카테고리코드 엔트리 리스트
+  List<MapEntry<String, dynamic>>?	reportCodeEntryList; // 신고코드 엔트리 리스트
+  List<MapEntry<String, dynamic>>?	alarmCodeEntryList; // 알람코드 엔트리 리스트
+
+
+
+
   
   AppInfoVo({
     this.appName,
@@ -117,5 +138,36 @@ class AppInfoVo {
     return data;
   }
 
+  void makeEntry(){
+    bodyFormCodeEntryList = getEntry(bodyFormCode);
+    drinkCodeEntryList = getEntry(drinkCode);
+    religionCodeEntryList = getEntry(religionCode);
+    personalityCodeEntryList = getEntry(personalityCode);
+    interestCodeEntryList = getEntry(interestCode);
+    attractionCodeEntryList = getEntry(attractionCode);
+    dateStyleCodeEntryList = getEntry(dateStyleCode);
+    areaCodeEntryList = getEntry(areaCode);
+    pointCodeEntryList = getEntry(pointCode);
+    adminAccessCodeEntryList = getEntry(adminAccessCode);
+    loungeCategoryCodeEntryList = getEntry(loungeCategoryCode);
+    communityReportCodeEntryList = getEntry(communityReportCode);
+    partyCategoryCodeEntryList = getEntry(partyCategoryCode);
+    reportCodeEntryList = getEntry(reportCode);
+    alarmCodeEntryList = getEntry(alarmCode);
+
+  }
+  List<MapEntry<String, dynamic>> getEntry(Map<String,dynamic>? map) {
+    if(map !=null){
+      List<MapEntry<String, dynamic>> entries = map!.entries.toList();
+      entries.sort((a, b) {
+        int numA = int.parse(a.key.split('_').last);
+        int numB = int.parse(b.key.split('_').last);
+        return numA.compareTo(numB);
+      });
+      return entries;
+    }else{
+      return [];
+    }
+  }
 }
 

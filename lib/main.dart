@@ -24,6 +24,7 @@ void main() async{
   Get.put(AuthController());
   StatusController _statusController = Get.find<StatusController>();
   await _statusController.getAppInfo();
+
   runApp(const MyApp());
 }
 

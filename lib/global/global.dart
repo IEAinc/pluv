@@ -52,12 +52,17 @@ Logger logger = Logger(
   ),
 );
 
-AppBar customAppBar({String? title , List<Widget>? actions}) {
+AppBar customAppBar({String? title , List<Widget>? actions ,VoidCallback? backFunction}) {
   return AppBar(
     title:title==null?null:Text(title!,style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),) ,
       centerTitle: true,
       leading: IconButton(onPressed: (){
-        Get.back();
+        if (backFunction != null) {
+          backFunction();
+        } else {
+          Get.back();
+        }
+
       },icon: SvgPicture.asset('assets/images/myicon/arrowleft.svg',width: 16,height: 16,),),
       actions: actions,
 
