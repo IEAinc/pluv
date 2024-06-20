@@ -31,14 +31,10 @@ class _PictureEnrollPageState extends State<PictureEnrollPage> {
 
   List<File> _imageList = [];
 
-  Future<XFile?> _pickImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    return pickedFile;
-  }
+
 
   Future<void> _addImage() async {
-    XFile? file = await _pickImage();
+    XFile? file = await pickImage();
     if(_imageList.length<5){
       if (file != null) {
         setState(() {
@@ -50,7 +46,7 @@ class _PictureEnrollPageState extends State<PictureEnrollPage> {
 
   Future<void> _editImage(int index) async {
 
-    XFile? file = await _pickImage();
+    XFile? file = await pickImage();
     if (file != null) {
       setState(() {
         _imageList[index] = File(file.path);
@@ -107,15 +103,15 @@ class _PictureEnrollPageState extends State<PictureEnrollPage> {
                   SizedBox(height: 10,),
                   Row(
                     children: [
-                      picture_box(0),
+                      _picture_box(0),
                       SizedBox(width: 10,),
-                      picture_box(1),
+                      _picture_box(1),
                       SizedBox(width: 10,),
-                      picture_box(2),
+                      _picture_box(2),
                       SizedBox(width: 10,),
-                      picture_box(3),
+                      _picture_box(3),
                       SizedBox(width: 10,),
-                      picture_box(4),
+                      _picture_box(4),
                     ],
                   )
                 ],
@@ -129,7 +125,7 @@ class _PictureEnrollPageState extends State<PictureEnrollPage> {
     );
   }
 
-  Container picture_box(int index) {
+  Container _picture_box(int index) {
     return Container(
                       height: (Get.width-40-32)/5,
                       width: (Get.width-40-32)/5,
