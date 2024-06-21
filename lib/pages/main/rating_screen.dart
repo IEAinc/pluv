@@ -286,6 +286,9 @@ class _RatingScreenState extends State<RatingScreen> {
           'SY_AR_07':'라운지댓글달림알람',
           'SY_AR_08':'상위평가알람',
           'SY_AR_09':'매칭추천도착알람',
+          'SY_AR_10':'공지사항',
+          'SY_AR_11':'이벤트',
+          'SY_AR_12':'마케팅',
 
         },
         'paperCode' : {

@@ -9,22 +9,22 @@ import '../../component/rectangle_button.dart';
 import '../../global/global.dart';
 import '../../global/text_styles.dart';
 
-///JobPage
+///MoneyPage
 ///담당자 : ---
 
-class JobPage extends StatefulWidget {
-  const JobPage({Key? key}) : super(key: key);
+class MoneyPage extends StatefulWidget {
+  const MoneyPage({Key? key}) : super(key: key);
 
   @override
-  State<JobPage> createState() => _JobPageState();
+  State<MoneyPage> createState() => _MoneyPageState();
 }
 
-class _JobPageState extends State<JobPage> {
+class _MoneyPageState extends State<MoneyPage> {
 
   @override
   void initState() {
     super.initState();
-    logger.i("JobPage");
+    logger.i("MoneyPage");
   }
   List<dynamic> _imageList = []; // 직업 인증 자료
 
@@ -58,51 +58,23 @@ class _JobPageState extends State<JobPage> {
 
   List<Map<String,dynamic>> _tabList =[
     {
-      "type": "전문직",
-      "explain" : "의사, 한의사, 치과의사, 수의사, 약사, 판사, 검사, 변호사, 변리사, 회계사, 세무사, 파일럿, 교수 등",
-      "select1" : "본인 명의의 전문직 자격증",
-      "select2" : "개인 명함",
+      "type": "부동산",
+      "explain" : "30억원 이상의 건물을 소유한 건물주",
+      "select1" : "부동산 등기서류 또는 매매 계약서",
+      "select2" : "네이버 부동산 실거래가 캡쳐 화면",
       "imageList" : [
-        'assets/images/exam/income_1.png',
-        'assets/images/exam/income_2.png',
-        'assets/images/exam/income_3.png',
+        'assets/images/exam/asset_1.png',
+        'assets/images/exam/asset_2.png',
       ]
     },
     {
-      "type": "사업가",
-      "explain" : "연 매출 30억 이상의 개인 사업가 또는 등기임원 ",
-      "select1" : "연 매출 30억 이상임을 증빙 할 수 있는 서류",
-      "select2" : "사업자 등록증",
+      "type": "현금",
+      "explain" : "5억원 이상의 현금을 보유한 고객 자산가",
+      "select1" : "시중 은행 잔고 또는 잔액 증명서",
+      "select2" : "모바일뱅킹 앱 캡쳐 화면",
       "imageList" : [
-        'assets/images/exam/job_3.png',
-      ]
-    },
-    {
-      "type": "대기업",
-      "explain" : "한국 100대 대기업 및 공기업",
-      "select1" : "사원증 or 본인 이름이 나와있는 명함",
-      "select2" : "재직증명서 ",
-      "imageList" : [
-        'assets/images/exam/job_4.png',
-        'assets/images/exam/job_5.png',
-      ]
-    },
-    {
-      "type": "공무원",
-      "explain" : "5급 이상의 공무원",
-      "select1" : "공무원 증 ",
-      "select2" : null,
-      "imageList" : [
-        'assets/images/exam/job_6.png',
-      ]
-    },
-    {
-      "type": "외국계",
-      "explain" : "외국계 글로벌 기업(내규에 따름) ",
-      "select1" : "사원증 or 본인 이름이 나와있는 명함",
-      "select2" : null,
-      "imageList" : [
-        'assets/images/exam/job_7.png',
+        'assets/images/exam/asset_3.png',
+        'assets/images/exam/asset_4.png',
       ]
     },
 
@@ -122,32 +94,32 @@ class _JobPageState extends State<JobPage> {
 
               width: Get.width,
               child:  Row(
-                children: _tabList.asMap().entries.map((entry) {
-                  int index = entry.key;
-                  Map<String, dynamic> item = entry.value;
-                  return Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _currentIndex = index;
-                        });
-                      },
-                      child: Container(
-                        height: 30,
-                        decoration: BoxDecoration(
-                          border: Border(bottom: BorderSide(
-                            width: _currentIndex == index?2:1,
-                              color: _currentIndex == index?appColorPrimary :appColorGray8,
-                          ))
-                        ),
-                        child: Text(
-                          item["type"],
-                          textAlign: TextAlign.center,
+                  children: _tabList.asMap().entries.map((entry) {
+                    int index = entry.key;
+                    Map<String, dynamic> item = entry.value;
+                    return Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _currentIndex = index;
+                          });
+                        },
+                        child: Container(
+                          height: 30,
+                          decoration: BoxDecoration(
+                              border: Border(bottom: BorderSide(
+                                width: _currentIndex == index?2:1,
+                                color: _currentIndex == index?appColorPrimary :appColorGray8,
+                              ))
+                          ),
+                          child: Text(
+                            item["type"],
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                }).toList()),
+                    );
+                  }).toList()),
             ),
             SizedBox(height: 10,),
             Expanded(
@@ -195,26 +167,26 @@ class _JobPageState extends State<JobPage> {
                               ],
                             ),
                             if(_tabList[_currentIndex]["select2"] != null)
-                            Column(
-                              children: [
-                                SizedBox(height: 10,),
-                                Row(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          color: appColorPrimary,
-                                          borderRadius: BorderRadius.circular(20)
+                              Column(
+                                children: [
+                                  SizedBox(height: 10,),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            color: appColorPrimary,
+                                            borderRadius: BorderRadius.circular(20)
+                                        ),
+                                        padding: EdgeInsets.symmetric(vertical: 2,horizontal: 10),
+                                        child: Center(child: Text("선택 2",style: TextStyles.sub_title12_w,)),
                                       ),
-                                      padding: EdgeInsets.symmetric(vertical: 2,horizontal: 10),
-                                      child: Center(child: Text("선택 2",style: TextStyles.sub_title12_w,)),
-                                    ),
-                                    SizedBox(width: 8,),
-                                    Text(_tabList[_currentIndex]["select2"],style: TextStyles.contents15_b,),
+                                      SizedBox(width: 8,),
+                                      Text(_tabList[_currentIndex]["select2"],style: TextStyles.contents15_b,),
 
-                                  ],
-                                ),
-                              ],
-                            ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                           ],
                         ),
 
@@ -237,17 +209,17 @@ class _JobPageState extends State<JobPage> {
                           children: [
                             Container(
 
-                              height: moreToggle?null:100,
-                              clipBehavior: Clip.hardEdge,
-                              decoration: BoxDecoration(),
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children:[
-                                    ..._tabList[_currentIndex]["imageList"].map((imageUrl) => Image.asset(imageUrl)).toList()
-                                  ]
-                              ),
-                            )),
+                                height: moreToggle?null:100,
+                                clipBehavior: Clip.hardEdge,
+                                decoration: BoxDecoration(),
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children:[
+                                        ..._tabList[_currentIndex]["imageList"].map((imageUrl) => Image.asset(imageUrl)).toList()
+                                      ]
+                                  ),
+                                )),
                             Positioned(
                                 bottom: 0,
                                 child: GestureDetector(

@@ -14,6 +14,10 @@ class StatusController extends GetxController {
   final MyFirebaseService myFirebaseService = MyFirebaseService();
 
   AppInfoVo appInfo = AppInfoVo();
+
+
+
+
   ///앱인포
   Future<void> getAppInfo() async{
     try{

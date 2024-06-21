@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:pluv/controller/auth_controller.dart';
 import 'package:pluv/global/text_styles.dart';
 
 import '../../global/global.dart';
@@ -41,3 +42,11 @@ class _SearchPageState extends State<SearchPage> {
 
 
 }
+
+
+
+
+
+
+
+

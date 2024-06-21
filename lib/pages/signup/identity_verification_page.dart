@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:pluv/component/rectangle_button.dart';
 import 'package:pluv/global/text_styles.dart';
 import 'package:pluv/pages/signup/sign_up_page.dart';
+import 'package:pluv/pages/signup/verification_webview_page.dart';
 
 import '../../global/global.dart';
 
@@ -72,11 +73,13 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
             Column(
               children: [
                 RectangleButton(action: (){
-                  Get.to(()=>SignUpPage());
+                  Get.to(()=>VerificationWebviewPage());
+                  // Get.to(()=>SignUpPage());
                 },
                   name: "본인인증 하기",
-                  textStyle: TextStyles.sub_title16_w,
-                  backgroundColor: appColorPrimary2,),
+                  mode: 1,
+
+                ),
 
                 SizedBox(height: 30,)
               ],

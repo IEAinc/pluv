@@ -3,9 +3,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pluv/global/text_styles.dart';
 import 'package:pluv/pages/signup/income_page.dart';
+import 'package:pluv/pages/signup/school_page.dart';
 
 import '../../global/global.dart';
+import 'car_page.dart';
+import 'family_page.dart';
 import 'job_page.dart';
+import 'money_page.dart';
 
 ///PaperEnrollPage
 ///담당자 : ---
@@ -72,28 +76,36 @@ class _PaperEnrollPageState extends State<PaperEnrollPage> {
                       active: false
                   ),
                   build_paper_container(
-                      function: (){},
+                      function: (){
+                        Get.to(()=>MoneyPage());
+                      },
                       title: "자산",
                       subTitle: "부동산/현금/주식/기타 인증",
                       iconPath: 'assets/images/icon/badge_money.svg',
                       active: false
                   ),
                   build_paper_container(
-                      function: (){},
+                      function: (){
+                        Get.to(()=>CarPage());
+                      },
                       title: "차량",
                       subTitle: "1.5억원 이상 상당의\n수입차량 및 슈퍼카\n고급세단 등 차량 소유자",
                       iconPath: 'assets/images/icon/badge_car.svg',
                       active: false
                   ),
                   build_paper_container(
-                      function: (){},
+                      function: (){
+                        Get.to(()=>FamilyPage());
+                      },
                       title: "집안",
                       subTitle: "3급 이상 공무원, 대기업 임원\n명문대 교수, 의료계\n법조계 종사자 등",
                       iconPath: 'assets/images/icon/badge_family.svg',
                       active: false
                   ),
                   build_paper_container(
-                      function: (){},
+                      function: (){
+                        Get.to(()=>SchoolPage());
+                      },
                       title: "학벌",
                       subTitle: "서울대,연세대(서울),고려대(서울),서강대,성균관대,한양대(서울),포스텍",
                       iconPath: 'assets/images/icon/badge_school.svg',

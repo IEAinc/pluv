@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:pluv/controller/auth_controller.dart';
 import 'package:pluv/pages/main/matching_success_screen.dart';
+import 'package:pluv/pages/main/not_login_screen.dart';
 
 import '../../global/global.dart';
 import '../../global/text_styles.dart';
@@ -32,59 +35,63 @@ class _HistoryScreenState extends State<HistoryScreen> {
   List<String> menu = ['지난 추천','진행중','매칭됨'];
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return GetBuilder<AuthController>(
+      builder: (authController) {
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 10),
+          child:authController.myInfo==null?NotLoginScreen(): Column(
             children: [
-          ...List.generate(menu.length, (index) {
-                return Expanded(
-                  child: GestureDetector(
-                    onTap: (){
-                      setState(() {
-                        _currentIndex=index;
-                      });
-                      _pageController.jumpToPage(index);
-                    },
-                    child: Center(
-                      child: Container(
-                        height: 40,
-                        width: 70,
-                        decoration: BoxDecoration(
-                            border: Border(bottom: BorderSide(color:_currentIndex==index? appColorPrimary2:Colors.transparent,width: 3))
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+              ...List.generate(menu.length, (index) {
+                    return Expanded(
+                      child: GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            _currentIndex=index;
+                          });
+                          _pageController.jumpToPage(index);
+                        },
+                        child: Center(
+                          child: Container(
+                            height: 40,
+                            width: 70,
+                            decoration: BoxDecoration(
+                                border: Border(bottom: BorderSide(color:_currentIndex==index? appColorPrimary2:Colors.transparent,width: 3))
+                            ),
+                            child: Center(child: Text(menu[index],style:_currentIndex==index?TextStyles.title15_b.copyWith(color: appColorPrimary2): TextStyles.sub_title15_g1,)),
+                          ),
                         ),
-                        child: Center(child: Text(menu[index],style:_currentIndex==index?TextStyles.title15_b.copyWith(color: appColorPrimary2): TextStyles.sub_title15_g1,)),
                       ),
-                    ),
-                  ),
-                );
-      }),
+                    );
+          }),
 
 
+                ],
+              ),
+              Divider(height: 1,),
+              Expanded(
+                child: PageView(
+                  controller: _pageController,
+                  children: <Widget>[
+                    LastRecommendScreen(),
+                    MatchingProgressScreen(),
+                    MatchingSuccessScreen(),
+
+
+                  ],
+                  onPageChanged: (index) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                ),
+              ),
             ],
           ),
-          Divider(height: 1,),
-          Expanded(
-            child: PageView(
-              controller: _pageController,
-              children: <Widget>[
-                LastRecommendScreen(),
-                MatchingProgressScreen(),
-                MatchingSuccessScreen(),
-
-
-              ],
-              onPageChanged: (index) {
-                setState(() {
-                  _currentIndex = index;
-                });
-              },
-            ),
-          ),
-        ],
-      ),
+        );
+      }
     );
   }
 }

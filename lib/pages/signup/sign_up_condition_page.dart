@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
 import 'package:pluv/component/rectangle_button.dart';
 import 'package:pluv/global/text_styles.dart';
 
@@ -25,6 +26,7 @@ class _SignUpConditionPageState extends State<SignUpConditionPage> {
     logger.i("SignUpConditionPage");
   }
 
+  int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +38,6 @@ class _SignUpConditionPageState extends State<SignUpConditionPage> {
             SizedBox(height: 50,),
             Expanded(
               child: PageView(
-
                 children: <Widget>[
                   Column(
                     children: [
@@ -48,9 +49,7 @@ class _SignUpConditionPageState extends State<SignUpConditionPage> {
                       SizedBox(height: 20,),
                       Text("프럽 남성회원 가입조건",style: TextStyles.title20_b,),
                       SizedBox(height: 20,),
-
                       Image.asset('assets/images/paper.png'),
-
                       SizedBox(height: 20,),
                       Text("전문직, 자산가, 사업가, 국내외 명문대 재학 및\n졸업생 및 경제력 혹은 사회적\n지위를 갖춘 남성",style: TextStyles.contents16_b,textAlign: TextAlign.center,)
                     ],
@@ -78,10 +77,20 @@ class _SignUpConditionPageState extends State<SignUpConditionPage> {
                   ),
                 ],
                 onPageChanged: (index) {
+                  setState(() {
+                    _currentIndex= index;
+                  });
 
                 },
               ),
             ),
+            PageViewDotIndicator(
+              currentItem: _currentIndex,
+              count: 2,
+              unselectedColor: appColorGray1,
+              selectedColor: appColorPrimary,
+            ),
+            SizedBox(height: 50,),
             RectangleButton(
               action: (){
                 showDialog(

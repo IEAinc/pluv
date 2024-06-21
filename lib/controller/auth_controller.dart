@@ -17,6 +17,12 @@ class AuthController extends GetxController {
 
   MemberVo? myInfo;
 
+  int testInt = 0;
+
+  void plusInt(){
+    testInt++;
+    update();
+  }
 
   ///로그인
 

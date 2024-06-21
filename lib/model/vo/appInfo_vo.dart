@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../global/global.dart';
@@ -27,6 +28,8 @@ class AppInfoVo {
   Map<String,dynamic>?	partyCategoryCode; // 파티카테고리코드
   Map<String,dynamic>?	reportCode; // 신고코드
   Map<String,dynamic>?	alarmCode; // 알람코드
+  List<NoticeVo>?	noticeList; // 공지 및 faq
+
 
 
   List<MapEntry<String, dynamic>>?	bodyFormCodeEntryList; // 체형코드 엔트리 리스트
@@ -74,8 +77,7 @@ class AppInfoVo {
     this.partyCategoryCode,
     this.reportCode,
     this.alarmCode,
-
-
+    this.noticeList,
   }); 
 
   AppInfoVo.fromSnapshot(DocumentSnapshot documentSnapshot) {
@@ -104,6 +106,13 @@ class AppInfoVo {
     partyCategoryCode = data['partyCategoryCode']??{};
     reportCode = data['reportCode']??{};
     alarmCode = data['alarmCode']??{};
+
+    if (data['noticeList'] != null && data['noticeList'] is List) {
+      noticeList = (data['noticeList'] as List).map((item) {
+        return NoticeVo.fromJson(item);}).toList();
+    } else {
+      noticeList = [];
+    }
 
   }
 
@@ -135,6 +144,7 @@ class AppInfoVo {
     data['reportCode'] = this.reportCode??{};
     data['alarmCode'] = this.alarmCode??{};
 
+    data['noticeList'] = noticeList?.map((item) {return item.toJson();})?.toList()??[];
     return data;
   }
 
@@ -169,5 +179,58 @@ class AppInfoVo {
       return [];
     }
   }
+
+
+
 }
 
+class NoticeVo {
+
+  String?	title;	//제목
+  String?	type;	//타입
+  String?	contents;	//내용
+  bool?	exposure;	//노출여부
+  List<dynamic>?	image;	//참고이미지링크
+  String?	editAdminUid;	//최종수정자
+  Timestamp?	createDate;	//최초등록일자
+  Timestamp?	updateDate;	//마지막수정일자
+
+
+  NoticeVo({
+    this.title,
+    this.type,
+    this.contents,
+    this.exposure,
+    this.image,
+    this.editAdminUid,
+    this.createDate,
+    this.updateDate,
+  });
+
+  NoticeVo.fromJson(Map<String , dynamic> data) {
+    title = data['title']??"";
+    type = data['type']??"notice";
+    contents = data['contents']??"";
+    exposure = data['exposure']??false;
+    image = data['image']??[];
+    editAdminUid = data['editAdminUid']??"";
+    createDate = data['createDate']??Timestamp.now();
+    updateDate = data['updateDate']??Timestamp.now();
+  }
+
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+
+    data['title'] = title??"";
+    data['type'] = type??"";
+    data['contents'] = contents??"";
+    data['exposure'] = exposure??false;
+    data['image'] = image??[];
+    data['editAdminUid'] = editAdminUid??"";
+    data['createDate'] = createDate??Timestamp.now();
+    data['updateDate'] = updateDate??Timestamp.now();
+    return data;
+  }
+
+}

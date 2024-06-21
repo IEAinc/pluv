@@ -4,29 +4,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pluv/component/rectangle_button.dart';
 
-import '../../component/rectangle_button.dart';
 import '../../global/global.dart';
 import '../../global/text_styles.dart';
 
-///JobPage
+///CarPage
 ///담당자 : ---
 
-class JobPage extends StatefulWidget {
-  const JobPage({Key? key}) : super(key: key);
+class CarPage extends StatefulWidget {
+  const CarPage({Key? key}) : super(key: key);
 
   @override
-  State<JobPage> createState() => _JobPageState();
+  State<CarPage> createState() => _CarPageState();
 }
 
-class _JobPageState extends State<JobPage> {
+class _CarPageState extends State<CarPage> {
 
   @override
   void initState() {
     super.initState();
-    logger.i("JobPage");
+    logger.i("CarPage");
   }
-  List<dynamic> _imageList = []; // 직업 인증 자료
+
+  List<dynamic> _imageList = []; // 소득 인증 자료
 
 
 
@@ -56,100 +57,14 @@ class _JobPageState extends State<JobPage> {
 
   bool moreToggle = false;
 
-  List<Map<String,dynamic>> _tabList =[
-    {
-      "type": "전문직",
-      "explain" : "의사, 한의사, 치과의사, 수의사, 약사, 판사, 검사, 변호사, 변리사, 회계사, 세무사, 파일럿, 교수 등",
-      "select1" : "본인 명의의 전문직 자격증",
-      "select2" : "개인 명함",
-      "imageList" : [
-        'assets/images/exam/income_1.png',
-        'assets/images/exam/income_2.png',
-        'assets/images/exam/income_3.png',
-      ]
-    },
-    {
-      "type": "사업가",
-      "explain" : "연 매출 30억 이상의 개인 사업가 또는 등기임원 ",
-      "select1" : "연 매출 30억 이상임을 증빙 할 수 있는 서류",
-      "select2" : "사업자 등록증",
-      "imageList" : [
-        'assets/images/exam/job_3.png',
-      ]
-    },
-    {
-      "type": "대기업",
-      "explain" : "한국 100대 대기업 및 공기업",
-      "select1" : "사원증 or 본인 이름이 나와있는 명함",
-      "select2" : "재직증명서 ",
-      "imageList" : [
-        'assets/images/exam/job_4.png',
-        'assets/images/exam/job_5.png',
-      ]
-    },
-    {
-      "type": "공무원",
-      "explain" : "5급 이상의 공무원",
-      "select1" : "공무원 증 ",
-      "select2" : null,
-      "imageList" : [
-        'assets/images/exam/job_6.png',
-      ]
-    },
-    {
-      "type": "외국계",
-      "explain" : "외국계 글로벌 기업(내규에 따름) ",
-      "select1" : "사원증 or 본인 이름이 나와있는 명함",
-      "select2" : null,
-      "imageList" : [
-        'assets/images/exam/job_7.png',
-      ]
-    },
-
-  ];
-
-  int _currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(title: "직업"),
+      appBar: customAppBar(title: "차량 "),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 20),
         child: Column(
           children: [
-            Container(
-
-              width: Get.width,
-              child:  Row(
-                children: _tabList.asMap().entries.map((entry) {
-                  int index = entry.key;
-                  Map<String, dynamic> item = entry.value;
-                  return Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _currentIndex = index;
-                        });
-                      },
-                      child: Container(
-                        height: 30,
-                        decoration: BoxDecoration(
-                          border: Border(bottom: BorderSide(
-                            width: _currentIndex == index?2:1,
-                              color: _currentIndex == index?appColorPrimary :appColorGray8,
-                          ))
-                        ),
-                        child: Text(
-                          item["type"],
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  );
-                }).toList()),
-            ),
-            SizedBox(height: 10,),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -165,7 +80,7 @@ class _JobPageState extends State<JobPage> {
                             child: SvgPicture.asset('assets/images/icon/exclamation.svg',width: 12,),
                           ),
                           SizedBox(width: 5,),
-                          Expanded(child: Text(_tabList[_currentIndex]["explain"],style: TextStyles.contents15_b,maxLines: 3,overflow: TextOverflow.ellipsis,))
+                          Expanded(child: Text("1.5억원 이상 상당의 수입차량, 스포츠카, 고급세단 슈퍼카 등의 차량 소지자",style: TextStyles.contents15_b,))
 
 
                         ],
@@ -190,34 +105,75 @@ class _JobPageState extends State<JobPage> {
                                   child: Center(child: Text("선택 1",style: TextStyles.sub_title12_w,)),
                                 ),
                                 SizedBox(width: 8,),
-                                Text(_tabList[_currentIndex]["select1"],style: TextStyles.contents15_b,),
+                                Text("본인차량 인증",style: TextStyles.contents15_b,),
 
                               ],
                             ),
-                            if(_tabList[_currentIndex]["select2"] != null)
-                            Column(
-                              children: [
-                                SizedBox(height: 10,),
-                                Row(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          color: appColorPrimary,
-                                          borderRadius: BorderRadius.circular(20)
-                                      ),
-                                      padding: EdgeInsets.symmetric(vertical: 2,horizontal: 10),
-                                      child: Center(child: Text("선택 2",style: TextStyles.sub_title12_w,)),
-                                    ),
-                                    SizedBox(width: 8,),
-                                    Text(_tabList[_currentIndex]["select2"],style: TextStyles.contents15_b,),
-
-                                  ],
-                                ),
-                              ],
+                            SizedBox(height: 10,),
+                            Container(
+                              color: Color(0xFFf9f9f9),
+                              padding: EdgeInsets.all(10),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text("필수 1",style: TextStyles.sub_title15_b),
+                                      SizedBox(width: 10),
+                                      Text("본인 성명이 기재된 자동차 등록증",style: TextStyles.sub_title15_g1),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10,),
+                                  Row(
+                                    children: [
+                                      Text("필수 2",style: TextStyles.sub_title15_b),
+                                      SizedBox(width: 10),
+                                      Text("장기렌트 또는 리스 계약서",style: TextStyles.sub_title15_g1),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
+
                           ],
                         ),
 
+                        SizedBox(height: 10,),
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: appColorPrimary,
+                                      borderRadius: BorderRadius.circular(20)
+                                  ),
+                                  padding: EdgeInsets.symmetric(vertical: 2,horizontal: 10),
+                                  child: Center(child: Text("선택 1",style: TextStyles.sub_title12_w,)),
+                                ),
+                                SizedBox(width: 8,),
+                                Text("리스/장기렌트 차량의 경우",style: TextStyles.contents15_b,),
+
+                              ],
+                            ),
+                            SizedBox(height: 10,),
+                            Container(
+                              color: Color(0xFFf9f9f9),
+                              padding: EdgeInsets.all(10),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text("필수 1",style: TextStyles.sub_title15_b),
+                                      SizedBox(width: 10),
+                                      Text("장기렌트 또는 리스 계약서",style: TextStyles.sub_title15_g1),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                          ],
+                        ),
 
                       ],
                     ),
@@ -243,11 +199,14 @@ class _JobPageState extends State<JobPage> {
                               child: SingleChildScrollView(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children:[
-                                    ..._tabList[_currentIndex]["imageList"].map((imageUrl) => Image.asset(imageUrl)).toList()
-                                  ]
+                                  children: [
+                                    Image.asset('assets/images/exam/car_1.png',),
+                                    Image.asset('assets/images/exam/car_2.png',),
+                                    Image.asset('assets/images/exam/car_3.png',),
+                                  ],
+                                ),
                               ),
-                            )),
+                            ),
                             Positioned(
                                 bottom: 0,
                                 child: GestureDetector(
@@ -307,6 +266,7 @@ class _JobPageState extends State<JobPage> {
       ),
     );
   }
+
   Container _picture_box(int index) {
     return Container(
       height: (Get.width-20-32)/3,
@@ -330,3 +290,4 @@ class _JobPageState extends State<JobPage> {
     );
   }
 }
+

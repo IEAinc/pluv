@@ -1,10 +1,12 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -141,8 +143,6 @@ String timeAgo(DateTime timestamp) {
   final now = DateTime.now();
   final difference = now.difference(timestamp);
 
-
-
   if (difference.inMinutes < 1){
     return '방금 전';
   } else if (difference.inMinutes < 60) {
@@ -158,6 +158,15 @@ String timeAgo(DateTime timestamp) {
     final years = difference.inDays ~/ 365;
     return '${years}년 전';
   }
+}
+
+//timestamp to yyyy-mm-dd
+String commonDate(Timestamp timestamp){
+  DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp.millisecondsSinceEpoch);
+  // 형식화
+  String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
+
+  return formattedDate;
 }
 
 
