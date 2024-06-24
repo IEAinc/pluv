@@ -227,6 +227,25 @@ class MyFirebaseService{
     }
   }
 
+
+
+  ///function 테스트
+
+  //라운지 리스트 불러오기
+  void functionTest() async {
+    try {
+
+      final HttpsCallableResult result = await functions.httpsCallable("saantest")
+          .call(<String, dynamic>{'searchMap': ""});
+
+      logger.i(result);
+      logger.e(result.data["result"]);
+
+    } catch (error) {
+      throw Exception('Error : $error');
+    }
+  }
+
 }
 
 

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluv/controller/status_controller.dart';
@@ -314,7 +315,35 @@ class _RatingScreenState extends State<RatingScreen> {
       throw Exception('Error : $error');
     }
   }
-  
+
+  void functionTest() async {
+    try {
+
+      final HttpsCallableResult result = await functions.httpsCallable("saantest")
+          .call(<String, dynamic>{'searchMap': ""});
+
+      logger.i(result.data);
+      logger.e(result.data["result"]);
+
+    } catch (error) {
+      throw Exception('Error : $error');
+    }
+  }
+
+  void functionTest2() async {
+    try {
+
+      final HttpsCallableResult result = await functions.httpsCallable("verificationReady")
+          .call(<String, dynamic>{'searchMap': ""});
+
+      logger.i(result);
+      logger.e(result.data["result"]);
+
+    } catch (error) {
+      throw Exception('Error : $error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<StatusController>(
@@ -325,23 +354,7 @@ class _RatingScreenState extends State<RatingScreen> {
               GestureDetector(
 
                   onTap: () async{
-                    setAppInfo();
-                    // logger.e(controller.appInfo.toJson());
-                    // MemberVo my = MemberVo(
-                    //     memberEmail: "matoda4113@gmail.com",
-                    //     memberName: "이성훈",
-                    //     memberBirth: "900317",
-                    //     memberGender: true,
-                    //     memberPhone: "010-9664-4113",
-                    //     fcmToken: "token",
-                    //
-                    // );
-                    // my.test = true;
-                    // my.memberPassword = "12341234";
-                    // my.memberDivision = 2;
-                    // _authController.addMember(my);
-                    // logger.e(my.toJson());
-
+                    functionTest2();
 
                     setState(() {});
                   },

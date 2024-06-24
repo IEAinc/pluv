@@ -1,9 +1,12 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../global/global.dart';
+import '../../global/my_firebase_service.dart';
 
 ///VerificationWebviewPage
 ///담당자 : ---
@@ -24,6 +27,8 @@ class _VerificationWebviewPageState extends State<VerificationWebviewPage> {
   }
 
 
+  String url = "https://asia-northeast3-pluv-16c7b.cloudfunctions.net/verificationApi/verification/ready";
+
 
   InAppWebViewController? webViewController;
   InAppWebViewSettings settings = InAppWebViewSettings(
@@ -40,12 +45,17 @@ class _VerificationWebviewPageState extends State<VerificationWebviewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("VerificationWebviewPage"),),
+      appBar: AppBar(title: Text("VerificationWebviewsdfPage"),),
       body: Column(
         children: [
-          Expanded(
+
+          Text("Sd"),
+          Container(
+            height: 100,
+            width: 300,
+            color: Colors.red,
             child: InAppWebView(
-              initialUrlRequest: URLRequest(url: WebUri("localhost:3000/certification/Ready")),
+              initialUrlRequest: URLRequest(url: WebUri("https://m.naver.com/")),
               initialSettings: settings,
               onWebViewCreated: (controller) {
                 webViewController = controller;
