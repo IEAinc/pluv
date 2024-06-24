@@ -45,6 +45,7 @@ class _SignUpPageState extends State<SignUpPage> {
   String memberBirth = "";
   String memberPhone = "";
 
+  int emailDuplicated = 0; //0 = 중복체크안함 , 1 = 이메일중복임 , 2= 이메일중복아님
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +76,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
                           Text("이메일 주소(로그인 ID)",style: TextStyles.title15_b,),
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
 
                             children: [
                               Expanded(
@@ -90,6 +91,12 @@ class _SignUpPageState extends State<SignUpPage> {
                                     }
                                 
                                     return null;
+                                  },
+                                  onChanged: (val){
+                                    setState(() {
+                                      emailDuplicated = 0;
+                                      memberEmail = val;
+                                    });
                                   },
                                   decoration: InputDecoration(
                                 
@@ -108,18 +115,41 @@ class _SignUpPageState extends State<SignUpPage> {
                               ),
                               SizedBox(width: 5,),
                               GestureDetector(
-                                onTap: (){},
+                                onTap: () async{
+
+                                  if(memberEmail!.length > 1 && RegExpEmail.hasMatch(memberEmail)){
+                                    bool duplicated = await authController.checkEmailDuplicate(memberEmail);
+                                    setState(() {
+                                      if(duplicated){
+                                        //중복
+                                        emailDuplicated = 1;
+                                      }else{
+                                        //중복아님
+                                        emailDuplicated = 2;
+                                      }
+                                    });
+                                  }else{
+                                    //이메일을 똑바로 입력하라고 스넥바
+                                    logger.e("똑바로 입력하세요ㅇㄹ");
+                                  }
+
+                                },
                                 child: Container(
-                                    
+
                                     decoration: BoxDecoration(
                                       color: appColorPrimary2,
                                       borderRadius: BorderRadius.circular(5)
                                     ),
+                                    margin: EdgeInsets.only(top: 20),
                                     padding: EdgeInsets.symmetric(vertical: 5,horizontal: 10),
                                     child: Text("중복체크",style: TextStyles.sub_title12_w,)),
-                              )
+                              ),
                             ],
                           ),
+                          if(emailDuplicated==1)
+                          Text("이미 사용중인 이메일 입니다",style: TextStyles.contents14_b.copyWith(color: appColorRed1),),
+                          if(emailDuplicated==2)
+                            Text("사용가능한 이메일 입니다",style: TextStyles.contents14_b.copyWith(color: appColorPrimary),),
                           const SizedBox(height: 20,),
                           Text("비밀번호",style: TextStyles.title15_b,),
                           TextFormField(

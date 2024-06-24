@@ -143,6 +143,47 @@ class MyFirebaseService{
 
   }
 
+  ///중복확인
+  // 유저 폰 중복 존재 확인
+  Future<bool> checkPhoneDuplicate(String name , String phone) async{
+    try {
+      final querySnapshot = await memberCollection
+          .where('memberPhone', isEqualTo: phone)
+          .where('memberName', isEqualTo: name)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        //1명 이상있으면 true
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      //에러시 있다고 가정
+      return true; // Handle error case
+    }
+  }
+
+  // 이메일 중복 존재 확인
+  Future<bool> checkEmailDuplicate(String email) async{
+    try {
+      final querySnapshot = await memberCollection
+          .where('memberEmail', isEqualTo: email)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        //1명 이상있으면 true
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      //에러시 있다고 가정
+      return true; // Handle error case
+    }
+  }
+
+
 
   ///----라운지 -----
 
