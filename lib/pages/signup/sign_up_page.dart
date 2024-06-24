@@ -14,7 +14,8 @@ import '../../global/text_styles.dart';
 ///담당자 : ---
 
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+  final Map<String,dynamic> result;
+  const SignUpPage({Key? key , required this.result}) : super(key: key);
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
@@ -26,14 +27,23 @@ class _SignUpPageState extends State<SignUpPage> {
   void initState() {
     super.initState();
     logger.i("SignUpPage");
+    setState(() {
+      // memberName = widget.result["NAME"];
+      // memberGender = widget.result["SEX"]=="1"?true:false;
+      // memberBirth = widget.result["DOB"];
+      // memberPhone = widget.result["PHONE"];
+    });
   }
 
   final _formKey = GlobalKey<FormState>();
   AuthController authController = Get.find<AuthController>();
-  String email = '';
+  String memberEmail = '';
   String password = '';
   String passwordChecked = '';
-
+  String memberName = "";
+  bool memberGender = true;
+  String memberBirth = "";
+  String memberPhone = "";
 
 
   @override
@@ -62,6 +72,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+
                           Text("이메일 주소(로그인 ID)",style: TextStyles.title15_b,),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
@@ -109,8 +120,6 @@ class _SignUpPageState extends State<SignUpPage> {
                               )
                             ],
                           ),
-
-
                           const SizedBox(height: 20,),
                           Text("비밀번호",style: TextStyles.title15_b,),
                           TextFormField(
