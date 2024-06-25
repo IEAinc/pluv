@@ -51,6 +51,9 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
   TextEditingController nickNameController = TextEditingController();
   TextEditingController tallController = TextEditingController();
   TextEditingController jobController = TextEditingController();
+  final _nickNameFormKey = GlobalKey<FormState>();
+  final _tallFormKey = GlobalKey<FormState>();
+  final _jobFormKey = GlobalKey<FormState>();
 
   int _currentIndex = 0;
   List<MapEntry<String, dynamic>> areaDetailList = [];
@@ -67,7 +70,8 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
   };
   int nickNameDuplicated = 0;
 
-  final _tallFormKey = GlobalKey<FormState>();
+
+
 
 
   void nextPage(){
@@ -77,12 +81,20 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
     if(_currentIndex==0){
 
       if(memberInfo["nickName"]!.length >= 2 && memberInfo["nickName"]!.length <= 8) {
+
+      }else{
+        getCautionSnackbar("닉네임을 바르게 입력해주세요");
+      }
+
+      if(_nickNameFormKey.currentState!.validate()){
+        _nickNameFormKey.currentState!.save();
         //shared 임시저장
         prefs.setString('tmp_nickName', memberInfo["nickName"]);
         goNext();
       }else{
-        getCautionSnackbar("닉네임을 바르게 입력해주세요");
+        getCautionSnackbar("닉네임을 바르게 입력해주세요.");
       }
+
     }
     //지역
     else if(_currentIndex==1){
@@ -103,19 +115,27 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
         _tallFormKey.currentState!.save();
 
         prefs.setString('tmp_memberHeight', memberInfo["memberHeight"]);
-
         goNext();
       }else{
-
         getCautionSnackbar("키를 바르게 입력해주세요.");
       }
 
 
 
     }
+    //직업
     else if(_currentIndex==3){
-      logger.e(3);
-      goNext();
+
+      if(_jobFormKey.currentState!.validate()){
+        _jobFormKey.currentState!.save();
+
+        prefs.setString('tmp_memberJob', memberInfo["memberJob"]);
+        goNext();
+      }else{
+        getCautionSnackbar("직업을 바르게 입력해주세요.");
+      }
+
+
     }
     else if(_currentIndex==4){
       logger.e(4);
@@ -173,8 +193,6 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
               }else{
                 goPrev();
               }
-
-
             }
         ),
         body: Column(
@@ -238,40 +256,47 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
 
                         children: [
                           Expanded(
-                            child: TextFormField(
-                              controller: nickNameController,
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
-                              validator: (val) {
-                                if(val!.length > 8) {
-                                  return '8글자 이내로 입력해주세요.';
-                                }
-                                if(val!.length < 2) {
-                                  return '2글자 이상 입력해주세요.';
-                                }
-                                return null;
-                              },
-                              decoration: InputDecoration(
+                            child: Form(
+                              key: _nickNameFormKey,
+                              child: TextFormField(
+                                controller: nickNameController,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                validator: (val) {
+                                  if(val!.length > 8) {
+                                    return '8글자 이내로 입력해주세요.';
+                                  }
+                                  if(val!.length < 2) {
+                                    return '2글자 이상 입력해주세요.';
+                                  }
+                                  return null;
+                                },
+                                decoration: InputDecoration(
 
-                                labelText: "8글자 이내로 입력해주세요.",
-                                labelStyle: TextStyles.contents15_g1,
+                                  labelText: "8글자 이내로 입력해주세요.",
+                                  labelStyle: TextStyles.contents15_g1,
 
-                                isDense: true,
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: appColorGray1, width: 1),
+                                  isDense: true,
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: appColorGray1, width: 1),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: appColorPrimary2, width: 1),
+                                  ),
+
+
                                 ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: appColorPrimary2, width: 1),
-                                ),
+                                onChanged: (val){
 
+                                  if(_nickNameFormKey.currentState!.validate()){
+                                    _nickNameFormKey.currentState!.save();
+                                    memberInfo["nickName"] = val;
+                                  }
+                                  setState(() {
+                                    nickNameDuplicated = 0;
+                                  });
 
+                                },
                               ),
-                              onChanged: (val){
-                                setState(() {
-                                  memberInfo["nickName"] = val;
-                                  nickNameDuplicated = 0;
-                                });
-
-                              },
                             ),
                           ),
                           SizedBox(width: 5,),
@@ -385,6 +410,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
         SizedBox(height: 10,),
         Text("상대방에게 보여질 회원님의 키를\n입력해주세요!",style: TextStyles.contents16_g1,),
         SizedBox(height: 20,),
+        Text(memberInfo["memberHeight"]),
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
 
@@ -397,9 +423,12 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   keyboardType: TextInputType.number,
                   onChanged: (val){
-                    setState(() {
-                      memberInfo["memberHeight"] = val;
-                    });
+                    if(_tallFormKey.currentState!.validate()){
+                      _tallFormKey.currentState!.save();
+                      setState(() {
+                        memberInfo["memberHeight"] = val;
+                      });
+                    }
                   },
                   validator: (val) {
 
@@ -458,26 +487,39 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
 
           children: [
             Expanded(
-              child: TextFormField(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                validator: (val) {
-                  if(val!.length > 8) {
-                    return '한글 8글자 이내로 입력해주세요.';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
+              child: Form(
+                key: _jobFormKey,
+                child: TextFormField(
+                  controller: jobController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
 
-                  labelText: "본인의 직업을 입력해주세요.",
-                  labelStyle: TextStyles.contents15_g1,
-                  isDense: true,
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: appColorGray1, width: 1),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: appColorPrimary2, width: 1),
-                  ),
+                  onChanged: (val){
+                    if(_jobFormKey.currentState!.validate()){
+                      _jobFormKey.currentState!.save();
+                      setState(() {
+                        memberInfo["memberJob"] = val;
+                      });
+                    }
+                  },
+                  validator: (val) {
+                    if(val!.length > 8) {
+                      return '8글자 이내로 입력해주세요.';
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
 
+                    labelText: "본인의 직업을 입력해주세요.",
+                    labelStyle: TextStyles.contents15_g1,
+                    isDense: true,
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: appColorGray1, width: 1),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: appColorPrimary2, width: 1),
+                    ),
+
+                  ),
                 ),
               ),
             ),
