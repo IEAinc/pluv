@@ -95,11 +95,32 @@ class AuthController extends GetxController {
   }
 
 
+  ///체킹
+
   //폰 중복확인
   Future<bool> checkPhoneDuplicate(String name ,String phone) async{
     try{
       bool result = await myFirebaseService.checkPhoneDuplicate(name,phone);
         return result;
+    }catch(error){
+      throw error;
+    }
+  }
+
+  //DI 중복확인
+  Future<bool> checkDiDuplicate(String di) async{
+    try{
+      bool result = await myFirebaseService.checkDiDuplicate(di);
+      return result;
+    }catch(error){
+      throw error;
+    }
+  }
+  //닉네임
+  Future<bool> checkNickNameDuplicate(String nickName) async{
+    try{
+      bool result = await myFirebaseService.checkNickNameDuplicate(nickName);
+      return result;
     }catch(error){
       throw error;
     }

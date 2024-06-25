@@ -67,9 +67,9 @@ class _LoginPageState extends State<LoginPage> {
                           );
                           if(result){
                             getCommonSnackbar('반갑습니다. ${"어드민사마"}님',"");
-                            Get.offAll(MainPage());
+                            Get.offAll(MainPage(initialPage: 0,));
                           }else{
-                            getFailSnackbar('로그인 실패 . 탈퇴한 회원입니다.');
+                            getCommonSnackbar('로그인 실패','탈퇴한 회원입니다');
                           }
 
                         }catch(error){
@@ -146,6 +146,8 @@ class _LoginPageState extends State<LoginPage> {
                     //로그인 버튼
                     Center(child: RectangleButton(
                       name: "로그인",
+                      able: true,
+                      mode: 1,
                       action: () async{
 
                         // 1.값 validate
@@ -159,9 +161,9 @@ class _LoginPageState extends State<LoginPage> {
                             bool result = await authController.login(email, password);
                             if(result){
                               getCommonSnackbar('반갑습니다. ${email}님',"");
-                              Get.offAll(MainPage());
+                              Get.offAll(MainPage(initialPage: 0,));
                             }else{
-                              getFailSnackbar('로그인 실패 . 탈퇴한 회원입니다.');
+                              getCommonSnackbar('로그인 실패 ','탈퇴한 회원입니다.');
                             }
 
                           }catch(error){
@@ -184,6 +186,8 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 20,),
                     Center(
                         child: RectangleButton(
+                          mode: 1,
+                          able: true,
                           name: "이메일 회원가입",
                           action: (){Get.to(()=>SignUpConditionPage());},
 

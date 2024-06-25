@@ -16,8 +16,9 @@ class RectangleButton extends StatefulWidget {
   double? radius;
   TextStyle? textStyle;
   int? mode;
+  bool? able;
 
-  RectangleButton({Key? key , required this.name , this.action , this.backgroundColor ,this.radius , this.textStyle ,this.mode}) : super(key: key);
+  RectangleButton({Key? key , required this.name , this.action , this.backgroundColor ,this.radius , this.textStyle ,this.mode , this.able}) : super(key: key);
 
   @override
   State<RectangleButton> createState() => _RectangleButtonState();
@@ -37,9 +38,8 @@ class _RectangleButtonState extends State<RectangleButton> {
     return Container(
       child:widget.mode==1?ElevatedButton(
         style: ElevatedButton.styleFrom(
-
           foregroundColor: appColorWhite,
-          backgroundColor: appColorPrimary2,
+          backgroundColor: widget.able == false?appColorGray8:appColorPrimary2,
           overlayColor: appColorWhite,
           fixedSize: Size(Get.width,48), // 높이를 50으로 설정
           shape: RoundedRectangleBorder(
@@ -47,9 +47,14 @@ class _RectangleButtonState extends State<RectangleButton> {
           ),
         ),
         onPressed: (){
-          if(widget.action !=null){
-            widget.action!();
+
+          if(widget.able == false){
+          }else{
+            if(widget.action !=null){
+              widget.action!();
+            }
           }
+
         },
         child: Text(widget.name,style: TextStyles.sub_title16_w),
       ): ElevatedButton(
@@ -65,8 +70,12 @@ class _RectangleButtonState extends State<RectangleButton> {
           ),
         ),
         onPressed: (){
-          if(widget.action !=null){
-            widget.action!();
+          if(widget.able == false){
+          }else{
+            if(widget.action !=null){
+              widget.action!();
+            }
+
           }
         },
         child: Text(widget.name,style: widget.textStyle??TextStyles.sub_title13_b,),

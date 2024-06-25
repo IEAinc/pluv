@@ -17,7 +17,8 @@ import 'home_screen.dart';
 ///담당자 : ---
 
 class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+  final int initialPage;
+  const MainPage({Key? key, required this.initialPage}) : super(key: key);
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -30,9 +31,13 @@ class _MainPageState extends State<MainPage> {
     super.initState();
     logger.w("MainPage");
 
+    setState(() {
+      _currentIndex = widget.initialPage;
+      _pageController = PageController(initialPage: widget.initialPage);
+    });
   }
   int _currentIndex = 0;
-  final PageController _pageController = PageController(initialPage: 0);
+  PageController _pageController = PageController(initialPage: 0);
   @override
   Widget build(BuildContext context) {
     return GetBuilder<StatusController>(

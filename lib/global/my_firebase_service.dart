@@ -164,6 +164,44 @@ class MyFirebaseService{
     }
   }
 
+  // 유저 di 중복 존재 확인
+  Future<bool> checkDiDuplicate(String di) async{
+    try {
+      final querySnapshot = await memberCollection
+          .where('memberDi', isEqualTo: di)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        //1명 이상있으면 true
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      //에러시 있다고 가정
+      return true; // Handle error case
+    }
+  }
+
+  // 유저 닉네임 중복 존재 확인
+  Future<bool> checkNickNameDuplicate(String nickName) async{
+    try {
+      final querySnapshot = await memberCollection
+          .where('nickName', isEqualTo: nickName)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        //1명 이상있으면 true
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      //에러시 있다고 가정
+      return true; // Handle error case
+    }
+  }
+
   // 이메일 중복 존재 확인
   Future<bool> checkEmailDuplicate(String email) async{
     try {

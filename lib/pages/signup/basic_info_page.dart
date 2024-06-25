@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:pluv/component/rectangle_button.dart';
 import 'package:pluv/global/text_styles.dart';
 
+import '../../controller/auth_controller.dart';
 import '../../controller/status_controller.dart';
 import '../../global/global.dart';
 
@@ -24,40 +25,93 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
     super.initState();
     logger.i("BasicInfoPage");
     areaDetailList = statusController.getAreaDetail('RE_GU_SE');
+
+
+    memberInfo['nickName'] = prefs.getString('tmp_nickName')??"";
+    memberInfo['areaCode'] = prefs.getString('tmp_areaCode')??"";
+    memberInfo['areaDetailCode'] = prefs.getString('tmp_areaDetailCode')??"";
+    memberInfo['memberHeight'] = prefs.getString('tmp_memberHeight')??"";
+    memberInfo['memberJob'] = prefs.getString('tmp_memberJob')??"";
+    memberInfo['bodyFormCode'] = prefs.getString('tmp_bodyFormCode')??"";
+    memberInfo['drinkCode'] = prefs.getString('tmp_drinkCode')??"";
+    memberInfo['smoke'] = prefs.getBool('tmp_smoke')??false;
+    memberInfo['religionCode'] = prefs.getString('tmp_religionCode')??"";
+    nickNameController = TextEditingController(text: memberInfo['nickName']);
+    tallController = TextEditingController(text: memberInfo['memberHeight']);
+    jobController = TextEditingController(text: memberInfo['memberJob']);
+
+    setState(() {
+
+    });
   }
   final PageController _pageController = PageController(initialPage: 0);
 
   StatusController statusController = Get.find<StatusController>();
+  AuthController authController = Get.find<AuthController>();
+  TextEditingController nickNameController = TextEditingController();
+  TextEditingController tallController = TextEditingController();
+  TextEditingController jobController = TextEditingController();
+
   int _currentIndex = 0;
-
   List<MapEntry<String, dynamic>> areaDetailList = [];
-
-  String tmpNickName = "";
   Map<String,dynamic> memberInfo = {
     "nickName" : "",
     "areaCode" : "RE_GU_SE",
     "areaDetailCode" : "",
+    "memberHeight" : "",
+    "memberJob" : "",
     "bodyFormCode" : "",
     "drinkCode" : "",
-    "smoke":null,
+    "smoke":false,
     "religionCode" : ""
   };
-  TextEditingController nickNameController = TextEditingController();
+  int nickNameDuplicated = 0;
+
+  final _tallFormKey = GlobalKey<FormState>();
+
 
   void nextPage(){
 
 
+    //닉네임
     if(_currentIndex==0){
-      logger.e(0);
-      goNext();
+
+      if(memberInfo["nickName"]!.length >= 2 && memberInfo["nickName"]!.length <= 8) {
+        //shared 임시저장
+        prefs.setString('tmp_nickName', memberInfo["nickName"]);
+        goNext();
+      }else{
+        getCautionSnackbar("닉네임을 바르게 입력해주세요");
+      }
     }
+    //지역
     else if(_currentIndex==1){
-      logger.e(1);
-      goNext();
+      if(memberInfo["areaCode"] != "" && memberInfo["areaDetailCode"] != "") {
+        //shared 임시저장
+        prefs.setString('tmp_areaCode', memberInfo["areaCode"]);
+        prefs.setString('tmp_areaDetailCode', memberInfo["areaDetailCode"]);
+
+        goNext();
+      }else{
+        getCautionSnackbar("지역을 선택해 주세요");
+      }
     }
+    //키
     else if(_currentIndex==2){
-      logger.e(2);
-      goNext();
+
+      if(_tallFormKey.currentState!.validate()){
+        _tallFormKey.currentState!.save();
+
+        prefs.setString('tmp_memberHeight', memberInfo["memberHeight"]);
+
+        goNext();
+      }else{
+
+        getCautionSnackbar("키를 바르게 입력해주세요.");
+      }
+
+
+
     }
     else if(_currentIndex==3){
       logger.e(3);
@@ -180,7 +234,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                       Text("사용하실 닉네임을\n입력해주세요.",style: TextStyles.title20_b,),
                       SizedBox(height: 50,),
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
 
                         children: [
                           Expanded(
@@ -189,14 +243,18 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                               autovalidateMode: AutovalidateMode.onUserInteraction,
                               validator: (val) {
                                 if(val!.length > 8) {
-                                  return '한글 8글자 이내로 입력해주세요.';
+                                  return '8글자 이내로 입력해주세요.';
+                                }
+                                if(val!.length < 2) {
+                                  return '2글자 이상 입력해주세요.';
                                 }
                                 return null;
                               },
                               decoration: InputDecoration(
 
-                                labelText: "한글 8글자 이내로 입력해주세요.",
+                                labelText: "8글자 이내로 입력해주세요.",
                                 labelStyle: TextStyles.contents15_g1,
+
                                 isDense: true,
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(color: appColorGray1, width: 1),
@@ -209,7 +267,8 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                               ),
                               onChanged: (val){
                                 setState(() {
-                                  tmpNickName = val;
+                                  memberInfo["nickName"] = val;
+                                  nickNameDuplicated = 0;
                                 });
 
                               },
@@ -217,12 +276,18 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                           ),
                           SizedBox(width: 5,),
                           GestureDetector(
-                            onTap: (){
+                            onTap: () async{
 
-                              //중복체크 통과하면
-                              setState(() {
-                                memberInfo["nickName"] = tmpNickName;
-                              });
+                              if(memberInfo["nickName"]!.length >= 2 && memberInfo["nickName"]!.length <= 8) {
+                                bool duplicate = await authController.checkDiDuplicate(memberInfo["nickName"]);
+                                if(duplicate){
+                                  nickNameDuplicated=1;
+                                }else{
+                                  nickNameDuplicated=2;
+                                }
+                                setState(() {});
+                              }
+
                             },
                             child: Container(
 
@@ -230,11 +295,16 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                                     color: appColorPrimary2,
                                     borderRadius: BorderRadius.circular(5)
                                 ),
+                                margin: EdgeInsets.only(top: 20),
                                 padding: EdgeInsets.symmetric(vertical: 5,horizontal: 10),
                                 child: Text("중복체크",style: TextStyles.sub_title12_w,)),
                           )
                         ],
                       ),
+                      if(nickNameDuplicated==1)
+                        Text("누군가 이미 사용하고있는 닉네임 입니다.\n닉네임은 중복 가능합니다",style: TextStyles.contents14_b.copyWith(color: appColorRed1),),
+                      if(nickNameDuplicated==2)
+                        Text("현재 아무도 사용하고 있지 않은 닉네임입니다.",style: TextStyles.contents14_b.copyWith(color: appColorPrimary),),
                     ],
                   );
   }
@@ -320,42 +390,53 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
 
           children: [
             Expanded(
-              child: TextFormField(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                validator: (val) {
+              child: Form(
+                key: _tallFormKey,
+                child: TextFormField(
+                  controller: tallController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  keyboardType: TextInputType.number,
+                  onChanged: (val){
+                    setState(() {
+                      memberInfo["memberHeight"] = val;
+                    });
+                  },
+                  validator: (val) {
 
-                  if (val!.length >3) {
-                    return '3자리 숫자만 입력해주세요';
-                  }
+                    if (val!.length >3) {
+                      return '3자리 숫자만 입력해주세요';
+                    }
 
-                  final number = int.tryParse(val);
-                  if (number == null) {
-                    return '3자리 숫자만 입력해주세요';
-                  }
-                  if (number >200) {
-                    return '올바른 키를 입력해주세요';
-                  }
-                  return null;
+                    final number = int.tryParse(val);
+                    if (number == null) {
+                      return '3자리 숫자만 입력해주세요';
+                    }
+                    if (number >200) {
+                      return '올바른 키를 입력해주세요';
+                    }
+                    return null;
 
-                },
-                decoration: InputDecoration(
+                  },
+                  decoration: InputDecoration(
 
-                  labelText: "본인의 키를 입력해주세요(소수점없이)",
-                  labelStyle: TextStyles.contents15_g1,
-                  isDense: true,
-                  suffixIcon: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("cm",style: TextStyles.contents16_b,),
-                    ],
+                    labelText: "본인의 키를 입력해주세요(소수점없이)",
+                    labelStyle: TextStyles.contents15_g1,
+
+                    isDense: true,
+                    suffixIcon: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("cm",style: TextStyles.contents16_b,),
+                      ],
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: appColorGray1, width: 1),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: appColorPrimary2, width: 1),
+                    ),
+
                   ),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: appColorGray1, width: 1),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: appColorPrimary2, width: 1),
-                  ),
-
                 ),
               ),
             ),

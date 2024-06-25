@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:pluv/controller/status_controller.dart';
 import 'package:pluv/model/vo/lounge_vo.dart';
@@ -316,33 +317,6 @@ class _RatingScreenState extends State<RatingScreen> {
     }
   }
 
-  void functionTest() async {
-    try {
-
-      final HttpsCallableResult result = await functions.httpsCallable("saantest")
-          .call(<String, dynamic>{'searchMap': ""});
-
-      logger.i(result.data);
-      logger.e(result.data["result"]);
-
-    } catch (error) {
-      throw Exception('Error : $error');
-    }
-  }
-
-  void functionTest2() async {
-    try {
-
-      final HttpsCallableResult result = await functions.httpsCallable("verificationReady")
-          .call(<String, dynamic>{'searchMap': ""});
-
-      logger.i(result);
-      logger.e(result.data["result"]);
-
-    } catch (error) {
-      throw Exception('Error : $error');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -354,7 +328,7 @@ class _RatingScreenState extends State<RatingScreen> {
               GestureDetector(
 
                   onTap: () async{
-                    functionTest2();
+                    getCautionSnackbar("똑바로 입력해주세요똑바로 입력해주똑바로 입력해주세요세요");
 
                     setState(() {});
                   },

@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pluv/component/basic_botton.dart';
 import 'package:pluv/component/signup_bottom_sheet.dart';
+import 'package:pluv/model/vo/member_vo.dart';
 
 import '../../component/custom_input_filed.dart';
 import '../../component/rectangle_button.dart';
@@ -28,10 +29,12 @@ class _SignUpPageState extends State<SignUpPage> {
     super.initState();
     logger.i("SignUpPage");
     setState(() {
-      // memberName = widget.result["NAME"];
-      // memberGender = widget.result["SEX"]=="1"?true:false;
-      // memberBirth = widget.result["DOB"];
-      // memberPhone = widget.result["PHONE"];
+      memberName = widget.result["NAME"];
+      memberGender = widget.result["SEX"]=="1"?true:false;
+      memberBirth = widget.result["DOB"];
+      memberPhone = widget.result["PHONE"];
+      memberCi = widget.result["CI"];
+      memberDi = widget.result["DI"];
     });
   }
 
@@ -39,11 +42,12 @@ class _SignUpPageState extends State<SignUpPage> {
   AuthController authController = Get.find<AuthController>();
   String memberEmail = '';
   String password = '';
-  String passwordChecked = '';
   String memberName = "";
   bool memberGender = true;
   String memberBirth = "";
   String memberPhone = "";
+  String memberCi = "";
+  String memberDi = "";
 
   int emailDuplicated = 0; //0 = 중복체크안함 , 1 = 이메일중복임 , 2= 이메일중복아님
 
@@ -130,9 +134,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                     });
                                   }else{
                                     //이메일을 똑바로 입력하라고 스넥바
-                                    logger.e("똑바로 입력하세요ㅇㄹ");
+                                    getCautionSnackbar("이메일을 바르게 입력해주세요");
                                   }
-
                                 },
                                 child: Container(
 
@@ -182,10 +185,16 @@ class _SignUpPageState extends State<SignUpPage> {
                               ),
 
                             ),
+                            onChanged: (val){
+                              setState(() {
+                                password = val;
+                              });
+                            },
                           ),
 
                           const SizedBox(height: 20,),
                           Text("비밀번호 확인",style: TextStyles.title15_b,),
+
                           TextFormField(
                             autovalidateMode: AutovalidateMode.onUserInteraction,
                               obscureText:true,
@@ -202,7 +211,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 return '16자 이하 입력해주세요!';
                               }
 
-                              if(password!=null && val != password){
+                              if(val != password){
                                 return '비밀번호가 다릅니다. 확인해주세요!';
                               }
                               return null;
@@ -244,15 +253,37 @@ class _SignUpPageState extends State<SignUpPage> {
                     RectangleButton(
                       mode: 1,
                       action: (){
+                        if(_formKey.currentState!.validate()){
+                          _formKey.currentState!.save();
 
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          backgroundColor: Colors.transparent,
-                          builder: (BuildContext context) {
-                            return SignupBottomSheet();
-                          },
-                        );
+                          MemberVo member = MemberVo(
+                            memberEmail:memberEmail,
+                            memberName:memberName,
+                            memberBirth:memberBirth,
+                            memberGender:memberGender,
+                            memberPhone:memberPhone,
+                            memberPassword: password,
+                            memberCi: memberCi,
+                            memberDi: memberDi,
+                            fcmToken:"",
+                          );
+
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            builder: (BuildContext context) {
+                              return SignupBottomSheet(member: member,);
+                            },
+                          );
+
+                        }else{
+
+                          getCautionSnackbar("이메일과 비밀번호를 바르게 입력해주세요.");
+                        }
+
+
+
 
                       },
                       name: "계정생성",

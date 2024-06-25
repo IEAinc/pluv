@@ -42,10 +42,10 @@ class _LandingPageState extends State<LandingPage> {
       }else{
         bool success = await _authController.autoLogin();
         if(success){
-          Get.offAll(MainPage());
+          Get.offAll(MainPage(initialPage: 0,));
         }else{
           //일단
-          Get.offAll(MainPage());
+          Get.offAll(MainPage(initialPage: 0,));
         }
       }
 

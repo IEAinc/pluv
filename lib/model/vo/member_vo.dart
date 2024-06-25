@@ -1,12 +1,16 @@
 import 'dart:core';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
+import 'package:pluv/controller/status_controller.dart';
 
 import '../../global/global.dart';
 
 class MemberVo {
 
   String? memberUid; //	유저고유UID
+  String? memberCi; //	유저CI
+  String? memberDi; //	유저DI
   String? memberEmail; //	이메일
   String? memberName; //	이름
   String? memberBirth; //	생년월일
@@ -60,11 +64,13 @@ class MemberVo {
   Map<String,dynamic>? alarmStatus; //	알람온오프여부
 
 
-  //***멤버 변수로만 존재
+
   String? memberPassword; //	회원가입용 비밀번호
 
   MemberVo({
     this.memberUid,
+    this.memberCi,
+    this.memberDi,
     required this.memberEmail,
     required this.memberName,
     required this.memberBirth,
@@ -116,14 +122,29 @@ class MemberVo {
     this.adAgree,
     this.test,
     this.alarmStatus,
+    this.memberPassword
+  }){
+    // alarmStatus가 null인 경우 getAlarm() 호출
+    alarmStatus ??= getAlarm();
+  }
+
+  Map<String, dynamic> getAlarm(){
+    StatusController statusController = Get.find<StatusController>();
+    Map<String, bool> modifiedMap = statusController.appInfo.alarmCode!.map((key, value) => MapEntry(key, true));
+
+    return modifiedMap;
+  }
 
 
-  });
+
+
+
 
   MemberVo.fromSnapshot(DocumentSnapshot documentSnapshot) {
     Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
 
     memberUid = data['memberUid'];
+    //ci,di 안받음
     memberEmail = data['memberEmail'];
     memberName = data['memberName'];
     memberBirth = data['memberBirth'];
@@ -193,6 +214,8 @@ class MemberVo {
     final Map<String, dynamic> data = new Map<String, dynamic>();
 
     data['memberUid'] = memberUid;
+    data['memberCi'] = memberCi??"";
+    data['memberDi'] = memberDi??"";
     data['memberEmail'] = memberEmail;
     data['memberName'] = memberName;
     data['memberBirth'] = memberBirth;
@@ -251,6 +274,8 @@ class MemberVo {
   MemberVo.sample() {
 
     memberUid = "";
+    memberCi = "asdf";
+    memberDi = "asdf";
     memberEmail = "ieatest${generateRandomString(7)}@iea.co.kr";
     memberName = generateRandomKoreanNickname(3);
     memberBirth = "900317";

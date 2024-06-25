@@ -30,7 +30,7 @@ class _MyScreenType1State extends State<MyScreenType1> {
   }
 
 
-  // AuthController _authController = Get.find<AuthController>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class _MyScreenType1State extends State<MyScreenType1> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("반갑습니다 김민규"),
+              Text("반갑습니다 ${authController.myInfo?.memberName}님"),
               SizedBox(height: 20,),
               Text("기본정보및 프로필입력을 완성하시고 관리자에게 승인을 요청해주세요"),
               SizedBox(height: 20,),
@@ -54,8 +54,7 @@ class _MyScreenType1State extends State<MyScreenType1> {
                       Text("*",style: TextStyles.title12_b.copyWith(color: appColorRed1),),
                       Text("기본정보",style: TextStyles.title17_b,),
                       SizedBox(width: 10,),
-                      if(authController!.myInfo!.profileStatus!.step1!)
-                      Icon(Icons.check,color: Colors.green,size: 20,)
+                      Icon(Icons.check,color:authController!.myInfo!.profileStatus!.step1!?Colors.green:appColorGray8,size: 20,)
                     ],
                   )),
               SizedBox(height: 20,),
@@ -67,8 +66,8 @@ class _MyScreenType1State extends State<MyScreenType1> {
                     children: [
                       Text("*",style: TextStyles.title12_b.copyWith(color: appColorRed1),),
                       Text("프로필",style: TextStyles.title17_b,),
-                      if(authController!.myInfo!.profileStatus!.step2!)
-                        Icon(Icons.check,color: Colors.green,size: 20,)
+                      SizedBox(width: 10,),
+                      Icon(Icons.check,color:authController!.myInfo!.profileStatus!.step2!?Colors.green:appColorGray8,size: 20,)
                     ],
                   )),
               SizedBox(height: 20,),
@@ -80,8 +79,8 @@ class _MyScreenType1State extends State<MyScreenType1> {
                     children: [
                       Text("*",style: TextStyles.title12_b.copyWith(color: appColorRed1),),
                       Text("사진등록",style: TextStyles.title17_b,),
-                      if(authController!.myInfo!.profileStatus!.step3!)
-                        Icon(Icons.check,color: Colors.green,size: 20,)
+                      SizedBox(width: 10,),
+                      Icon(Icons.check,color:authController!.myInfo!.profileStatus!.step3!?Colors.green:appColorGray8,size: 20,)
                     ],
                   )),
               SizedBox(height: 20,),
@@ -93,8 +92,8 @@ class _MyScreenType1State extends State<MyScreenType1> {
                   children: [
                     Text("*",style: TextStyles.title12_b.copyWith(color: appColorRed1),),
                     Text("인증서류",style: TextStyles.title17_b,),
-                    if(authController!.myInfo!.profileStatus!.step4!)
-                      Icon(Icons.check,color: Colors.green,size: 20,)
+                    SizedBox(width: 10,),
+                    Icon(Icons.check,color:authController!.myInfo!.profileStatus!.step4!?Colors.green:appColorGray8,size: 20,)
                   ],
                 ),
               ),
@@ -107,14 +106,19 @@ class _MyScreenType1State extends State<MyScreenType1> {
                     children: [
                       Text("*",style: TextStyles.title12_b.copyWith(color: Colors.transparent),),
                       Text("자기소개등록",style: TextStyles.contents17_b,),
-                      if(authController!.myInfo!.profileStatus!.step5!)
-                        Icon(Icons.check,color: Colors.green,size: 20,)
+                      SizedBox(width: 10,),
+                      Icon(Icons.check,color:authController!.myInfo!.profileStatus!.step5!?Colors.green:appColorGray8,size: 20,)
                     ],
                   )),
               SizedBox(height: 50,),
               RectangleButton(
                 name: "심사신청하기",
                 mode: 1,
+                able:
+                (authController!.myInfo!.profileStatus!.step1==true &&
+                    authController!.myInfo!.profileStatus!.step2 ==true &&
+                    authController!.myInfo!.profileStatus!.step3 == true &&
+                authController!.myInfo!.profileStatus!.step4 == true)?true:false,
                 action: (){
                   logger.e(authController.myInfo!.toJson());
                 },
