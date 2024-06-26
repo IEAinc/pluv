@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../component/rectangle_button.dart';
+import '../../controller/auth_controller.dart';
 import '../../controller/status_controller.dart';
 import '../../global/global.dart';
 import '../../global/text_styles.dart';
@@ -23,15 +24,25 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
   void initState() {
     super.initState();
     logger.i("ProfileInfoPage");
+    memberInfo['personalityCode'] = prefs.getStringList('tmp_personalityCode')??[];
+    memberInfo['interestCode'] = prefs.getStringList('tmp_interestCode')??[];
+    memberInfo['attractionCode'] = prefs.getStringList('tmp_attractionCode')??[];
+    memberInfo['dateStyleCode'] = prefs.getStringList('tmp_dateStyleCode')??[];
+    mbti['a'] = prefs.getString('tmp_mbti_a');
+    mbti['b'] = prefs.getString('tmp_mbti_b');
+    mbti['c'] = prefs.getString('tmp_mbti_c');
+    mbti['d'] = prefs.getString('tmp_mbti_d');
+    setState(() {});
   }
 
 
   final PageController _pageController = PageController(initialPage: 0);
 
   StatusController statusController = Get.find<StatusController>();
+  AuthController authController = Get.find<AuthController>();
   int _currentIndex = 0;
 
-  Map<String,List<String>> memberInfo1 = {
+  Map<String,List<String>> memberInfo = {
     "personalityCode" : [],
     "interestCode" : [],
     "attractionCode" : [],
@@ -44,25 +55,58 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
     "d":null,
   };
 
+  bool areAllValuesNonNull(Map<String, dynamic> map) {
+    for (var value in map.values) {
+      if (value == null) {
+        return false;
+      }
+    }
+    return true;
+  }
 
-  TextEditingController nickNameController = TextEditingController();
-
-  void nextPage(){
+  void nextPage() async{
 
     if(_currentIndex==0){
+      prefs.setStringList('tmp_personalityCode', memberInfo["personalityCode"]!);
       goNext();
     }
     else if(_currentIndex==1){
+      prefs.setStringList('tmp_interestCode', memberInfo["interestCode"]!);
       goNext();
     }
     else if(_currentIndex==2){
+      prefs.setStringList('tmp_attractionCode', memberInfo["attractionCode"]!);
       goNext();
     }
     else if(_currentIndex==3){
+      prefs.setStringList('tmp_dateStyleCode', memberInfo["dateStyleCode"]!);
       goNext();
     }
     else if(_currentIndex==4){
-      goNext();
+
+
+      try{
+        if(areAllValuesNonNull(mbti)){
+          prefs.setString('tmp_mbti_a', mbti['a']);
+          prefs.setString('tmp_mbti_b', mbti['b']);
+          prefs.setString('tmp_mbti_c', mbti['c']);
+          prefs.setString('tmp_mbti_d', mbti['d']);
+          authController.myInfo!.profileStatus!.step2 = true;
+          authController.myInfo!.personalityCode = memberInfo['personalityCode'];
+          authController.myInfo!.interestCode = memberInfo['interestCode'];
+          authController.myInfo!.attractionCode = memberInfo['attractionCode'];
+          authController.myInfo!.dateStyleCode = memberInfo['dateStyleCode'];
+          authController.myInfo!.mbti = mbti;
+          await authController.updateMember();
+          goNext();
+        }else{
+          getCautionSnackbar("mbti를 바르게 입력해주세요");
+        }
+      }catch(error){
+        throw error;
+      }
+
+
     }
     else if(_currentIndex==5){
       Get.back();
@@ -155,7 +199,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
   Column page1_personality() {
 
     List<MapEntry<String, dynamic>> target = statusController.appInfo.personalityCodeEntryList!;
-    List<String> info = memberInfo1['personalityCode']!;
+    List<String> info = memberInfo['personalityCode']!;
     int count = 3;
     String title= "본인의 성격을 나타내는\n키워드를 선택하세요.";
     return Column(
@@ -210,7 +254,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
   }
   Column page2_interest() {
     List<MapEntry<String, dynamic>> target = statusController.appInfo.interestCodeEntryList!;
-    List<String> info = memberInfo1['interestCode']!;
+    List<String> info = memberInfo['interestCode']!;
     int count = 6;
     String title= "저는 이런것에 관심이 있어요.";
     return Column(
@@ -265,7 +309,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
   }
   Column page3_attraction() {
     List<MapEntry<String, dynamic>> target = statusController.appInfo.attractionCodeEntryList!;
-    List<String> info = memberInfo1['attractionCode']!;
+    List<String> info = memberInfo['attractionCode']!;
     int count = 6;
     String title= "저는 이런 매력이 있어요.";
     return Column(
@@ -320,7 +364,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
   }
   Column page4_date_style() {
     List<MapEntry<String, dynamic>> target = statusController.appInfo.dateStyleCodeEntryList!;
-    List<String> info = memberInfo1['dateStyleCode']!;
+    List<String> info = memberInfo['dateStyleCode']!;
     int count = 6;
     String title= "데이트 스타일은 이래요.";
     return Column(

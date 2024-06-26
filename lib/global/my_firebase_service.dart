@@ -143,6 +143,20 @@ class MyFirebaseService{
 
   }
 
+  Future<MemberVo> updateMember(MemberVo memberVo) async {
+
+    try {
+      await memberCollection.doc(memberVo.memberUid).update(memberVo.toJson());
+      //사용자 가져오기
+      DocumentSnapshot documentSnapshot = await memberCollection.doc(memberVo.memberUid).get();
+      return MemberVo.fromSnapshot(documentSnapshot);
+    } catch (error) {
+      throw error;
+    }
+
+  }
+
+
   ///중복확인
   // 유저 폰 중복 존재 확인
   Future<bool> checkPhoneDuplicate(String name , String phone) async{

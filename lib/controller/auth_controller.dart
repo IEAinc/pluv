@@ -83,6 +83,8 @@ class AuthController extends GetxController {
   }
 
   ///멤버등록
+
+  //회원가입
   Future<void> addMember(MemberVo memberVo) async{
 
     try{
@@ -94,6 +96,17 @@ class AuthController extends GetxController {
 
   }
 
+
+  //내정보 업데이트
+  Future<void> updateMember() async{
+    try{
+      myInfo = await myFirebaseService.updateMember(myInfo!);
+      update();
+    }catch(error){
+      throw error;
+    }
+
+  }
 
   ///체킹
 

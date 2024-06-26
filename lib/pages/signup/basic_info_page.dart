@@ -1,13 +1,15 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pluv/component/rectangle_button.dart';
 import 'package:pluv/global/text_styles.dart';
 
+import '../../component/custom_dialog.dart';
 import '../../controller/auth_controller.dart';
 import '../../controller/status_controller.dart';
 import '../../global/global.dart';
-
+import 'dart:developer';
 ///BasicInfoPage
 ///담당자 : ---
 
@@ -24,7 +26,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
   void initState() {
     super.initState();
     logger.i("BasicInfoPage");
-    areaDetailList = statusController.getAreaDetail('RE_GU_SE');
+    areaDetailList = statusController.getAreaDetail(prefs.getString('tmp_areaDetailCode')??'RE_GU_SE');
 
 
     memberInfo['nickName'] = prefs.getString('tmp_nickName')??"";
@@ -74,7 +76,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
 
 
 
-  void nextPage(){
+  void nextPage() async{
 
 
     //닉네임
@@ -128,7 +130,6 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
 
       if(_jobFormKey.currentState!.validate()){
         _jobFormKey.currentState!.save();
-
         prefs.setString('tmp_memberJob', memberInfo["memberJob"]);
         goNext();
       }else{
@@ -137,18 +138,61 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
 
 
     }
+    //체형
     else if(_currentIndex==4){
-      logger.e(4);
-      goNext();
+      if(memberInfo["bodyFormCode"] != null && memberInfo["bodyFormCode"] != ""){
+
+        prefs.setString('tmp_bodyFormCode', memberInfo["bodyFormCode"]);
+        goNext();
+      }else{
+        getCautionSnackbar("체형을 선택해 주세요.");
+      }
+
+
     }
+    //음주
     else if(_currentIndex==5){
-      goNext();
+
+      if(memberInfo["drinkCode"] != null && memberInfo["drinkCode"] != ""){
+
+        prefs.setString('tmp_drinkCode', memberInfo["drinkCode"]);
+        goNext();
+      }else{
+        getCautionSnackbar("음주 스타일을 선택해 주세요.");
+      }
     }
+    //흡연
     else if(_currentIndex==6){
+      prefs.setBool('tmp_smoke', memberInfo["smoke"]);
       goNext();
     }
+    //종교
     else if(_currentIndex==7){
-      goNext();
+
+      try{
+        if(memberInfo["religionCode"] != null && memberInfo["religionCode"] != ""){
+          prefs.setString('tmp_religionCode', memberInfo["religionCode"]);
+          authController.myInfo!.profileStatus!.step1 = true;
+          authController.myInfo!.nickName = memberInfo['nickName'];
+          authController.myInfo!.areaCode = memberInfo['areaCode'];
+          authController.myInfo!.areaDetailCode = memberInfo['areaDetailCode'];
+          authController.myInfo!.memberHeight = int.parse(memberInfo['memberHeight']);
+          authController.myInfo!.memberJob = memberInfo['memberJob'];
+          authController.myInfo!.bodyFormCode = memberInfo['bodyFormCode'];
+          authController.myInfo!.drinkCode = memberInfo['drinkCode'];
+          authController.myInfo!.smoke = memberInfo['smoke'];
+          authController.myInfo!.religionCode = memberInfo['religionCode'];
+          await authController.updateMember();
+          goNext();
+        }else{
+          getCautionSnackbar("종교를 선택해 주세요.");
+        }
+      }catch(error){
+        throw error;
+      }
+
+
+
     }
     else if(_currentIndex==8){
       logger.e(8);
@@ -410,7 +454,6 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
         SizedBox(height: 10,),
         Text("상대방에게 보여질 회원님의 키를\n입력해주세요!",style: TextStyles.contents16_g1,),
         SizedBox(height: 20,),
-        Text(memberInfo["memberHeight"]),
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
 
