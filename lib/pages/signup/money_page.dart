@@ -252,22 +252,7 @@ class _MoneyPageState extends PaperTemplate<MoneyPage> {
                   ),
                 ),
                 SizedBox(height: 10,),
-                RectangleButton(name:"저장",mode: 1,action: () async{
-
-                  setState(() {
-                    loading = true;
-                  });
-                  try{
-                    await authController.uploadPaperImage("PAPER_ASSET", imageList);
-                    Get.back();
-                  }catch(e){
-                    logger.e(e);
-                  }
-                  setState(() {
-                    loading = false;
-                  });
-
-                },),
+                paperSaveButton("PAPER_ASSET"),
                 SizedBox(height: 20,),
               ],
             ),
@@ -283,5 +268,7 @@ class _MoneyPageState extends PaperTemplate<MoneyPage> {
       ],
     );
   }
+
+
 }
 

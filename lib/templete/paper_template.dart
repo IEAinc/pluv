@@ -81,6 +81,24 @@ abstract class PaperTemplate<T extends StatefulWidget> extends State<T> {
     );
   }
 
+  RectangleButton paperSaveButton(String paperCode) {
+    return RectangleButton(name:"저장",mode: 1,action: () async{
+
+      setState(() {
+        loading = true;
+      });
+      try{
+        await authController.uploadPaperImage(paperCode, imageList);
+        Get.back();
+      }catch(e){
+        logger.e(e);
+      }
+      setState(() {
+        loading = false;
+      });
+
+    },);
+  }
 
 }
 
