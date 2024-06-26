@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:pluv/model/vo/lounge_vo.dart';
 import 'package:pluv/model/vo/member_vo.dart';
 
@@ -143,6 +144,7 @@ class MyFirebaseService{
 
   }
 
+  //유저 업데이트
   Future<MemberVo> updateMember(MemberVo memberVo) async {
 
     try {
@@ -155,6 +157,9 @@ class MyFirebaseService{
     }
 
   }
+
+
+
 
 
   ///중복확인
@@ -321,6 +326,19 @@ class MyFirebaseService{
   }
 
 
+  ///공통
+
+  //이미지 업로드
+  Future<String> imageUpload(String folderName, String title,File file) async {
+    try{
+      Reference ref = storage.ref("${folderName}/${title}_${DateFormat('yyyyMMdd').format(DateTime.now())}_${generateRandomString(5)}.${file.path.split('.').last}");
+      await ref.putFile(file);
+      final String _urlString = await ref.getDownloadURL();
+      return _urlString;
+    }catch(error){
+      throw Exception(error);
+    }
+  }
 
   ///function 테스트
 

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../component/custom_input_filed.dart';
 import '../../component/rectangle_button.dart';
+import '../../controller/auth_controller.dart';
 import '../../global/global.dart';
 import '../../global/text_styles.dart';
 
@@ -22,8 +23,13 @@ class _IntroduceEnrollPageState extends State<IntroduceEnrollPage> {
   void initState() {
     super.initState();
     logger.i("IntroduceEnrollPage");
+    selfIntroduce = prefs.getString('tmp_selfIntroduce')??"";
+    selfIntroduceController = TextEditingController(text: selfIntroduce);
   }
 
+  String selfIntroduce ="";
+  AuthController authController = Get.find<AuthController>();
+  TextEditingController selfIntroduceController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -55,6 +61,7 @@ class _IntroduceEnrollPageState extends State<IntroduceEnrollPage> {
 
                         labelText: "자기 소개 작성해주세요",
 
+                        controller: selfIntroduceController,
                         fillColor: Color(0xFFf9f9f9),
                         keyboardType: TextInputType.multiline,
                         borderRadius: 1,
@@ -65,7 +72,7 @@ class _IntroduceEnrollPageState extends State<IntroduceEnrollPage> {
                         isDense: true,
                         onChanged: (val) {
                           setState(() {
-                            // comment = val;
+                            selfIntroduce = val;
                           });
                         },
                         suffix: false,
@@ -77,7 +84,15 @@ class _IntroduceEnrollPageState extends State<IntroduceEnrollPage> {
                 ),
                 SizedBox(height: 20,),
                
-                RectangleButton(name: "저장",mode: 1,)
+                RectangleButton(name: "저장",mode: 1,action: () async{
+                  await prefs.setString('tmp_selfIntroduce', selfIntroduce);
+
+                  authController.myInfo!.selfIntroduce = selfIntroduce;
+                  authController.myInfo!.profileStatus!.step5 = true;
+                  await authController.updateMember();
+                  Get.back();
+
+                },)
               ],
             ),
           ),

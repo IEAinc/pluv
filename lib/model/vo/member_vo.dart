@@ -373,7 +373,7 @@ class PaperInfoVo {
 
   String?	paperCode; // 인증서류종류코드
   bool?	certificate; // 인증완료여부
-  List<PaperDetailVo>?	paperDetail; // 인증서류세부종류
+  List<dynamic>?	imageList; // 이미지리스트
   Timestamp?	certificateDate; // 인증완료날짜
   String?	certificateAdminUid; // 인증한관리자Uid
 
@@ -381,7 +381,7 @@ class PaperInfoVo {
   PaperInfoVo({
     this.paperCode,
     this.certificate,
-    this.paperDetail,
+    this.imageList,
     this.certificateDate,
     this.certificateAdminUid,
   });
@@ -389,12 +389,7 @@ class PaperInfoVo {
   PaperInfoVo.fromJson(Map<String , dynamic> data) {
     paperCode = data['paperCode']??"";
     certificate = data['certificate']??false;
-    if (data['paperDetail'] != null && data['paperDetail'] is List) {
-      paperDetail = (data['paperInfo'] as List).map((item) {
-        return PaperDetailVo.fromJson(item);}).toList();
-    } else {
-      paperDetail = [];
-    }
+    imageList = data['imageList']??[];
     certificateDate = data['certificateDate']??null;
     certificateAdminUid = data['certificateAdminUid']??"";
   }
@@ -405,35 +400,9 @@ class PaperInfoVo {
 
     data['paperCode'] = this.paperCode??"";
     data['certificate'] = this.certificate??false;
-    data['paperDetail'] = this.paperDetail?.map((detail) {return detail.toJson();})?.toList();
+    data['imageList'] = this.imageList??[];
     data['certificateDate'] = this.certificateDate??null;
     data['certificateAdminUid'] = this.certificateAdminUid??"";
-
-    return data;
-  }
-
-}
-class PaperDetailVo {
-
-  String?	code; // 인증서류세부종류코드
-  List<String>?	image; //인증서류이미지
-
-  PaperDetailVo({
-    this.code,
-    this.image,
-
-  });
-
-  PaperDetailVo.fromJson(Map<String , dynamic> data) {
-    code = data['code']??"";
-    image = data['image']??[];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-
-    data['code'] = this.code??"";
-    data['image'] = this.image??[];
 
     return data;
   }

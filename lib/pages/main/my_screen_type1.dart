@@ -110,7 +110,20 @@ class _MyScreenType1State extends State<MyScreenType1> {
                       Icon(Icons.check,color:authController!.myInfo!.profileStatus!.step5!?Colors.green:appColorGray8,size: 20,)
                     ],
                   )),
-              SizedBox(height: 50,),
+              SizedBox(height: 30,),
+              if(authController.myInfo!.memberGender==false)
+              RectangleButton(
+                name: "프로필 심사신청하기(여성회원전용)",
+                mode: 1,
+                able:
+                (authController!.myInfo!.profileStatus!.step1==true &&
+                    authController!.myInfo!.profileStatus!.step2 ==true &&
+                    authController!.myInfo!.profileStatus!.step3 == true)?true:false,
+                action: (){
+                  logger.e(authController.myInfo!.toJson());
+                },
+              ),
+              SizedBox(height: 20,),
               RectangleButton(
                 name: "심사신청하기",
                 mode: 1,

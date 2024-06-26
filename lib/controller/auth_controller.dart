@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:get/get.dart';
@@ -106,6 +107,64 @@ class AuthController extends GetxController {
       throw error;
     }
 
+  }
+
+  //프로필 이미지 업로드
+  Future<void> uploadProfileImage(List<dynamic> list) async{
+    try{
+      List<String> profileImageList =[];
+      for (var item in list) {
+        if (item is File) {
+          String url = await myFirebaseService.imageUpload("profileImage", myInfo!.memberUid!, item);
+          profileImageList.add(url);
+        } else {
+          profileImageList.add(item);
+        }
+      }
+      myInfo!.profileImageList = profileImageList;
+      myInfo!.profileStatus!.step3 = true;
+      myInfo = await myFirebaseService.updateMember(myInfo!);
+      update();
+    }catch(error){
+      throw error;
+    }
+  }
+
+
+  //서류 이미지 업로드
+  Future<void> uploadPaperImage(String paperCode,List<dynamic> list) async{
+    try{
+      List<String> paperImageList =[];
+      for (var item in list) {
+        if (item is File) {
+          String url = await myFirebaseService.imageUpload("paperImage", myInfo!.memberUid!+"_"+paperCode , item);
+          paperImageList.add(url);
+        } else {
+          paperImageList.add(item);
+        }
+      }
+
+      PaperInfoVo paperInfoVo = PaperInfoVo();
+      paperInfoVo.paperCode = paperCode;
+      paperInfoVo.certificate = false;
+      paperInfoVo.imageList = paperImageList;
+
+      int index = myInfo!.paperInfo!.indexWhere((element) => element.paperCode == paperCode);
+
+      if (index != -1) {
+        // Update the existing PaperInfoVo
+        myInfo!.paperInfo![index] = paperInfoVo;
+      } else {
+        // Add a new PaperInfoVo if not found
+        myInfo!.paperInfo!.add(paperInfoVo);
+      }
+
+      myInfo!.profileStatus!.step4 = true;
+      myInfo = await myFirebaseService.updateMember(myInfo!);
+      update();
+    }catch(error){
+      throw error;
+    }
   }
 
   ///체킹
