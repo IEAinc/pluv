@@ -325,30 +325,7 @@ class _RatingScreenState extends State<RatingScreen> {
         return Container(
           child: Column(
             children: [
-              GestureDetector(
-
-                  onTap: () async{
-                    getCautionSnackbar("똑바로 입력해주세요똑바로 입력해주똑바로 입력해주세요세요");
-
-                    setState(() {});
-                  },
-                  child:Text("SD")
-
-              ),
-              (items==null || items!.length==0)?Container(): Expanded(
-                child: ListView.separated(
-                  itemCount: items!.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: (){},
-                      child: Text("SD"),
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return SizedBox(width: 10,);
-                  },
-                ),
-              )
+              Center(child: Text("프로필 심사회원 평가하는 곳"))
             ],
           ),
         );

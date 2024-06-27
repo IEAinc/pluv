@@ -39,6 +39,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         // 전체적인 앱의 기본 폰트를 Pretendard 로 설정
         fontFamily: 'Pretendard',
+        appBarTheme: AppBarTheme(backgroundColor: Colors.white,elevation: 0),
+        scaffoldBackgroundColor: Colors.white,
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: Colors.white)
 
       ),
       home: const LandingPage(),

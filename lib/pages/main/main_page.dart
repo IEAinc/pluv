@@ -48,7 +48,6 @@ class _MainPageState extends State<MainPage> {
             child: Scaffold(
                 appBar: AppBar(
                   toolbarHeight: 52,
-                  elevation: 50,
                   title: TextLogo(),
                   centerTitle: false,
                   actions: [
@@ -78,41 +77,51 @@ class _MainPageState extends State<MainPage> {
                     });
                   },
                 ),
-                bottomNavigationBar: BottomNavigationBar(
-                  type: BottomNavigationBarType.fixed,
-                  currentIndex: _currentIndex,
+                bottomNavigationBar: Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      top: BorderSide(
+                        color: appColorGray8, // 테두리 색상
+                        width: 1.0, // 테두리 두께
+                      ),
+                    ),
+                  ),
+                  child: BottomNavigationBar(
+                    type: BottomNavigationBarType.fixed,
+                    currentIndex: _currentIndex,
 
-                  onTap: (index) {
-                    // 탭이 선택되면 해당 페이지로 이동
-                    _pageController.jumpToPage(index);
-                  },
+                    onTap: (index) {
+                      // 탭이 선택되면 해당 페이지로 이동
+                      _pageController.jumpToPage(index);
+                    },
 
-                  showSelectedLabels: false,
-                  showUnselectedLabels: false,
-                  items: [
+                    showSelectedLabels: false,
+                    showUnselectedLabels: false,
+                    items: [
 
-                    BottomNavigationBarItem(
-                        icon: SvgPicture.asset('assets/images/myicon/home.svg',colorFilter: ColorFilter.mode(_currentIndex ==0 ?appColorBlack :appColorGray4, BlendMode.srcIn)),
-                        label: ''
-                    ),
-                    BottomNavigationBarItem(
-                        icon: SvgPicture.asset('assets/images/myicon/heart.svg',colorFilter: ColorFilter.mode(_currentIndex ==1 ?appColorBlack :appColorGray4, BlendMode.srcIn)),
-                        label: ''
-                    ),
-                    BottomNavigationBarItem(
-                        icon: SvgPicture.asset('assets/images/myicon/document.svg',colorFilter: ColorFilter.mode(_currentIndex ==2 ?appColorBlack :appColorGray4, BlendMode.srcIn)),
-                        label: ''
-                    ),
-                    BottomNavigationBarItem(
-                        icon: SvgPicture.asset('assets/images/myicon/rounge.svg',colorFilter: ColorFilter.mode(_currentIndex ==3 ?appColorBlack :appColorGray4, BlendMode.srcIn)),
-                        label: ''
-                    ),
-                    BottomNavigationBarItem(
-                        icon: SvgPicture.asset('assets/images/myicon/man.svg',colorFilter: ColorFilter.mode(_currentIndex ==4 ?appColorBlack :appColorGray4, BlendMode.srcIn)),
-                        label: ''
-                    ),
+                      BottomNavigationBarItem(
+                          icon: SvgPicture.asset('assets/images/myicon/home.svg',colorFilter: ColorFilter.mode(_currentIndex ==0 ?appColorBlack :appColorGray4, BlendMode.srcIn)),
+                          label: ''
+                      ),
+                      BottomNavigationBarItem(
+                          icon: SvgPicture.asset('assets/images/myicon/heart.svg',colorFilter: ColorFilter.mode(_currentIndex ==1 ?appColorBlack :appColorGray4, BlendMode.srcIn)),
+                          label: ''
+                      ),
+                      BottomNavigationBarItem(
+                          icon: SvgPicture.asset('assets/images/myicon/document.svg',colorFilter: ColorFilter.mode(_currentIndex ==2 ?appColorBlack :appColorGray4, BlendMode.srcIn)),
+                          label: ''
+                      ),
+                      BottomNavigationBarItem(
+                          icon: SvgPicture.asset('assets/images/myicon/rounge.svg',colorFilter: ColorFilter.mode(_currentIndex ==3 ?appColorBlack :appColorGray4, BlendMode.srcIn)),
+                          label: ''
+                      ),
+                      BottomNavigationBarItem(
+                          icon: SvgPicture.asset('assets/images/myicon/man.svg',colorFilter: ColorFilter.mode(_currentIndex ==4 ?appColorBlack :appColorGray4, BlendMode.srcIn)),
+                          label: ''
+                      ),
 
-                  ],
+                    ],
+                  ),
                 )
             ),
           );

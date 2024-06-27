@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -223,11 +224,12 @@ void getCautionSnackbar(String message){
 
 
 ///이미지픽
-Future<XFile?> pickImage() async {
+Future<XFile?> pickImage({double? compressWidth}) async {
   final picker = ImagePicker();
-  final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+  final pickedFile = await picker.pickImage(source: ImageSource.gallery,maxWidth: compressWidth);
   return pickedFile;
 }
+
 
 ///정규식
 

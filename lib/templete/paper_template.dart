@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pluv/component/custom_progress_indicator.dart';
 import 'package:pluv/controller/auth_controller.dart';
 
 import '../../component/rectangle_button.dart';
@@ -75,9 +77,98 @@ abstract class PaperTemplate<T extends StatefulWidget> extends State<T> {
               child: Center(child: Text("+",style: TextStyles.contents24_g1,))))
           :GestureDetector(
           onTap: (){
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  contentPadding: EdgeInsets.zero,
+                  backgroundColor: Colors.black,
+                  insetPadding: EdgeInsets.zero,
+                  content: SizedBox(
+                    width: Get.width,
+                    height: Get.width,
+                    child: InteractiveViewer(
+                      child:(this.imageList[index] is String)?ExtendedImage.network(
+                        this.imageList[index] ?? "",
+                        fit: BoxFit.cover,
+                        cache: true,
+                        initGestureConfigHandler: (state) {
+                          return GestureConfig(
+                            minScale: 0.9,
+                            animationMinScale: 0.7,
+                            maxScale: 3.0,
+                            animationMaxScale: 3.5,
+                            speed: 1.0,
+                            inertialSpeed: 100.0,
+                            initialScale: 1.0,
+                            inPageView: false,
+                            initialAlignment: InitialAlignment.center,
+                          );
+                        },
+                        loadStateChanged: (ExtendedImageState state) {
+                          switch (state.extendedImageLoadState) {
+                            case LoadState.loading:
+                              return CustomProgressIndicator();
+                            case LoadState.completed:
+                              return state.completedWidget;
+                            case LoadState.failed:
+                              return Icon(Icons.error);
+                          }
+                        },
+                      ): ExtendedImage.file(
+                        this.imageList[index] ?? "",
+                        fit: BoxFit.cover,
+                        initGestureConfigHandler: (state) {
+                          return GestureConfig(
+                            minScale: 0.9,
+                            animationMinScale: 0.7,
+                            maxScale: 3.0,
+                            animationMaxScale: 3.5,
+                            speed: 1.0,
+                            inertialSpeed: 100.0,
+                            initialScale: 1.0,
+                            inPageView: false,
+                            initialAlignment: InitialAlignment.center,
+                          );
+                        },
+                        loadStateChanged: (ExtendedImageState state) {
+                          switch (state.extendedImageLoadState) {
+                            case LoadState.loading:
+                              return CustomProgressIndicator();
+                            case LoadState.completed:
+                              return state.completedWidget;
+                            case LoadState.failed:
+                              return Icon(Icons.error);
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                );
+              },
+            );
+
+          },
+          onLongPress: (){
             _editImage(index);
           },
-          child: (this.imageList[index] is String)?Image.network(this.imageList[index],fit: BoxFit.cover,):Image.file(this.imageList[index],fit: BoxFit.cover,)),
+          child: (this.imageList[index] is String)
+              ?ExtendedImage.network(
+            this.imageList[index],
+            cache: true,
+            fit: BoxFit.cover,
+            loadStateChanged: (ExtendedImageState state) {
+              switch (state.extendedImageLoadState) {
+                case LoadState.loading:
+                  return CustomProgressIndicator();
+                case LoadState.completed:
+                  return state.completedWidget;
+                case LoadState.failed:
+                  return Icon(Icons.error);
+              }
+            },
+          )
+              :Image.file(this.imageList[index],fit: BoxFit.cover,)),
     );
   }
 

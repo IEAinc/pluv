@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -39,7 +40,7 @@ class _PictureEnrollPageState extends State<PictureEnrollPage> {
 
 
   Future<void> _addImage() async {
-    XFile? file = await pickImage();
+    XFile? file = await pickImage(compressWidth: 500);
     if(_imageList.length<5){
       if (file != null) {
         setState(() {
@@ -51,7 +52,7 @@ class _PictureEnrollPageState extends State<PictureEnrollPage> {
 
   Future<void> _editImage(int index) async {
 
-    XFile? file = await pickImage();
+    XFile? file = await pickImage(compressWidth: 500);
     if (file != null) {
       setState(() {
         _imageList[index] = File(file.path);
@@ -107,7 +108,21 @@ class _PictureEnrollPageState extends State<PictureEnrollPage> {
                                 onTap: (){
                                   _editImage(0);
                                 },
-                                child:  (_imageList[0] is String)?Image.network(_imageList[0],fit: BoxFit.cover,):Image.file(_imageList[0],fit: BoxFit.cover,),
+                                child:  (_imageList[0] is String)?ExtendedImage.network(
+                                  _imageList[0],
+                                  cache: true,
+                                  fit: BoxFit.cover,
+                                  loadStateChanged: (ExtendedImageState state) {
+                                    switch (state.extendedImageLoadState) {
+                                      case LoadState.loading:
+                                        return CustomProgressIndicator();
+                                      case LoadState.completed:
+                                        return state.completedWidget;
+                                      case LoadState.failed:
+                                        return Icon(Icons.error);
+                                    }
+                                  },
+                                ):Image.file(_imageList[0],fit: BoxFit.cover,),
                             ),
 
 
@@ -178,10 +193,101 @@ class _PictureEnrollPageState extends State<PictureEnrollPage> {
                               child: Center(child: Text("+",style: TextStyles.contents24_g1,))))
                           :GestureDetector(
                           onTap: (){
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  contentPadding: EdgeInsets.zero,
+                                  backgroundColor: Colors.black,
+                                  insetPadding: EdgeInsets.zero,
+                                  content: SizedBox(
+                                    width: Get.width,
+                                    height: Get.width,
+                                    child: InteractiveViewer(
+                                      child:(_imageList[index] is String)
+                                          ?ExtendedImage.network(
+                                        _imageList[index] ?? "",
+                                        fit: BoxFit.cover,
+                                        cache: true,
+                                        initGestureConfigHandler: (state) {
+                                          return GestureConfig(
+                                            minScale: 0.9,
+                                            animationMinScale: 0.7,
+                                            maxScale: 3.0,
+                                            animationMaxScale: 3.5,
+                                            speed: 1.0,
+                                            inertialSpeed: 100.0,
+                                            initialScale: 1.0,
+                                            inPageView: false,
+                                            initialAlignment: InitialAlignment.center,
+                                          );
+                                        },
+                                        loadStateChanged: (ExtendedImageState state) {
+                                          switch (state.extendedImageLoadState) {
+                                            case LoadState.loading:
+                                              return CustomProgressIndicator();
+                                            case LoadState.completed:
+                                              return state.completedWidget;
+                                            case LoadState.failed:
+                                              return Icon(Icons.error);
+                                          }
+                                        },
+                                      )
+                                          : ExtendedImage.file(
+                                        _imageList[index] ?? "",
+                                        fit: BoxFit.cover,
+                                        initGestureConfigHandler: (state) {
+                                          return GestureConfig(
+                                            minScale: 0.9,
+                                            animationMinScale: 0.7,
+                                            maxScale: 3.0,
+                                            animationMaxScale: 3.5,
+                                            speed: 1.0,
+                                            inertialSpeed: 100.0,
+                                            initialScale: 1.0,
+                                            inPageView: false,
+                                            initialAlignment: InitialAlignment.center,
+                                          );
+                                        },
+                                        loadStateChanged: (ExtendedImageState state) {
+                                          switch (state.extendedImageLoadState) {
+                                            case LoadState.loading:
+                                              return CustomProgressIndicator();
+                                            case LoadState.completed:
+                                              return state.completedWidget;
+                                            case LoadState.failed:
+                                              return Icon(Icons.error);
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          onLongPress: (){
                             _editImage(index);
                           },
-                          child: (_imageList[index] is String)?Image.network(_imageList[index],fit: BoxFit.cover,):Image.file(_imageList[index],fit: BoxFit.cover,)),
+                          child: (_imageList[index] is String)?ExtendedImage.network(
+                            _imageList[index],
+                            cache: true,
+                            fit: BoxFit.cover,
+                            loadStateChanged: (ExtendedImageState state) {
+                              switch (state.extendedImageLoadState) {
+                                case LoadState.loading:
+                                  return CustomProgressIndicator();
+                                case LoadState.completed:
+                                  return state.completedWidget;
+                                case LoadState.failed:
+                                  return Icon(Icons.error);
+                              }
+                            },
+                          ):Image.file(_imageList[index],fit: BoxFit.cover,)),
                     );
   }
 }
 
+
+
+// Image.network(_imageList[index],fit: BoxFit.cover,)

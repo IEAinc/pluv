@@ -348,7 +348,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                             onTap: () async{
 
                               if(memberInfo["nickName"]!.length >= 2 && memberInfo["nickName"]!.length <= 8) {
-                                bool duplicate = await authController.checkDiDuplicate(memberInfo["nickName"]);
+                                bool duplicate = await authController.checkNickNameDuplicate(memberInfo["nickName"]);
                                 if(duplicate){
                                   nickNameDuplicated=1;
                                 }else{

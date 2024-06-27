@@ -8,12 +8,15 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluv/model/vo/lounge_vo.dart';
 import 'package:pluv/model/vo/member_vo.dart';
+import 'package:pluv/model/vo/request_approval_vo.dart';
 
 import '../model/dto/lounge_dto.dart';
+import '../model/vo/admin_vo.dart';
 import '../model/vo/appInfo_vo.dart';
 import '../model/vo/comment_vo.dart';
 import 'global.dart';
@@ -35,6 +38,8 @@ CollectionReference masterCollection = firestore.collection('MASTER');
 CollectionReference loungeCollection = firestore.collection('COMMUNITY_LOUNGE');
 CollectionReference commentCollection = firestore.collection('COMMUNITY_COMMENT');
 CollectionReference memberCollection = firestore.collection('MEMBER');
+CollectionReference requestMemberApprovalCollection = firestore.collection('REQUEST_MEMBER_APPROVAL');
+CollectionReference adminCollection = firestore.collection('ADMIN');
 
 
 
@@ -157,6 +162,46 @@ class MyFirebaseService{
     }
 
   }
+
+  //심사요청
+  Future<MemberVo> requestMemberApproval(RequestApprovalVo request) async {
+    try {
+      // 트랜잭션 시작
+      await firestore.runTransaction((transaction) async {
+        // 심사 요청 컬렉션에서 문서 참조 가져오기
+        final DocumentReference docReference = requestMemberApprovalCollection.doc(request.memberUid);
+        transaction.set(docReference, request.toJson());
+        transaction.update(memberCollection.doc(request.memberUid), {
+          "memberStatus": 2,
+          "screeningDivision": request.screeningDivision
+        });
+      });
+
+      DocumentSnapshot documentSnapshot = await memberCollection.doc(request.memberUid).get();
+
+      return MemberVo.fromSnapshot(documentSnapshot);
+    } catch (error) {
+      throw error;
+    }
+
+  }
+
+
+  //내 어드민 정보 호출
+  Future<AdminVo?> getMyAdmin(String? uid) async {
+    try {
+      DocumentSnapshot documentSnapshot = await adminCollection.doc(uid).get();
+      if(documentSnapshot.exists){
+        return AdminVo.fromSnapshot(documentSnapshot);
+      }
+    } catch (error) {
+      logger.e(error);
+      throw error;
+    }
+
+  }
+
+
 
 
 
@@ -331,6 +376,8 @@ class MyFirebaseService{
   //이미지 업로드
   Future<String> imageUpload(String folderName, String title,File file) async {
     try{
+
+
       Reference ref = storage.ref("${folderName}/${title}_${DateFormat('yyyyMMdd').format(DateTime.now())}_${generateRandomString(5)}.${file.path.split('.').last}");
       await ref.putFile(file);
       final String _urlString = await ref.getDownloadURL();

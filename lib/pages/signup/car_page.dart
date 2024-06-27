@@ -32,7 +32,7 @@ class _CarPageState extends PaperTemplate<CarPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
       children: [
         Scaffold(
           appBar: customAppBar(title: "차량 "),

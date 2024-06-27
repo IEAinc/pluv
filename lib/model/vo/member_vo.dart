@@ -54,6 +54,8 @@ class MemberVo {
   StepStatus? idealSettingStatus; //	구간별이상형설정상태
   List<UseableProfileVo>? useableProfileList; //	볼수있는 프로필 리스트
   List<PaperInfoVo>? paperInfo; //	인증서류및뱃지
+
+  String?	assignedAdminUid; // 담당관리자Uid
   Timestamp? joinDate; //	가입일
   num?	activeState; //	활동상태
   num?	memberDivision; //	회원구분
@@ -114,6 +116,7 @@ class MemberVo {
     this.idealSettingStatus,
     this.useableProfileList,
     this.paperInfo,
+    this.assignedAdminUid,
     this.joinDate,
     this.activeState,
     this.memberDivision,
@@ -198,7 +201,7 @@ class MemberVo {
     } else {
       paperInfo = [];
     }
-
+    assignedAdminUid = data['assignedAdminUid'];
     joinDate = data['joinDate']??Timestamp.now();
     activeState = data['activeState']??1;
     memberDivision = data['memberDivision']??1;
@@ -259,6 +262,7 @@ class MemberVo {
     data['idealSettingStatus'] = idealSettingStatus?.toJson()??{};
     data['useableProfileList'] = useableProfileList?.map((item) {return item.toJson();})?.toList()??[];
     data['paperInfo'] = paperInfo?.map((item) {return item.toJson();})?.toList()??[];
+    data['assignedAdminUid'] = assignedAdminUid;
     data['joinDate'] = joinDate??Timestamp.now();
     data['activeState'] = activeState??1;
     data['memberDivision'] = memberDivision??1;

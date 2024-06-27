@@ -192,6 +192,12 @@ class _LoginPageState extends State<LoginPage> {
                           action: (){Get.to(()=>SignUpConditionPage());},
 
                         )),
+                    SizedBox(height: 20,),
+                    Center(child: GestureDetector(
+                        onTap: (){
+                          Get.offAll(()=>MainPage(initialPage: 4));
+                        },
+                        child: Text("둘러보기"))),
                   ],
                 ),
               ),

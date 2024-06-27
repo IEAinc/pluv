@@ -2,8 +2,10 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:get/get.dart';
+import 'package:pluv/model/vo/admin_vo.dart';
 import 'package:pluv/model/vo/lounge_vo.dart';
 import 'package:pluv/model/vo/member_vo.dart';
+import 'package:pluv/model/vo/request_approval_vo.dart';
 
 
 import '../global/global.dart';
@@ -97,7 +99,6 @@ class AuthController extends GetxController {
 
   }
 
-
   //내정보 업데이트
   Future<void> updateMember() async{
     try{
@@ -129,7 +130,6 @@ class AuthController extends GetxController {
       throw error;
     }
   }
-
 
   //서류 이미지 업로드
   Future<void> uploadPaperImage(String paperCode,List<dynamic> list) async{
@@ -166,6 +166,31 @@ class AuthController extends GetxController {
       throw error;
     }
   }
+
+  //심사 신청
+  Future<void> requestMemberApproval(RequestApprovalVo request) async{
+    try{
+      myInfo = await myFirebaseService.requestMemberApproval(request);
+      update();
+    }catch(error){
+      throw error;
+    }
+
+  }
+
+  //내 담당 어드민 조회
+  Future<AdminVo?> getMyAdmin() async{
+
+    if(myInfo == null || myInfo?.assignedAdminUid == null || myInfo?.assignedAdminUid == ""){
+      return null;
+    }
+    try{
+      return await myFirebaseService.getMyAdmin(myInfo!.assignedAdminUid!);
+    }catch(error){
+      throw error;
+    }
+  }
+
 
   ///체킹
 
