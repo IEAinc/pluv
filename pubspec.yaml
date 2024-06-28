@@ -36,11 +36,22 @@ dependencies:
   firebase_messaging: ^14.9.3
   cloud_functions: ^4.7.5
   firebase_analytics: ^10.10.6
+  flutter_native_splash: ^2.4.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/pluvlogo.png"
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: "assets/images/pluvlogo.png"
 
 flutter:
 

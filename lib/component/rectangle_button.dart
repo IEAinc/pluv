@@ -39,7 +39,7 @@ class _RectangleButtonState extends State<RectangleButton> {
       child:widget.mode==1?ElevatedButton(
         style: ElevatedButton.styleFrom(
           foregroundColor: appColorWhite,
-          backgroundColor: widget.able == false?appColorGray8:appColorPrimary2,
+          backgroundColor: widget.able == false?appColorGray8:widget.backgroundColor??appColorPrimary2,
           overlayColor: appColorWhite,
           fixedSize: Size(Get.width,48), // 높이를 50으로 설정
           shape: RoundedRectangleBorder(
@@ -56,7 +56,7 @@ class _RectangleButtonState extends State<RectangleButton> {
           }
 
         },
-        child: Text(widget.name,style: TextStyles.sub_title16_w),
+        child: Text(widget.name,style:widget.textStyle??TextStyles.sub_title16_w),
       ): ElevatedButton(
         style: ElevatedButton.styleFrom(
 

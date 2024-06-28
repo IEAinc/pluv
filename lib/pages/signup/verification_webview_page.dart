@@ -131,12 +131,6 @@ class _VerificationWebviewPageState extends State<VerificationWebviewPage> {
           isLoading
               ? Center(child: CustomProgressIndicator())
               : SizedBox.shrink(),
-          Positioned(right: 0,bottom: 0,child: GestureDetector(
-
-              onTap: (){
-                Get.to(()=>SignUpPage(result: {}));
-              },
-              child: Container(width: 100,height: 100,color: Colors.brown,)))
         ],
       ),
     );

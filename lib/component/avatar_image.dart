@@ -10,9 +10,10 @@ import '../global/global.dart';
 class AvatarImage extends StatefulWidget {
   final double? size;
   final String? imagePath;
+  final bool? logo;
   final void Function()? action;
 
-  const AvatarImage({Key? key, this.size, this.imagePath , this.action})
+  const AvatarImage({Key? key, this.size, this.imagePath , this.logo,this.action})
       : super(key: key);
 
   @override
@@ -30,7 +31,16 @@ class _AvatarImageState extends State<AvatarImage> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return widget.logo==true? ClipRRect(
+      borderRadius: BorderRadius.circular(100),
+      child: Image.asset(
+        sampleAsset,
+        fit: BoxFit.cover,
+        width: widget.size ?? 92,
+        height: widget.size ?? 92,
+        
+      ),
+    ): GestureDetector(
       onTap:
       widget.action == null
           ? () {

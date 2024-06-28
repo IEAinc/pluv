@@ -3,10 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-
 import '../../component/custom_progress_indicator.dart';
-import '../../component/rectangle_button.dart';
 import '../../global/global.dart';
 import '../../global/text_styles.dart';
 import '../../templete/paper_template.dart';

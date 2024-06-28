@@ -58,7 +58,7 @@ class _MyScreenType2State extends State<MyScreenType2> {
           if(myAdmin==null)
           Column(
             children: [
-              AvatarImage(),
+              AvatarImage(logo: true,),
               SizedBox(height: 10,),
               Text("회원님에게 배치된 담당자가 아직없어요"),
             ],

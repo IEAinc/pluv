@@ -8,6 +8,7 @@ class AppInfoVo {
   String? appName; // 앱이름
   Map<String,dynamic>?	appVersion; // 버전
   Map<String,dynamic>?	buildVersion; // 빌드버전
+  List<MediaInfoVo>?	onboardingInfoList; // 온보딩인포
   String? serviceLink; // 서비스이용약관링크
   String? privacyLink; // 개인정보 보호정책 링크
   String? promotionLink; // 홍보 및 마케팅 링크
@@ -57,6 +58,7 @@ class AppInfoVo {
     this.appName,
     this.appVersion,
     this.buildVersion,
+    this.onboardingInfoList,
     this.serviceLink,
     this.privacyLink,
     this.promotionLink,
@@ -86,6 +88,12 @@ class AppInfoVo {
     appName = data['appName']??"";
     appVersion = data['appVersion']??{};
     buildVersion = data['buildVersion']??{};
+    if (data['onboardingInfoList'] != null && data['onboardingInfoList'] is List) {
+      onboardingInfoList = (data['onboardingInfoList'] as List).map((item) {
+        return MediaInfoVo.fromJson(item);}).toList();
+    } else {
+      onboardingInfoList = [];
+    }
     serviceLink = data['serviceLink']??"";
     privacyLink = data['privacyLink']??"";
     promotionLink = data['promotionLink']??"";
@@ -123,6 +131,7 @@ class AppInfoVo {
     data['appName'] = this.appName??"";
     data['appVersion'] = this.appVersion??{};
     data['buildVersion'] = this.appVersion??{};
+    data['onboardingInfoList'] = onboardingInfoList?.map((item) {return item.toJson();})?.toList()??[];
     data['serviceLink'] = this.serviceLink??"";
     data['privacyLink'] = this.privacyLink??"";
     data['promotionLink'] = this.promotionLink??"";
@@ -230,6 +239,46 @@ class NoticeVo {
     data['editAdminUid'] = editAdminUid??"";
     data['createDate'] = createDate??Timestamp.now();
     data['updateDate'] = updateDate??Timestamp.now();
+    return data;
+  }
+
+}
+
+class MediaInfoVo {
+
+  String?	title;	//제목
+  String?	subTitle;	//서브제목
+  String?	contents;	//내용
+  num?	mediaType;	//미디어타입
+  String?	url;	// 경로
+
+
+
+  MediaInfoVo({
+    this.title,
+    this.subTitle,
+    this.contents,
+    this.mediaType,
+    this.url,
+  });
+
+  MediaInfoVo.fromJson(Map<String , dynamic> data) {
+    title = data['title']??"";
+    subTitle = data['subTitle']??"";
+    contents = data['contents']??"";
+    mediaType = data['mediaType']??1;
+    url = data['url']??"";
+  }
+
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+
+    data['title'] = title??"";
+    data['subTitle'] = subTitle??"";
+    data['contents'] = contents??"";
+    data['mediaType'] = mediaType??1;
+    data['url'] = url??"";
     return data;
   }
 
