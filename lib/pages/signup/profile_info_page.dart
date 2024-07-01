@@ -470,7 +470,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
         SizedBox(height: 50,),
         Text("2단계 가입이 완료 되었습니다.",style: TextStyles.title20_b,),
         SizedBox(height: 20,),
-        Text("프로톡 2단계 가입이 완료 되었습니다.\n프로필 작성을 통해 좀더 매력을\n어필해보세요" , textAlign: TextAlign.center,style: TextStyles.sub_title16_g1,),
+        Text("프럽 2단계 가입이 완료 되었습니다.\n프로필 작성을 통해 좀더 매력을\n어필해보세요" , textAlign: TextAlign.center,style: TextStyles.sub_title16_g1,),
         SizedBox(height: 20,),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,

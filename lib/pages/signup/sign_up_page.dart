@@ -170,6 +170,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                 if(val.length > 16){
                                   return '16자 이하 입력해주세요!';
                                 }
+
+                                if(!RegExpPassword.hasMatch(val)){
+                                  return '영문과 숫자 조합으로 해주세요.';
+                                }
                                 return null;
                               },
                             decoration: InputDecoration(
@@ -209,6 +213,10 @@ class _SignUpPageState extends State<SignUpPage> {
 
                               if(val.length > 16){
                                 return '16자 이하 입력해주세요!';
+                              }
+
+                              if(!RegExpPassword.hasMatch(val)){
+                                return '영문과 숫자 조합으로 해주세요.';
                               }
 
                               if(val != password){

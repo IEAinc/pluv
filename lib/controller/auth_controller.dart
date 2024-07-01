@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:pluv/model/vo/admin_vo.dart';
 import 'package:pluv/model/vo/lounge_vo.dart';
@@ -40,8 +41,6 @@ class AuthController extends GetxController {
       }else{
         myInfo = memberVo;
         update();
-        await prefs.setString('myEmail', email);
-        await prefs.setString('myPassword', password);
         return true;
       }
 
@@ -54,20 +53,23 @@ class AuthController extends GetxController {
   //오토로그인
   Future<bool> autoLogin() async{
 
-    String? email =  prefs.getString('myEmail');
-    String? password = prefs.getString('myPassword');
-
-    if(email ==null || password ==null){
-      return false;
-    }
-
     try{
-      return login(email,password);
+      MemberVo? memberVo = await myFirebaseService.autoLogin();
+
+      if(memberVo==null){
+        return false;
+      }
+      if(memberVo.activeState==3){
+        return false;
+      }else{
+        myInfo = memberVo;
+        update();
+        return true;
+      }
 
     }catch(error){
-      await prefs.remove('myEmail');
-      await prefs.remove('myPassword');
-      throw Exception('Error : $error');
+      throw error;
+
     }
   }
 
@@ -77,9 +79,6 @@ class AuthController extends GetxController {
       myInfo = null;
       await myFirebaseService.logout();
       update();
-      await prefs.remove('myEmail');
-      await prefs.remove('myPassword');
-
     }catch(error){
       throw Exception('Error : $error');
     }

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -35,7 +36,7 @@ class _RatingScreenState extends State<RatingScreen> {
   DataController _dataController = Get.find<DataController>();
   AuthController _authController = Get.find<AuthController>();
   List<LoungeDto>? items;
-
+  final FirebaseAuth auth = FirebaseAuth.instance;
   void setAppInfo() async {
     try {
       await masterCollection.doc('system').update({
@@ -317,6 +318,15 @@ class _RatingScreenState extends State<RatingScreen> {
     }
   }
 
+  void d() async{
+    print(auth.currentUser);
+
+    // String? dd = await auth.currentUser?.getIdToken(false);
+
+
+    // logger.e(dd);
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -325,6 +335,7 @@ class _RatingScreenState extends State<RatingScreen> {
         return Container(
           child: Column(
             children: [
+
               Center(child: Text("프로필 심사회원 평가하는 곳"))
             ],
           ),

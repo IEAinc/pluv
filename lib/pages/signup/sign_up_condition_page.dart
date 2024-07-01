@@ -106,7 +106,7 @@ class _SignUpConditionPageState extends State<SignUpConditionPage> {
                         SizedBox(height: 20,),
                         Image.asset('assets/images/shield.png',width: 70,),
                         SizedBox(height: 20,),
-                        Text("기혼자는 가입이 엄격히 금지됩니다.\n프로톡은 법적으로 싱글인 사람만 가입 가능하며\n이를 위반할 시 관련 법령에 따른",style: TextStyles.sub_title14_b,textAlign: TextAlign.center,),
+                        Text("기혼자는 가입이 엄격히 금지됩니다.\n프럽은 법적으로 싱글인 사람만 가입 가능하며\n이를 위반할 시 관련 법령에 따른",style: TextStyles.sub_title14_b,textAlign: TextAlign.center,),
                         Row(
                           children: [
                             Text("강제탈퇴 및 민/형사상 법적 조치",style: TextStyles.sub_title14_b.copyWith(color: appColorPrimary),textAlign: TextAlign.center,),

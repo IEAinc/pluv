@@ -40,7 +40,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
               children: [
                 Text("검증된 만남을 위해\n본인인증이 필요합니다.",style: TextStyles.title20_b,),
                 SizedBox(height: 20,),
-                Text('프럽(pluv)은 국내 최대 신용평가회사인 ‘NICE평가정보’를 통한 철저한 본인인증을 거치고 있습니다. ',style: TextStyles.contents14_b,),
+                Text('프럽(pluv)은 다날(danal) 서비스를 통한 철저한 본인인증을 거치고 있습니다. ',style: TextStyles.contents14_b,),
                 SizedBox(height: 20,),
                 Text('프럽의 모든 회원은 정확한 실명/정확한 나이/연락처 인증을 거치고 있어 정보도용이 불가하며, ',style: TextStyles.contents14_b,),
                 SizedBox(height: 20,),

@@ -62,7 +62,6 @@ class _VerificationWebviewPageState extends State<VerificationWebviewPage> {
               webViewController?.addJavaScriptHandler(handlerName: 'successHandler', callback: (args) async {
                 if (args[0] == 'success') {
                   // 인증 성공 시의 Flutter 액션
-
                   //기존 pluv 가입된 경우가 있는경우(di)
                   bool duplicate = await authController.checkDiDuplicate(args[1]["result"]["DI"]);
 

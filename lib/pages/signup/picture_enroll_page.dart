@@ -143,6 +143,8 @@ class _PictureEnrollPageState extends State<PictureEnrollPage> {
                       )
                     ],
                   ),
+                  SizedBox(height: 5,),
+                  Text("*사진을 누르면 상세보기/ 1초이상 꾹 누르면 사진변경",style: TextStyles.contents10_b,),
                   SizedBox(height: 20,),
                   RectangleButton(name: "저장",mode: 1,action: () async{
 

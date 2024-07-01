@@ -67,9 +67,8 @@ class MyFirebaseService{
         email: email,
         password: password,
       );
+
       String? memberUid = userCredential.user?.uid;
-
-
       //사용자 fcmToken 최신화
       String? token = await messaging.getToken();
       await memberCollection.doc(memberUid).update({
@@ -95,6 +94,41 @@ class MyFirebaseService{
       throw error;
     }
   }
+
+
+  //오토로그인
+  Future<MemberVo?> autoLogin() async {
+    try {
+
+
+      if(auth.currentUser ==null){
+        return null;
+      }
+      String? memberUid = auth.currentUser?.uid;
+      //사용자 fcmToken 최신화
+      String? token = await messaging.getToken();
+      await memberCollection.doc(memberUid).update({
+        'fcmToken': token,
+      });
+      //사용자 가져오기
+      DocumentSnapshot documentSnapshot = await memberCollection.doc(memberUid).get();
+
+      return MemberVo.fromSnapshot(documentSnapshot);
+    } catch (error) {
+
+      if (error is FirebaseAuthException) {
+
+        if (error.code == 'INVALID_LOGIN_CREDENTIALS') {
+          throw '계정정보를 찾을 수 없습니다. 이메일,비밀번호를 확인해주세요.';
+        }
+
+      }else{
+        throw error;
+      }
+      throw error;
+    }
+  }
+
 
   //로그아웃
   Future<void> logout() async {
