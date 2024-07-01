@@ -8,6 +8,7 @@ import 'package:pluv/component/view_status.dart';
 import '../global/global.dart';
 import '../global/text_styles.dart';
 import '../model/dto/lounge_dto.dart';
+import '../model/vo/lounge_vo.dart';
 import '../pages/main/lounge_detail_page.dart';
 import 'dot.dart';
 
@@ -15,7 +16,7 @@ import 'dot.dart';
 ///담당자 : ---
 
 class LoungeCard extends StatefulWidget {
-  final LoungeDto item;
+  final LoungeVo item;
   const LoungeCard({Key? key , required this.item}) : super(key: key);
 
   @override
@@ -39,14 +40,14 @@ class _LoungeCardState extends State<LoungeCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CategoryTag(text: widget.item.loungeVo?.loungeCategoryCodeKorean??"",),
-            Text(widget.item.loungeVo!.loungeTitle??"",style: TextStyles.title20_b,),
+            CategoryTag(text: widget.item?.loungeCategoryCodeKorean??"",),
+            Text(widget.item.loungeTitle??"",style: TextStyles.title20_b,),
             SizedBox(height: 10,),
             ViewStatus(
                 gender :widget.item.writerGender??true,
-                time:widget.item.loungeVo?.loungeCreateDate??Timestamp.now(),
-                viewCount : widget.item.loungeVo?.viewCount??0,
-                commentCount:widget.item.commentCount??0
+                time:widget.item?.loungeCreateDate??Timestamp.now(),
+                viewCount : widget.item?.viewCount??0,
+                commentCount:0
             ),
           ],
         ),

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ import '../../component/custom_progress_indicator.dart';
 import '../../controller/data_controller.dart';
 import '../../global/global.dart';
 import '../../model/dto/lounge_dto.dart';
+import '../../model/vo/lounge_vo.dart';
 
 ///LoungeScreen
 ///담당자 : ---
@@ -34,7 +36,8 @@ class _RoungeScreenState extends State<LoungeScreen> {
   DataController _dataController = Get.find<DataController>();
   StatusController _statusController = Get.find<StatusController>();
   int _currentIndex = 0;
-  List<LoungeDto>? items;
+  List<LoungeVo>? items;
+  DocumentSnapshot? lastDocument;
   bool _loading = false;
 
   void getLoungeList() async{
@@ -42,7 +45,10 @@ class _RoungeScreenState extends State<LoungeScreen> {
       _loading = true;
     });
     try{
-      items = await _dataController.searchLoungeList(categoryType: "", page: 0);
+      Map<String,dynamic> result = await _dataController.searchLoungeList(bigQuery: false,categoryType: "best", page: 0 ,lastDocument: lastDocument);
+      items =result["loungeList"] ;
+      lastDocument =result["lastDocument"] ;
+
     }catch(e){
       logger.e(e);
     }
@@ -65,6 +71,13 @@ class _RoungeScreenState extends State<LoungeScreen> {
     return Container(
       child: Column(
         children: [
+          GestureDetector(
+                        onTap: (){
+
+                          getLoungeList();
+                        },
+                        child: Text("실험용버튼"),
+                      ),
           Container(
             height: 40,
             padding: EdgeInsets.only(left: 20),

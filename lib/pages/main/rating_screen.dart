@@ -35,7 +35,7 @@ class _RatingScreenState extends State<RatingScreen> {
 
   DataController _dataController = Get.find<DataController>();
   AuthController _authController = Get.find<AuthController>();
-  List<LoungeDto>? items;
+
   final FirebaseAuth auth = FirebaseAuth.instance;
   void setAppInfo() async {
     try {

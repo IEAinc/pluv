@@ -8,13 +8,16 @@ class LoungeVo {
 
   String? loungeKey; // 라운지key
   String? writerUid; // 등록자uid
+  bool? writerGender; // 등록자성별
   String? loungeCategoryCode; // 라운지카테고리코드
   String? loungeTitle; // 제목
   String? loungeDescription; // 내용
   num? viewCount; //조회수
-  List<String>?	likeList; // 좋아요리스트
-  List<String>?	loungeImageList; //	이미지리스트
-  List<String>?	loungeKeywordList; //	키워드리스트
+  List<dynamic>?	likeList; // 좋아요리스트
+  List<dynamic>?	loungeImageList; //	이미지리스트
+  List<dynamic>?	loungeKeywordList; //	키워드리스트
+  List<dynamic>?	commentList; // 댓글리스트
+  List<dynamic>?	comment2List; // 대댓글리스트
   Timestamp? loungeCreateDate; //	라운지생성날짜
   num? loungeStatus; // 라운지 상태 1:정상,2:어드민블록,3:삭제
   bool? best;
@@ -26,6 +29,7 @@ class LoungeVo {
 
     this.loungeKey,
     this.writerUid,
+    this.writerGender,
     this.loungeCategoryCode,
     this.loungeTitle,
     this.loungeDescription,
@@ -33,6 +37,8 @@ class LoungeVo {
     this.likeList,
     this.loungeImageList,
     this.loungeKeywordList,
+    this.commentList,
+    this.comment2List,
     this.loungeCreateDate,
     this.loungeStatus,
     this.best,
@@ -45,6 +51,7 @@ class LoungeVo {
     Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
     loungeKey = data['loungeKey']??"";
     writerUid = data['writerUid']??"";
+    writerGender = data['writerGender']??false;
     loungeCategoryCode = data['loungeCategoryCode']??"";
     loungeCategoryCodeKorean = _statusController.appInfo.loungeCategoryCode?[data['loungeCategoryCode']]??"기타";
     loungeTitle = data['loungeTitle']??"";
@@ -53,6 +60,8 @@ class LoungeVo {
     likeList = data['likeList']??[];
     loungeImageList = data['loungeImageList']??[];
     loungeKeywordList = data['loungeKeywordList']??[];
+    commentList = data['commentList']??[];
+    comment2List = data['comment2List']??[];
     loungeCreateDate = data['loungeCreateDate']??"";
     loungeStatus = data['loungeStatus']??1;
     best = data['best']??false;
@@ -62,6 +71,7 @@ class LoungeVo {
   LoungeVo.fromJson(Map<dynamic,dynamic> data) {
     loungeKey = data['loungeKey']??"";
     writerUid = data['writerUid']??"";
+    writerGender = data['writerUid']??false;
     loungeCategoryCode = data['loungeCategoryCode']??"";
     loungeCategoryCodeKorean = _statusController.appInfo.loungeCategoryCode?[data['loungeCategoryCode']]??"기타";
     loungeTitle = data['loungeTitle']??"";
@@ -72,7 +82,8 @@ class LoungeVo {
     likeList = data['likeList']??[];
     loungeImageList = data['loungeImageList']??[];
     loungeKeywordList = data['loungeKeywordList']??[];
-
+    commentList = data['commentList']??[];
+    comment2List = data['comment2List']??[];
     if(data['loungeCreateDate']!=null){
       // millisecondsSinceEpoch로부터 DateTime 생성
       int millisecondsSinceEpoch = int.parse(data['loungeCreateDate'])*1000;
@@ -95,6 +106,8 @@ class LoungeVo {
 
     data['loungeKey'] = this.loungeKey??"";
     data['writerUid'] = this.writerUid??"";
+    data['writerGender'] = this.writerGender??false;
+
     data['loungeCategoryCode'] = this.loungeCategoryCode??"";
     data['loungeCategoryCodeKorean'] = this.loungeCategoryCodeKorean??"";
     data['loungeTitle'] = this.loungeTitle??"";
@@ -103,6 +116,8 @@ class LoungeVo {
     data['likeList'] = this.likeList??[""];
     data['loungeImageList'] = this.loungeImageList??[""];
     data['loungeKeywordList'] = this.loungeKeywordList??[""];
+    data['commentList'] = this.loungeImageList??[];
+    data['comment2List'] = this.loungeKeywordList??[];
     data['loungeCreateDate'] = this.loungeCreateDate??"";
     data['loungeStatus'] = this.loungeStatus??1;
     data['best'] = this.best??false;

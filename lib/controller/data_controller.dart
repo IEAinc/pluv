@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:pluv/model/vo/lounge_vo.dart';
 
@@ -18,13 +19,14 @@ class DataController extends GetxController {
 
 
   ///라운지 리스트 조회
-  Future<List<LoungeDto>> searchLoungeList({required String categoryType, String? keyword,required int page}) async{
+  //빅쿼리에서
+  Future<Map<String,dynamic>> searchLoungeList({required bigQuery,required String categoryType, String? keyword,required int page,DocumentSnapshot? lastDocument}) async{
     // bigQuery -> true->function 통해 빅쿼리호출, false ->firestore에서 직접 가져옴
     // categoryType -> ""(전체) , best(베스트), 나머지는 카테고리 코드
     // keyword -> 검색어
     // page -> 페이징, 0이 디폴트
     try{
-      List<LoungeDto> data = await myFirebaseService.searchLoungeList(categoryType,keyword??"",page);
+      Map<String,dynamic> data = await myFirebaseService.searchLoungeList(bigQuery,categoryType,keyword??"",page,lastDocument);
       return data;
     }catch(error){
       throw Exception('Error : $error');

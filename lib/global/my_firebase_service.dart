@@ -324,34 +324,67 @@ class MyFirebaseService{
   ///----라운지 -----
 
   //라운지 리스트 불러오기
-  Future<List<LoungeDto>> searchLoungeList(categoryType,keyword,page) async {
-    try {
+  Future<Map<String,dynamic>> searchLoungeList(bigQuery,categoryType,keyword,page,DocumentSnapshot? lastDocument) async {
 
+    Map<String,dynamic> valueModel = {
+      "loungeList" :[],
+      "lastDocument":null
+    };
+
+    try {
       Map<String,dynamic> searchMap = {
         "categoryType" : categoryType,
         "searchKey" : keyword,
         "limit" : 20,
         "page" : page,
       };
-      List<LoungeDto> loungeList = <LoungeDto>[];
-      final HttpsCallableResult result = await functions
-          .httpsCallable("searchLoungeList")
-          .call(<String, dynamic>{'searchMap': searchMap});
+      List<LoungeVo> loungeList = <LoungeVo>[];
+      if(bigQuery){
+        final HttpsCallableResult result = await functions
+            .httpsCallable("searchLoungeList")
+            .call(<String, dynamic>{'searchMap': searchMap});
+        result.data["result"].forEach((v) {
+          LoungeVo item = LoungeVo.fromJson(v);
+          loungeList!.add(item);
+        });
+        valueModel["loungeList"] = loungeList;
+
+        return valueModel;
+
+      }else{
+
+        Query query = loungeCollection
+            .where("loungeStatus" , isEqualTo: 1)
+            .orderBy('loungeCreateDate', descending: true)
+            .limit(20);
+        if (categoryType == "전체" ||  categoryType == "best") {
+        }else{
+          query = query.where("loungeCategoryCode" , isEqualTo: categoryType);
+        }
+        if (categoryType == "best") {
+          query = query.where("best" , isEqualTo: true);
+        }
+
+        if (lastDocument != null ) {
+          query = query.startAfterDocument(lastDocument);
+        }
+        QuerySnapshot querySnapshot = await query.get();
+        if(querySnapshot.docs.isEmpty){
+          valueModel["loungeList"] = null;
+          valueModel["lastDocument"] = lastDocument;
+        }else{
+          for (DocumentSnapshot document in querySnapshot.docs) {
+            loungeList.add(LoungeVo.fromSnapshot(document));
+          }
+          valueModel["loungeList"] = loungeList;
+          valueModel["lastDocument"] = querySnapshot.docs.last;
+        }
 
 
-
-      result.data["result"].forEach((v) {
-
-        LoungeDto item = LoungeDto();
-        item.loungeVo = LoungeVo.fromJson(v);
-        item.commentCount = v['commentCount'];
-        item.writerGender = v['memberGender'] == "true"?true:false;
-
-        loungeList!.add(item);
-      });
+        return valueModel;
+      }
 
 
-      return loungeList;
 
 
     } catch (error) {
