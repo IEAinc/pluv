@@ -63,7 +63,7 @@ class MemberVo {
   bool?	promotionAgree; //	홍보 및 마케팅 동의여부
   bool?	adAgree; //	광고성 정보수신 동의여부
   bool?	test; //	테스트 여부
-  Map<String,dynamic>? alarmStatus; //	알람온오프여부
+  // Map<String,dynamic>? alarmStatus; //	알람온오프여부
 
 
 
@@ -124,19 +124,14 @@ class MemberVo {
     this.promotionAgree,
     this.adAgree,
     this.test,
-    this.alarmStatus,
+    // this.alarmStatus,
     this.memberPassword
   }){
     // alarmStatus가 null인 경우 getAlarm() 호출
-    alarmStatus ??= getAlarm();
+    // alarmStatus ??= getAlarm();
   }
 
-  Map<String, dynamic> getAlarm(){
-    StatusController statusController = Get.find<StatusController>();
-    Map<String, bool> modifiedMap = statusController.appInfo.alarmCode!.map((key, value) => MapEntry(key, true));
 
-    return modifiedMap;
-  }
 
 
 
@@ -209,7 +204,7 @@ class MemberVo {
     promotionAgree = data['promotionAgree']??false;
     adAgree = data['adAgree']??false;
     test = data['test']??false;
-    alarmStatus = data['alarmStatus'];
+    // alarmStatus = data['alarmStatus'];
 
   }
 
@@ -270,7 +265,7 @@ class MemberVo {
     data['promotionAgree'] = promotionAgree??false;
     data['adAgree'] = adAgree??false;
     data['test'] = test??false;
-    data['alarmStatus'] = alarmStatus;
+    // data['alarmStatus'] = alarmStatus;
 
     return data;
   }
@@ -330,7 +325,7 @@ class MemberVo {
     promotionAgree = false;
     adAgree = false;
     test = true;
-    alarmStatus = {};
+    // alarmStatus = {};
   }
 
 

@@ -27,14 +27,14 @@ class _AvatarImageState extends State<AvatarImage> {
     logger.i("AvatarImage");
   }
 
-  String sampleAsset = "assets/images/pluvlogo.png";
+
 
   @override
   Widget build(BuildContext context) {
     return widget.logo==true? ClipRRect(
       borderRadius: BorderRadius.circular(100),
       child: Image.asset(
-        sampleAsset,
+        logoPath,
         fit: BoxFit.cover,
         width: widget.size ?? 92,
         height: widget.size ?? 92,
@@ -76,7 +76,7 @@ class _AvatarImageState extends State<AvatarImage> {
                       if (state.extendedImageLoadState ==
                           LoadState.failed) {
                         return Image.asset(
-                          sampleAsset,
+                          logoPath,
                           fit: BoxFit.cover,
                         );
                       }
@@ -103,7 +103,7 @@ class _AvatarImageState extends State<AvatarImage> {
         loadStateChanged: (ExtendedImageState state) {
           if (state.extendedImageLoadState == LoadState.failed) {
             return Image.asset(
-              sampleAsset,
+              logoPath,
               fit: BoxFit.cover,
               width: widget.size ?? 92,
               height: widget.size ?? 92,

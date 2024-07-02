@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:pluv/model/vo/appInfo_vo.dart';
 
 import '../../component/rectangle_button.dart';
 import '../../controller/auth_controller.dart';
@@ -198,7 +199,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
 
   Column page1_personality() {
 
-    List<MapEntry<String, dynamic>> target = statusController.appInfo.personalityCodeEntryList!;
+    List<CodeInfoVo> target = statusController.appInfo.personalityCode!;
     List<String> info = memberInfo['personalityCode']!;
     int count = 3;
     String title= "본인의 성격을 나타내는\n키워드를 선택하세요.";
@@ -217,23 +218,23 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
             ),
             itemCount: target.length, //
             itemBuilder: (BuildContext context, int index) {
-              MapEntry<String, dynamic> item = target[index];
+              CodeInfoVo item = target[index];
               // index에 따라 각 아이템을 생성
               return GestureDetector(
                 onTap: (){
                   setState(() {
-                    if(info.contains(item.key)){
-                      info.remove(item.key);
+                    if(info.contains(item.code)){
+                      info.remove(item.code);
                     }else{
                       if(info.length>=count){
                         info.removeLast();
                       }
-                      info.add(item.key);
+                      info.add(item.code!);
                     }
                   });
                 },
                 child: Container(
-                  child: Center(child: Text(item.value)),
+                  child: Center(child: Text(item.title!)),
                   decoration: BoxDecoration(
                     border: Border(
                       top: BorderSide(color: appColorGray8, width: 1),
@@ -241,7 +242,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                       right: (index % 2 == 1) ? BorderSide(color: appColorGray8, width: 1) : BorderSide.none,
                       bottom: (index >= target.length - 2) ? BorderSide(color: appColorGray8, width: 1) : BorderSide.none,
                     ),
-                    color: info.contains(item.key)?appColorPrimary.withOpacity(0.1):Colors.transparent
+                    color: info.contains(item.code)?appColorPrimary.withOpacity(0.1):Colors.transparent
                   ),
                 ),
               ); //
@@ -253,7 +254,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
     );
   }
   Column page2_interest() {
-    List<MapEntry<String, dynamic>> target = statusController.appInfo.interestCodeEntryList!;
+    List<CodeInfoVo> target = statusController.appInfo.interestCode!;
     List<String> info = memberInfo['interestCode']!;
     int count = 6;
     String title= "저는 이런것에 관심이 있어요.";
@@ -272,23 +273,23 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
             ),
             itemCount: target.length, //
             itemBuilder: (BuildContext context, int index) {
-              MapEntry<String, dynamic> item = target[index];
+              CodeInfoVo item = target[index];
               // index에 따라 각 아이템을 생성
               return GestureDetector(
                 onTap: (){
                   setState(() {
-                    if(info.contains(item.key)){
-                      info.remove(item.key);
+                    if(info.contains(item.code)){
+                      info.remove(item.code);
                     }else{
                       if(info.length>=count){
                         info.removeLast();
                       }
-                      info.add(item.key);
+                      info.add(item.code!);
                     }
                   });
                 },
                 child: Container(
-                  child: Center(child: Text(item.value)),
+                  child: Center(child: Text(item.title!)),
                   decoration: BoxDecoration(
                       border: Border(
                         top: BorderSide(color: appColorGray8, width: 1),
@@ -296,7 +297,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                         right: (index % 2 == 1) ? BorderSide(color: appColorGray8, width: 1) : BorderSide.none,
                         bottom: (index >= target.length - 2) ? BorderSide(color: appColorGray8, width: 1) : BorderSide.none,
                       ),
-                      color: info.contains(item.key)?appColorPrimary.withOpacity(0.1):Colors.transparent
+                      color: info.contains(item.code)?appColorPrimary.withOpacity(0.1):Colors.transparent
                   ),
                 ),
               ); //
@@ -308,7 +309,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
     );
   }
   Column page3_attraction() {
-    List<MapEntry<String, dynamic>> target = statusController.appInfo.attractionCodeEntryList!;
+    List<CodeInfoVo> target = statusController.appInfo.attractionCode!;
     List<String> info = memberInfo['attractionCode']!;
     int count = 6;
     String title= "저는 이런 매력이 있어요.";
@@ -327,23 +328,23 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
             ),
             itemCount: target.length, //
             itemBuilder: (BuildContext context, int index) {
-              MapEntry<String, dynamic> item = target[index];
+              CodeInfoVo item = target[index];
               // index에 따라 각 아이템을 생성
               return GestureDetector(
                 onTap: (){
                   setState(() {
-                    if(info.contains(item.key)){
-                      info.remove(item.key);
+                    if(info.contains(item.code)){
+                      info.remove(item.code);
                     }else{
                       if(info.length>=count){
                         info.removeLast();
                       }
-                      info.add(item.key);
+                      info.add(item.code!);
                     }
                   });
                 },
                 child: Container(
-                  child: Center(child: Text(item.value)),
+                  child: Center(child: Text(item.title!)),
                   decoration: BoxDecoration(
                       border: Border(
                         top: BorderSide(color: appColorGray8, width: 1),
@@ -351,7 +352,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                         right: (index % 2 == 1) ? BorderSide(color: appColorGray8, width: 1) : BorderSide.none,
                         bottom: (index >= target.length - 2) ? BorderSide(color: appColorGray8, width: 1) : BorderSide.none,
                       ),
-                      color: info.contains(item.key)?appColorPrimary.withOpacity(0.1):Colors.transparent
+                      color: info.contains(item.code)?appColorPrimary.withOpacity(0.1):Colors.transparent
                   ),
                 ),
               ); //
@@ -363,7 +364,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
     );
   }
   Column page4_date_style() {
-    List<MapEntry<String, dynamic>> target = statusController.appInfo.dateStyleCodeEntryList!;
+    List<CodeInfoVo> target = statusController.appInfo.dateStyleCode!;
     List<String> info = memberInfo['dateStyleCode']!;
     int count = 6;
     String title= "데이트 스타일은 이래요.";
@@ -382,23 +383,23 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
             ),
             itemCount: target.length, //
             itemBuilder: (BuildContext context, int index) {
-              MapEntry<String, dynamic> item = target[index];
+              CodeInfoVo item = target[index];
               // index에 따라 각 아이템을 생성
               return GestureDetector(
                 onTap: (){
                   setState(() {
-                    if(info.contains(item.key)){
-                      info.remove(item.key);
+                    if(info.contains(item.code)){
+                      info.remove(item.code);
                     }else{
                       if(info.length>=count){
                         info.removeLast();
                       }
-                      info.add(item.key);
+                      info.add(item.code!);
                     }
                   });
                 },
                 child: Container(
-                  child: Center(child: Text(item.value)),
+                  child: Center(child: Text(item.title!)),
                   decoration: BoxDecoration(
                       border: Border(
                         top: BorderSide(color: appColorGray8, width: 1),
@@ -406,7 +407,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                         right: (index % 2 == 1) ? BorderSide(color: appColorGray8, width: 1) : BorderSide.none,
                         bottom: (index >= target.length - 2) ? BorderSide(color: appColorGray8, width: 1) : BorderSide.none,
                       ),
-                      color: info.contains(item.key)?appColorPrimary.withOpacity(0.1):Colors.transparent
+                      color: info.contains(item.code)?appColorPrimary.withOpacity(0.1):Colors.transparent
                   ),
                 ),
               ); //

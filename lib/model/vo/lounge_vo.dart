@@ -23,8 +23,6 @@ class LoungeVo {
   bool? best;
   bool? test;
 
-  //계산값
-  String? loungeCategoryCodeKorean;
   LoungeVo({
 
     this.loungeKey,
@@ -53,7 +51,6 @@ class LoungeVo {
     writerUid = data['writerUid']??"";
     writerGender = data['writerGender']??false;
     loungeCategoryCode = data['loungeCategoryCode']??"";
-    loungeCategoryCodeKorean = _statusController.appInfo.loungeCategoryCode?[data['loungeCategoryCode']]??"기타";
     loungeTitle = data['loungeTitle']??"";
     loungeDescription = data['loungeDescription']??"";
     viewCount = data['viewCount']??0;
@@ -73,7 +70,6 @@ class LoungeVo {
     writerUid = data['writerUid']??"";
     writerGender = data['writerUid']??false;
     loungeCategoryCode = data['loungeCategoryCode']??"";
-    loungeCategoryCodeKorean = _statusController.appInfo.loungeCategoryCode?[data['loungeCategoryCode']]??"기타";
     loungeTitle = data['loungeTitle']??"";
     loungeDescription = data['loungeDescription']??"";
 
@@ -107,9 +103,7 @@ class LoungeVo {
     data['loungeKey'] = this.loungeKey??"";
     data['writerUid'] = this.writerUid??"";
     data['writerGender'] = this.writerGender??false;
-
     data['loungeCategoryCode'] = this.loungeCategoryCode??"";
-    data['loungeCategoryCodeKorean'] = this.loungeCategoryCodeKorean??"";
     data['loungeTitle'] = this.loungeTitle??"";
     data['loungeDescription'] = this.loungeDescription??"";
     data['viewCount'] = this.viewCount??0;

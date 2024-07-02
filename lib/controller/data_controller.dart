@@ -33,6 +33,14 @@ class DataController extends GetxController {
     }
   }
 
+  ///라운지 1개 조회
+  Future<LoungeVo> getLounge(String loungeKey) async{
+    try{
+      return await myFirebaseService.getLounge(loungeKey);
+    }catch(error){
+      throw Exception('Error : $error');
+    }
+  }
 
   ///라운지 등록
   Future<void> addLounge(LoungeVo loungeVo) async{
@@ -51,6 +59,17 @@ class DataController extends GetxController {
       throw Exception('Error : $error');
     }
   }
+
+  ///라운지 like 추가/제거
+  Future<void> updateLoungeLike(String loungeKey , String userUid, bool add) async{
+    try{
+      await myFirebaseService.updateLoungeLike(loungeKey , userUid, add);
+    }catch(error){
+      throw Exception('Error : $error');
+    }
+  }
+
+
 
 
 }

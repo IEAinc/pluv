@@ -49,7 +49,9 @@ class MyFirebaseService{
 
   Future<AppInfoVo> getAppInfo() async {
     try {
-      DocumentSnapshot documentSnapshot = await masterCollection.doc('system').get();
+      // DocumentSnapshot documentSnapshot = await masterCollection.doc('system').get();
+      DocumentSnapshot documentSnapshot = await masterCollection.doc('system_v2').get();
+
       return AppInfoVo.fromSnapshot(documentSnapshot);
     } catch (error) {
       throw Exception('Error : $error');
@@ -392,6 +394,18 @@ class MyFirebaseService{
     }
   }
 
+  //라운지 1개불러오기
+  Future<LoungeVo> getLounge(String loungeKey) async {
+    try {
+      //사용자 가져오기
+      DocumentSnapshot documentSnapshot = await loungeCollection.doc(loungeKey).get();
+      return LoungeVo.fromSnapshot(documentSnapshot);
+
+    } catch (error) {
+      throw Exception('Error : $error');
+    }
+  }
+
 
   //라운지 게시글 등록
   Future<void> addLounge(LoungeVo loungeVo) async {
@@ -431,6 +445,20 @@ class MyFirebaseService{
 
       await docReference.set(commentVo.toJson());
 
+
+    } catch (error) {
+      throw Exception('Error : $error');
+    }
+  }
+
+  //라운지 like 등록
+  Future<void> updateLoungeLike(String loungeKey,String userUid,bool add ) async {
+    try {
+      DocumentReference docRef = loungeCollection.doc(loungeKey);
+
+      return docRef.update({
+        'likeList': add?FieldValue.arrayUnion([userUid]):FieldValue.arrayRemove([userUid])
+      });
 
     } catch (error) {
       throw Exception('Error : $error');

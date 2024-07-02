@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pluv/component/category_tag.dart';
 import 'package:pluv/component/view_status.dart';
+import 'package:pluv/controller/status_controller.dart';
 
 import '../global/global.dart';
 import '../global/text_styles.dart';
@@ -30,25 +32,54 @@ class _LoungeCardState extends State<LoungeCard> {
     super.initState();
   }
 
+  StatusController _statusController = Get.find<StatusController>();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Get.to(()=>LoungeDetailPage());
+        Get.to(()=>LoungeDetailPage(loungeKey: widget.item.loungeKey!));
       },
       child: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CategoryTag(text: widget.item?.loungeCategoryCodeKorean??"",),
-            Text(widget.item.loungeTitle??"",style: TextStyles.title20_b,),
-            SizedBox(height: 10,),
-            ViewStatus(
-                gender :widget.item.writerGender??true,
-                time:widget.item?.loungeCreateDate??Timestamp.now(),
-                viewCount : widget.item?.viewCount??0,
-                commentCount:0
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CategoryTag(text: _statusController.findTitleByCode(_statusController.appInfo.loungeCategoryCode!, widget.item.loungeCategoryCode!)),
+                  Text(widget.item.loungeTitle??"",style: TextStyles.sub_title16_b,overflow: TextOverflow.ellipsis,),
+                  SizedBox(height: 10,),
+                  ViewStatus(
+                      gender :widget.item.writerGender??true,
+                      time:widget.item?.loungeCreateDate??Timestamp.now(),
+                      viewCount : widget.item?.viewCount??0,
+                      commentCount: widget.item.commentList!.length+widget.item.comment2List!.length
+                  ),
+                ],
+              ),
             ),
+            if(widget.item.loungeImageList!.length>0)
+            ExtendedImage.network(
+              widget.item.loungeImageList!.first??"",
+              width: 80,
+              height: 80,
+              fit: BoxFit.cover,
+              cache: true,
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(10),
+              loadStateChanged: (ExtendedImageState state) {
+                if (state.extendedImageLoadState == LoadState.failed) {
+                  return Image.asset(
+                    logoPath,
+                    fit: BoxFit.cover,
+                    width: 80,
+                    height: 80,
+                  );
+                }
+              },
+            )
           ],
         ),
       ),

@@ -1,7 +1,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../global/global.dart';
 
 class AppInfoVo {
 
@@ -14,46 +13,24 @@ class AppInfoVo {
   String? promotionLink; // 홍보 및 마케팅 링크
   String? adLink; // 광고성 정보 수신동의서 링크
   String? businessNumber; // 사업자번호
-  Map<String,dynamic>?	bodyFormCode; // 체형코드
-  Map<String,dynamic>?	drinkCode; // 음주코드
-  Map<String,dynamic>?	religionCode; // 종교코드
-  Map<String,dynamic>?	personalityCode; // 성격코드
-  Map<String,dynamic>?	interestCode; // 관심코드
-  Map<String,dynamic>?	attractionCode; // 매력코드
-  Map<String,dynamic>?	dateStyleCode; // 데이트스타일코드
-  Map<String,dynamic>?	areaCode; // 지역구코드
-  Map<String,dynamic>?	pointCode; // 포인트코드
-  Map<String,dynamic>?	adminAccessCode; // 관리자접근권한코드
-  Map<String,dynamic>?	loungeCategoryCode; // 라운지카테고리코드
-  Map<String,dynamic>?	communityReportCode; // 커뮤니티신고코드
-  Map<String,dynamic>?	partyCategoryCode; // 파티카테고리코드
-  Map<String,dynamic>?	reportCode; // 신고코드
-  Map<String,dynamic>?	alarmCode; // 알람코드
+  List<CodeInfoVo>?	bodyFormCode; // 체형코드
+  List<CodeInfoVo>?	drinkCode; // 음주코드
+  List<CodeInfoVo>?	religionCode; // 종교코드
+  List<CodeInfoVo>?	personalityCode; // 성격코드
+  List<CodeInfoVo>?	interestCode; // 관심코드
+  List<CodeInfoVo>?	attractionCode; // 매력코드
+  List<CodeInfoVo>?	dateStyleCode; // 데이트스타일코드
+  List<CodeInfoVo>?	areaCode; // 지역구코드
+  List<CodeInfoVo>?	pointCode; // 포인트코드
+  List<CodeInfoVo>?	adminAccessCode; // 관리자접근권한코드
+  List<CodeInfoVo>?	loungeCategoryCode; // 라운지카테고리코드
+  List<CodeInfoVo>?	communityReportCode; // 커뮤니티신고코드
+  List<CodeInfoVo>?	partyCategoryCode; // 파티카테고리코드
+  List<CodeInfoVo>?	reportCode; // 신고코드
+  List<CodeInfoVo>?	alarmCode; // 알람코드
   List<NoticeVo>?	noticeList; // 공지 및 faq
 
 
-
-  List<MapEntry<String, dynamic>>?	bodyFormCodeEntryList; // 체형코드 엔트리 리스트
-  List<MapEntry<String, dynamic>>?	drinkCodeEntryList; // 음주코드 엔트리 리스트
-  List<MapEntry<String, dynamic>>?	religionCodeEntryList; // 종교코드 엔트리 리스트
-  List<MapEntry<String, dynamic>>?	personalityCodeEntryList; // 성격코드 엔트리 리스트
-  List<MapEntry<String, dynamic>>?	interestCodeEntryList; // 관심코드 엔트리 리스트
-  List<MapEntry<String, dynamic>>?	attractionCodeEntryList; // 매력코드 엔트리 리스트
-  List<MapEntry<String, dynamic>>?	dateStyleCodeEntryList; // 데이트스타일코드 엔트리 리스트
-  List<MapEntry<String, dynamic>>?	areaCodeEntryList; // 지역구코드 엔트리 리스트
-
-  List<MapEntry<String, dynamic>>?	pointCodeEntryList; // 포인트코드 엔트리 리스트
-  List<MapEntry<String, dynamic>>?	adminAccessCodeEntryList; // 관리자접근권한코드 엔트리 리스트
-  List<MapEntry<String, dynamic>>?	loungeCategoryCodeEntryList; // 라운지카테고리코드 엔트리 리스트
-  List<MapEntry<String, dynamic>>?	communityReportCodeEntryList; // 커뮤니티신고코드 엔트리 리스트
-  List<MapEntry<String, dynamic>>?	partyCategoryCodeEntryList; // 파티카테고리코드 엔트리 리스트
-  List<MapEntry<String, dynamic>>?	reportCodeEntryList; // 신고코드 엔트리 리스트
-  List<MapEntry<String, dynamic>>?	alarmCodeEntryList; // 알람코드 엔트리 리스트
-
-
-
-
-  
   AppInfoVo({
     this.appName,
     this.appVersion,
@@ -99,22 +76,101 @@ class AppInfoVo {
     promotionLink = data['promotionLink']??"";
     adLink = data['adLink']??"";
     businessNumber = data['businessNumber']??"";
-    bodyFormCode = data['bodyFormCode']??{};
-    drinkCode = data['drinkCode']??{};
-    religionCode = data['religionCode']??{};
-    personalityCode = data['personalityCode']??{};
-    interestCode = data['interestCode']??{};
-    attractionCode = data['attractionCode']??{};
-    dateStyleCode = data['dateStyleCode']??{};
-    areaCode = data['areaCode']??{};
-    pointCode = data['pointCode']??{};
-    adminAccessCode = data['adminAccessCode']??{};
-    loungeCategoryCode = data['loungeCategoryCode']??{};
-    communityReportCode = data['communityReportCode']??{};
-    partyCategoryCode = data['partyCategoryCode']??{};
-    reportCode = data['reportCode']??{};
-    alarmCode = data['alarmCode']??{};
 
+
+    if (data['bodyFormCode'] != null && data['bodyFormCode'] is List) {
+      bodyFormCode = (data['bodyFormCode'] as List).map((item) {
+        return CodeInfoVo.fromJson(item);}).toList();
+    } else {
+      bodyFormCode = [];
+    }
+    if (data['drinkCode'] != null && data['drinkCode'] is List) {
+      drinkCode = (data['drinkCode'] as List).map((item) {
+        return CodeInfoVo.fromJson(item);}).toList();
+    } else {
+      drinkCode = [];
+    }
+    if (data['religionCode'] != null && data['religionCode'] is List) {
+      religionCode = (data['religionCode'] as List).map((item) {
+        return CodeInfoVo.fromJson(item);}).toList();
+    } else {
+      religionCode = [];
+    }
+    if (data['personalityCode'] != null && data['personalityCode'] is List) {
+      personalityCode = (data['personalityCode'] as List).map((item) {
+        return CodeInfoVo.fromJson(item);}).toList();
+    } else {
+      personalityCode = [];
+    }
+    if (data['interestCode'] != null && data['interestCode'] is List) {
+      interestCode = (data['interestCode'] as List).map((item) {
+        return CodeInfoVo.fromJson(item);}).toList();
+    } else {
+      interestCode = [];
+    }
+    if (data['attractionCode'] != null && data['attractionCode'] is List) {
+      attractionCode = (data['attractionCode'] as List).map((item) {
+        return CodeInfoVo.fromJson(item);}).toList();
+    } else {
+      attractionCode = [];
+    }
+    if (data['dateStyleCode'] != null && data['dateStyleCode'] is List) {
+      dateStyleCode = (data['dateStyleCode'] as List).map((item) {
+        return CodeInfoVo.fromJson(item);}).toList();
+    } else {
+      dateStyleCode = [];
+    }
+    if (data['areaCode'] != null && data['areaCode'] is List) {
+      areaCode = (data['areaCode'] as List).map((item) {
+        return CodeInfoVo.fromJson(item);}).toList();
+    } else {
+      areaCode = [];
+    }
+    if (data['pointCode'] != null && data['pointCode'] is List) {
+      pointCode = (data['pointCode'] as List).map((item) {
+        return CodeInfoVo.fromJson(item);}).toList();
+    } else {
+      pointCode = [];
+    }
+    if (data['adminAccessCode'] != null && data['adminAccessCode'] is List) {
+      adminAccessCode = (data['adminAccessCode'] as List).map((item) {
+        return CodeInfoVo.fromJson(item);}).toList();
+    } else {
+      adminAccessCode = [];
+    }
+
+    if (data['loungeCategoryCode'] != null && data['loungeCategoryCode'] is List) {
+      loungeCategoryCode = (data['loungeCategoryCode'] as List).map((item) {
+        return CodeInfoVo.fromJson(item);}).toList();
+    } else {
+      loungeCategoryCode = [];
+    }
+    if (data['communityReportCode'] != null && data['communityReportCode'] is List) {
+      communityReportCode = (data['communityReportCode'] as List).map((item) {
+        return CodeInfoVo.fromJson(item);}).toList();
+    } else {
+      communityReportCode = [];
+    }
+
+    if (data['partyCategoryCode'] != null && data['partyCategoryCode'] is List) {
+      partyCategoryCode = (data['partyCategoryCode'] as List).map((item) {
+        return CodeInfoVo.fromJson(item);}).toList();
+    } else {
+      partyCategoryCode = [];
+    }
+
+    if (data['reportCode'] != null && data['reportCode'] is List) {
+      reportCode = (data['reportCode'] as List).map((item) {
+        return CodeInfoVo.fromJson(item);}).toList();
+    } else {
+      reportCode = [];
+    }
+    if (data['alarmCode'] != null && data['alarmCode'] is List) {
+      alarmCode = (data['alarmCode'] as List).map((item) {
+        return CodeInfoVo.fromJson(item);}).toList();
+    } else {
+      alarmCode = [];
+    }
     if (data['noticeList'] != null && data['noticeList'] is List) {
       noticeList = (data['noticeList'] as List).map((item) {
         return NoticeVo.fromJson(item);}).toList();
@@ -137,59 +193,24 @@ class AppInfoVo {
     data['promotionLink'] = this.promotionLink??"";
     data['adLink'] = this.adLink??"";
     data['businessNumber'] = this.businessNumber??"";
-    data['bodyFormCode'] = this.bodyFormCode??{};
-    data['drinkCode'] = this.drinkCode??{};
-    data['religionCode'] = this.religionCode??{};
-    data['personalityCode'] = this.personalityCode??{};
-    data['interestCode'] = this.interestCode??{};
-    data['attractionCode'] = this.attractionCode??{};
-    data['dateStyleCode'] = this.dateStyleCode??{};
-    data['areaCode'] = this.areaCode??{};
-    data['pointCode'] = this.pointCode??{};
-    data['adminAccessCode'] = this.adminAccessCode??{};
-    data['loungeCategoryCode'] = this.loungeCategoryCode??{};
-    data['communityReportCode'] = this.communityReportCode??{};
-    data['partyCategoryCode'] = this.partyCategoryCode??{};
-    data['reportCode'] = this.reportCode??{};
-    data['alarmCode'] = this.alarmCode??{};
-
+    data['bodyFormCode'] = bodyFormCode?.map((item) {return item.toJson();})?.toList()??[];
+    data['drinkCode'] = drinkCode?.map((item) {return item.toJson();})?.toList()??[];
+    data['religionCode'] = religionCode?.map((item) {return item.toJson();})?.toList()??[];
+    data['personalityCode'] = personalityCode?.map((item) {return item.toJson();})?.toList()??[];
+    data['interestCode'] = interestCode?.map((item) {return item.toJson();})?.toList()??[];
+    data['attractionCode'] = attractionCode?.map((item) {return item.toJson();})?.toList()??[];
+    data['dateStyleCode'] = dateStyleCode?.map((item) {return item.toJson();})?.toList()??[];
+    data['areaCode'] = areaCode?.map((item) {return item.toJson();})?.toList()??[];
+    data['pointCode'] = pointCode?.map((item) {return item.toJson();})?.toList()??[];
+    data['adminAccessCode'] = adminAccessCode?.map((item) {return item.toJson();})?.toList()??[];
+    data['loungeCategoryCode'] = loungeCategoryCode?.map((item) {return item.toJson();})?.toList()??[];
+    data['communityReportCode'] = communityReportCode?.map((item) {return item.toJson();})?.toList()??[];
+    data['partyCategoryCode'] = partyCategoryCode?.map((item) {return item.toJson();})?.toList()??[];
+    data['reportCode'] = reportCode?.map((item) {return item.toJson();})?.toList()??[];
+    data['alarmCode'] = alarmCode?.map((item) {return item.toJson();})?.toList()??[];
     data['noticeList'] = noticeList?.map((item) {return item.toJson();})?.toList()??[];
     return data;
   }
-
-  void makeEntry(){
-    bodyFormCodeEntryList = getEntry(bodyFormCode);
-    drinkCodeEntryList = getEntry(drinkCode);
-    religionCodeEntryList = getEntry(religionCode);
-    personalityCodeEntryList = getEntry(personalityCode);
-    interestCodeEntryList = getEntry(interestCode);
-    attractionCodeEntryList = getEntry(attractionCode);
-    dateStyleCodeEntryList = getEntry(dateStyleCode);
-    areaCodeEntryList = getEntry(areaCode);
-    pointCodeEntryList = getEntry(pointCode);
-    adminAccessCodeEntryList = getEntry(adminAccessCode);
-    loungeCategoryCodeEntryList = getEntry(loungeCategoryCode);
-    communityReportCodeEntryList = getEntry(communityReportCode);
-    partyCategoryCodeEntryList = getEntry(partyCategoryCode);
-    reportCodeEntryList = getEntry(reportCode);
-    alarmCodeEntryList = getEntry(alarmCode);
-
-  }
-  List<MapEntry<String, dynamic>> getEntry(Map<String,dynamic>? map) {
-    if(map !=null){
-      List<MapEntry<String, dynamic>> entries = map!.entries.toList();
-      entries.sort((a, b) {
-        int numA = int.parse(a.key.split('_').last);
-        int numB = int.parse(b.key.split('_').last);
-        return numA.compareTo(numB);
-      });
-      return entries;
-    }else{
-      return [];
-    }
-  }
-
-
 
 }
 
@@ -281,5 +302,47 @@ class MediaInfoVo {
     data['url'] = url??"";
     return data;
   }
+
+
+
+
+}
+
+class CodeInfoVo {
+
+  String?	code;	//코드
+  String?	title;	//내용
+  String?	upperCode;	//상위코드
+  String?	etc;	//기타기능
+
+  CodeInfoVo({
+    this.code,
+    this.title,
+    this.upperCode,
+    this.etc,
+
+  });
+
+  CodeInfoVo.fromJson(Map<String , dynamic> data) {
+    code = data['code']??"";
+    title = data['title']??"";
+    upperCode = data['upperCode']??"";
+    etc = data['etc']??"";
+  }
+
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+
+    data['code'] = code??"";
+    data['title'] = title??"";
+    data['upperCode'] = upperCode??"";
+    data['etc'] = etc??"";
+
+    return data;
+  }
+
+
+
 
 }

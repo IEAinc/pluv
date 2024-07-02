@@ -13,7 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 String loadingProgress ='assets/lottie/loading.json';
-
+String logoPath = "assets/images/pluvlogo.png";
 ///icon
 
 String calender = "🗓";

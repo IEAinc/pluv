@@ -16,13 +16,10 @@ class StatusController extends GetxController {
   AppInfoVo appInfo = AppInfoVo();
 
 
-
-
   ///앱인포
   Future<void> getAppInfo() async{
     try{
       appInfo = await myFirebaseService.getAppInfo();
-      appInfo.makeEntry();
       update();
     }catch(error){
       throw Exception('Error : $error');
@@ -30,9 +27,9 @@ class StatusController extends GetxController {
   }
 
   //지역구만 뽑아내기
-  List<MapEntry<String, dynamic>> getArea() {
+  List<CodeInfoVo> getArea() {
 
-    List<MapEntry<String, dynamic>> entries = appInfo.areaCodeEntryList!.where((entry) => entry.key.contains("00")).toList();
+    List<CodeInfoVo> entries = appInfo.areaCode!.where((entry) => entry.etc!.contains("01")).toList();
     entries.sort((a, b) {
       const order = [
         'RE_GU_SE_00',
@@ -45,8 +42,8 @@ class StatusController extends GetxController {
         'RE_GU_JJ_00'
       ];
 
-      int indexA = order.indexOf(a.key);
-      int indexB = order.indexOf(b.key);
+      int indexA = order.indexOf(a.code!);
+      int indexB = order.indexOf(b.code!);
       if (indexA == -1) indexA = order.length; // 나머지 항목은 마지막으로
       if (indexB == -1) indexB = order.length;
       return indexA.compareTo(indexB);
@@ -55,11 +52,22 @@ class StatusController extends GetxController {
   }
 
   //지역구 상세 뽑아내기
-  List<MapEntry<String, dynamic>> getAreaDetail(String area) {
-    List<MapEntry<String, dynamic>> entries = appInfo.areaCodeEntryList!.where((entry) => entry.key.contains(area.substring(0, 8)) && !entry.key.contains("00")).toList();
+  List<CodeInfoVo> getAreaDetail(String area) {
+    List<CodeInfoVo> entries = appInfo.areaCode!.where((entry) => entry.upperCode!.contains(area)).toList();
     return entries;
   }
 
+
+
+  //코드에서 title 뽑아내기
+  String findTitleByCode(List<CodeInfoVo> list, String codeToFind) {
+    try {
+      CodeInfoVo result = list.firstWhere((obj) => obj.code == codeToFind, orElse: () => CodeInfoVo(code: "", title: ""));
+      return result.title!;
+    } catch (e) {
+      return "";
+    }
+  }
 
 
 

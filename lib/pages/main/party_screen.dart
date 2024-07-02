@@ -8,6 +8,7 @@ import '../../component/dot.dart';
 import '../../controller/status_controller.dart';
 import '../../global/global.dart';
 import '../../global/text_styles.dart';
+import '../../model/vo/appInfo_vo.dart';
 
 ///PartyScreen
 ///담당자 : ---
@@ -25,17 +26,18 @@ class _PartyScreenState extends State<PartyScreen> {
   void initState() {
     super.initState();
     logger.i("PartyScreen");
+    partyCategoryList =[
+      CodeInfoVo(title: "전체",code: "전체"),..._statusController!.appInfo!.partyCategoryCode!
+    ];
   }
 
 
   int _currentIndex = 0;
-  List<String> partyCategoryList =[
-    "전체","best","CT_PT_01", "CT_PT_02",
-  ];
 
-  String findCode(String code){
-    return _statusController.appInfo.partyCategoryCode?[code]??code;
-  }
+
+  List<CodeInfoVo> partyCategoryList =[];
+
+
   StatusController _statusController = Get.find<StatusController>();
 
   @override
@@ -65,7 +67,7 @@ class _PartyScreenState extends State<PartyScreen> {
                           decoration: BoxDecoration(
                               border:_currentIndex == index? Border(bottom: BorderSide(color: appColorPrimary,width: 3)):null
                           ),
-                          child: Text(findCode(partyCategoryList[index]),style:_currentIndex == index?TextStyles.sub_title15_b.copyWith(color: appColorPrimary2): TextStyles.sub_title15_g1,)),
+                          child: Text(partyCategoryList[index].title!,style:_currentIndex == index?TextStyles.sub_title15_b.copyWith(color: appColorPrimary2): TextStyles.sub_title15_g1,)),
                     ],
                   ),
                 );

@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pluv/component/rectangle_button.dart';
 import 'package:pluv/global/text_styles.dart';
+import 'package:pluv/model/vo/appInfo_vo.dart';
 
 import '../../component/custom_dialog.dart';
 import '../../controller/auth_controller.dart';
@@ -58,7 +59,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
   final _jobFormKey = GlobalKey<FormState>();
 
   int _currentIndex = 0;
-  List<MapEntry<String, dynamic>> areaDetailList = [];
+  List<CodeInfoVo> areaDetailList = [];
   Map<String,dynamic> memberInfo = {
     "nickName" : "",
     "areaCode" : "RE_GU_SE",
@@ -397,18 +398,18 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                                     return GestureDetector(
                                       onTap: (){
                                         setState(() {
-                                          memberInfo["areaCode"]=statusController.getArea()[index].key;
-                                          areaDetailList = statusController.getAreaDetail(statusController.getArea()[index].key);
+                                          memberInfo["areaCode"]=statusController.getArea()[index].code;
+                                          areaDetailList = statusController.getAreaDetail(statusController.getArea()[index].code!);
                                         });
                                       },
                                       child: Container(
                                         height: 50,
                                         width: Get.width,
                                         decoration: BoxDecoration(
-                                          color: memberInfo["areaCode"]==statusController.getArea()[index].key?appColorPrimary.withOpacity(0.1):Colors.transparent,
+                                          color: memberInfo["areaCode"]==statusController.getArea()[index].code?appColorPrimary.withOpacity(0.1):Colors.transparent,
                                             border: Border(top: index==0?BorderSide(color: appColorGray8):BorderSide.none,bottom: BorderSide(color: appColorGray8), left:BorderSide(color: appColorGray8),right: BorderSide(color: appColorGray8) )
                                         ),
-                                        child: Center(child: Text(statusController.getArea()[index].value)),
+                                        child: Center(child: Text(statusController.getArea()[index].title!)),
                                       ),
                                     );
                                   },
@@ -424,17 +425,17 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                                       onTap: (){
 
                                         setState(() {
-                                          memberInfo["areaDetailCode"] = areaDetailList[index].key;
+                                          memberInfo["areaDetailCode"] = areaDetailList[index].title;
                                         });
                                       },
                                       child: Container(
                                         height: 50,
                                         width: Get.width,
                                         decoration: BoxDecoration(
-                                            color: memberInfo["areaDetailCode"]==areaDetailList[index].key?appColorPrimary.withOpacity(0.1):Colors.transparent,
+                                            color: memberInfo["areaDetailCode"]==areaDetailList[index].code?appColorPrimary.withOpacity(0.1):Colors.transparent,
                                             border: Border(top: index==0?BorderSide(color: appColorGray8):BorderSide.none,bottom: BorderSide(color: appColorGray8), left:BorderSide(color: appColorGray8),right: BorderSide(color: appColorGray8) )
                                         ),
-                                        child: Center(child: Text(areaDetailList[index].value)),
+                                        child: Center(child: Text(areaDetailList[index].title!)),
                                       ),
                                     );
                                   },
@@ -580,22 +581,22 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
         SizedBox(height: 50,),
         Expanded(
             child: ListView.builder(
-              itemCount: statusController.appInfo.bodyFormCodeEntryList!.length,
+              itemCount: statusController.appInfo.bodyFormCode!.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: (){
                     setState(() {
-                      memberInfo["bodyFormCode"]=statusController.appInfo.bodyFormCodeEntryList![index].key;
+                      memberInfo["bodyFormCode"]=statusController.appInfo.bodyFormCode![index].code;
                     });
                   },
                   child: Container(
                     height: 50,
                     width: Get.width,
                     decoration: BoxDecoration(
-                        color: memberInfo["bodyFormCode"]==statusController.appInfo.bodyFormCodeEntryList![index].key?appColorPrimary.withOpacity(0.1):Colors.transparent,
+                        color: memberInfo["bodyFormCode"]==statusController.appInfo.bodyFormCode![index].code?appColorPrimary.withOpacity(0.1):Colors.transparent,
                         border: Border(top: index==0?BorderSide(color: appColorGray8):BorderSide.none,bottom: BorderSide(color: appColorGray8), left:BorderSide(color: appColorGray8),right: BorderSide(color: appColorGray8) )
                     ),
-                    child: Center(child: Text(statusController.appInfo.bodyFormCodeEntryList![index].value)),
+                    child: Center(child: Text(statusController.appInfo.bodyFormCode![index].title!)),
                   ),
                 );
               },
@@ -613,22 +614,22 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
         SizedBox(height: 50,),
         Expanded(
             child: ListView.builder(
-              itemCount: statusController.appInfo.drinkCodeEntryList!.length,
+              itemCount: statusController.appInfo.drinkCode!.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: (){
                     setState(() {
-                      memberInfo["drinkCode"]=statusController.appInfo.drinkCodeEntryList![index].key;
+                      memberInfo["drinkCode"]=statusController.appInfo.drinkCode![index].code;
                     });
                   },
                   child: Container(
                     height: 50,
                     width: Get.width,
                     decoration: BoxDecoration(
-                        color: memberInfo["drinkCode"]==statusController.appInfo.drinkCodeEntryList![index].key?appColorPrimary.withOpacity(0.1):Colors.transparent,
+                        color: memberInfo["drinkCode"]==statusController.appInfo.drinkCode![index].code?appColorPrimary.withOpacity(0.1):Colors.transparent,
                         border: Border(top: index==0?BorderSide(color: appColorGray8):BorderSide.none,bottom: BorderSide(color: appColorGray8), left:BorderSide(color: appColorGray8),right: BorderSide(color: appColorGray8) )
                     ),
-                    child: Center(child: Text(statusController.appInfo.drinkCodeEntryList![index].value)),
+                    child: Center(child: Text(statusController.appInfo.drinkCode![index].title!)),
                   ),
                 );
               },
@@ -692,22 +693,22 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
         SizedBox(height: 50,),
         Expanded(
             child: ListView.builder(
-              itemCount: statusController.appInfo.religionCodeEntryList!.length,
+              itemCount: statusController.appInfo.religionCode!.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: (){
                     setState(() {
-                      memberInfo["religionCode"]=statusController.appInfo.religionCodeEntryList![index].key;
+                      memberInfo["religionCode"]=statusController.appInfo.religionCode![index].code;
                     });
                   },
                   child: Container(
                     height: 50,
                     width: Get.width,
                     decoration: BoxDecoration(
-                        color: memberInfo["religionCode"]==statusController.appInfo.religionCodeEntryList![index].key?appColorPrimary.withOpacity(0.1):Colors.transparent,
+                        color: memberInfo["religionCode"]==statusController.appInfo.religionCode![index].code?appColorPrimary.withOpacity(0.1):Colors.transparent,
                         border: Border(top: index==0?BorderSide(color: appColorGray8):BorderSide.none,bottom: BorderSide(color: appColorGray8), left:BorderSide(color: appColorGray8),right: BorderSide(color: appColorGray8) )
                     ),
-                    child: Center(child: Text(statusController.appInfo.religionCodeEntryList![index].value)),
+                    child: Center(child: Text(statusController.appInfo.religionCode![index].title!)),
                   ),
                 );
               },

@@ -61,7 +61,7 @@ class _RectangleButtonState extends State<RectangleButton> {
         style: ElevatedButton.styleFrom(
 
           foregroundColor: Colors.black,
-          backgroundColor: widget.backgroundColor,
+          backgroundColor: widget.backgroundColor??Colors.white,
           overlayColor: appColorPrimary,
           side: BorderSide(color: Colors.black, width: 1), // 테두리 색상
           fixedSize: Size(Get.width,44), // 높이를 50으로 설정

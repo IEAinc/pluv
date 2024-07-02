@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,6 +8,7 @@ import 'package:pluv/component/dot.dart';
 import 'package:pluv/component/lounge_card.dart';
 import 'package:pluv/controller/status_controller.dart';
 import 'package:pluv/global/text_styles.dart';
+import 'package:pluv/model/vo/appInfo_vo.dart';
 import 'package:pluv/pages/main/lounge_write_page.dart';
 
 import '../../component/custom_progress_indicator.dart';
@@ -29,9 +32,11 @@ class _RoungeScreenState extends State<LoungeScreen> {
   @override
   void initState() {
     super.initState();
-    getLoungeList();
+    getLoungeList(bigQuery: false ,categoryType: "전체",page: 0);
     logger.i("LoungeScreen");
-
+    loungeCategoryList =[
+      CodeInfoVo(title: "전체",code: "전체"),CodeInfoVo(title: "best",code: "best"),..._statusController!.appInfo!.loungeCategoryCode!
+    ];
   }
   DataController _dataController = Get.find<DataController>();
   StatusController _statusController = Get.find<StatusController>();
@@ -40,12 +45,12 @@ class _RoungeScreenState extends State<LoungeScreen> {
   DocumentSnapshot? lastDocument;
   bool _loading = false;
 
-  void getLoungeList() async{
+  void getLoungeList({required bool bigQuery,required String categoryType,required int page ,DocumentSnapshot? lastDocument}) async{
     setState(() {
       _loading = true;
     });
     try{
-      Map<String,dynamic> result = await _dataController.searchLoungeList(bigQuery: false,categoryType: "best", page: 0 ,lastDocument: lastDocument);
+      Map<String,dynamic> result = await _dataController.searchLoungeList(bigQuery: bigQuery,categoryType: categoryType, page: page ,lastDocument: lastDocument);
       items =result["loungeList"] ;
       lastDocument =result["lastDocument"] ;
 
@@ -57,13 +62,7 @@ class _RoungeScreenState extends State<LoungeScreen> {
     });
   }
 
-  List<String> loungeCategoryList =[
-    "전체","best","CT_RO_01", "CT_RO_02", "CT_RO_03",
-  ];
-
-  String findCode(String code){
-    return _statusController.appInfo.loungeCategoryCode?[code]??code;
-  }
+  List<CodeInfoVo> loungeCategoryList =[];
 
 
   @override
@@ -71,13 +70,7 @@ class _RoungeScreenState extends State<LoungeScreen> {
     return Container(
       child: Column(
         children: [
-          GestureDetector(
-                        onTap: (){
 
-                          getLoungeList();
-                        },
-                        child: Text("실험용버튼"),
-                      ),
           Container(
             height: 40,
             padding: EdgeInsets.only(left: 20),
@@ -101,7 +94,7 @@ class _RoungeScreenState extends State<LoungeScreen> {
                           decoration: BoxDecoration(
                               border:_currentIndex == index? Border(bottom: BorderSide(color: appColorPrimary,width: 3)):null
                           ),
-                          child: Text(findCode(loungeCategoryList[index]),style:_currentIndex == index?TextStyles.sub_title15_b.copyWith(color: appColorPrimary2): TextStyles.sub_title15_g1,)),
+                          child: Text((loungeCategoryList[index].title!),style:_currentIndex == index?TextStyles.sub_title15_b.copyWith(color: appColorPrimary2): TextStyles.sub_title15_g1,)),
                     ],
                   ),
                 );

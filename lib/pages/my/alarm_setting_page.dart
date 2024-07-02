@@ -64,9 +64,9 @@ class _AlarmSettingPageState extends State<AlarmSettingPage> {
     });
   }
 
-  String findCode(String code){
-    return _statusController.appInfo.alarmCode?[code]??code;
-  }
+  // String findCode(String code){
+  //   return _statusController.appInfo.alarmCode?[code]??code;
+  // }
 
   StatusController _statusController = Get.find<StatusController>();
   @override
@@ -113,7 +113,7 @@ class _AlarmSettingPageState extends State<AlarmSettingPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(findCode(entry.key),style: TextStyles.sub_title15_b,),
+                          // Text(findCode(entry.key),style: TextStyles.sub_title15_b,),
                           FlutterSwitch(
                             value: entry.value,
                             width: 46,
