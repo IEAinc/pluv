@@ -6,7 +6,9 @@ class CommentVo {
   String? targetCommunityKey; //	대상커뮤니티key
   num? replyDepth; //	댓글레벨
   String? upperReplyKey; //	상위댓글key
+  List<dynamic>?underCommentList; //	하위댓글리스트
   String? writerUid; //	댓글작성자uid
+  bool?	writerGender;	// 댓글작성자성별
   String? commentDescription; //	댓글내용
   num? commentStatus; //	댓글상태
   Timestamp? commentCreateDate; //	댓글생성날짜
@@ -17,7 +19,9 @@ class CommentVo {
     this.targetCommunityKey,
     this.replyDepth,
     this.upperReplyKey,
+    this.underCommentList,
     this.writerUid,
+    this.writerGender,
     this.commentDescription,
     this.commentStatus,
     this.commentCreateDate,
@@ -30,7 +34,9 @@ class CommentVo {
     targetCommunityKey = data['targetCommunityKey']??"";
     replyDepth = data['replyDepth']??1;
     upperReplyKey = data['upperReplyKey']??null;
+    underCommentList = data['underCommentList']??[];
     writerUid = data['writerUid']??"";
+    writerGender = data['writerGender']??false;
     commentDescription = data['commentDescription']??"";
     commentStatus = data['commentStatus']??1;
     commentCreateDate = data['commentCreateDate']??Timestamp.now();
@@ -43,8 +49,10 @@ class CommentVo {
     data['commentKey'] = this.commentKey??"";
     data['targetCommunityKey'] = this.targetCommunityKey??"";
     data['replyDepth'] = this.replyDepth??1;
-    data['upperReplyKey'] = this.upperReplyKey??null;
+    data['upperReplyKey'] = this.upperReplyKey??"";
+    data['underCommentList'] = this.underCommentList??[];
     data['writerUid'] = this.writerUid??"";
+    data['writerGender'] = this.writerGender??false;
     data['commentDescription'] = this.commentDescription??"";
     data['commentStatus'] = this.commentStatus??1;
     data['commentCreateDate'] = this.commentCreateDate??Timestamp.now();

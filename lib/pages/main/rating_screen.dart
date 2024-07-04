@@ -1,13 +1,17 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:pluv/component/custom_input_filed.dart';
 import 'package:pluv/controller/status_controller.dart';
 import 'package:pluv/model/vo/lounge_vo.dart';
 import 'package:pluv/model/vo/member_vo.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:pluv/sample_page.dart';
 import '../../controller/auth_controller.dart';
 import '../../controller/data_controller.dart';
 import '../../global/global.dart';
@@ -319,18 +323,41 @@ class _RatingScreenState extends State<RatingScreen> {
   Widget build(BuildContext context) {
     return GetBuilder<StatusController>(
       builder: (controller) {
-        return Container(
-          child: Column(
-            children: [
-              GestureDetector(
-                            onTap: (){
-                              setAppInfo();
-                            },
-                            child: Text("실험용버튼"),
-                          ),
-
-              Center(child: Text("프로필 심사회원 평가하는 곳"))
-            ],
+        return SingleChildScrollView(
+          child: GestureDetector(
+            onTap: (){
+              FocusScope.of(context).unfocus();
+            },
+            child: Container(
+              child: Column(
+                children: [
+                  SizedBox(height: 300,),
+                  TextField(
+          
+                  ),
+                  TextField(
+          
+                  ),
+                  GestureDetector(
+                                onTap: (){
+          
+                                  // Get.to(()=>SamplePage())?.then((a){
+                                  //
+                                  //
+                                  //   // Timer(Duration(milliseconds: 10), () {
+                                  //   //   FocusScope.of(context).unfocus();
+                                  //   // });
+                                  //
+                                  //
+                                  // });
+                                },
+                                child: Text("실험용버튼"),
+                              ),
+          
+                  Center(child: Text("프로필 심사회원 평가하는 곳"))
+                ],
+              ),
+            ),
           ),
         );
       }

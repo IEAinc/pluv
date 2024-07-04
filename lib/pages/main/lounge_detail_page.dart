@@ -3,17 +3,24 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:pluv/component/comment_card.dart';
+import 'package:pluv/component/edit_delete_bottom_sheet.dart';
+
 import 'package:pluv/component/rectangle_button.dart';
 import 'package:pluv/component/view_status.dart';
 import 'package:pluv/controller/auth_controller.dart';
 import 'package:pluv/controller/data_controller.dart';
 import 'package:pluv/controller/status_controller.dart';
+import 'package:pluv/model/vo/comment_vo.dart';
 import 'package:pluv/model/vo/lounge_vo.dart';
 import 'package:pluv/pages/main/lounge_text_detail_page.dart';
 
 import '../../component/category_tag.dart';
+import '../../component/comment_bottom_sheet.dart';
 import '../../component/custom_input_filed.dart';
 import '../../component/custom_progress_indicator.dart';
+import '../../component/dot.dart';
+import '../../component/community_report_bottom_sheet.dart';
 import '../../global/global.dart';
 import '../../global/text_styles.dart';
 
@@ -35,15 +42,33 @@ class _LoungeDetailPageState extends State<LoungeDetailPage> {
     super.initState();
     logger.i("LoungeDetailPage");
     getItem();
+    getCommentList();
   }
 
   void getItem() async{
     try{
       item = await dataController.getLounge(widget.loungeKey);
     }catch(e){
+      logger.e(e);
       Get.back();
     }
     setState(() {});
+  }
+  //이건 나중에 너무 비용많이 발생하면 빅쿼리 호출 형태로 바꿔야됨
+  Future<void> getCommentList() async{
+    setState(() {
+      _commentLoading = true;
+    });
+    try{
+      Map<String,dynamic> result = await dataController.getCommentList(widget.loungeKey,"",1, _lastComment);
+      _commentList = result['commentList'];
+      _lastComment = result['lastDocument'];
+    }catch(e){
+      logger.e(e);
+    }
+    setState(() {
+      _commentLoading = false;
+    });
   }
 
   final FocusNode _focusNode = FocusNode();
@@ -53,7 +78,16 @@ class _LoungeDetailPageState extends State<LoungeDetailPage> {
   StatusController statusController = Get.find<StatusController>();
 
   LoungeVo? item;
+  List<CommentVo>? _commentList;
+  DocumentSnapshot? _lastComment;
+  bool _commentLoading= false;
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    FocusScope.of(context).unfocus();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -70,7 +104,31 @@ class _LoungeDetailPageState extends State<LoungeDetailPage> {
               appBar: customAppBar(
                   title: "자세히보기" ,
                   actions: [
-                    SvgPicture.asset('assets/images/myicon/dot.svg',height: 15,),
+                    GestureDetector(
+
+                        onTap: (){
+                          if(item !=null){
+                            if(authController.myInfo!.memberUid == item!.writerUid!){
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return EditDeleteBottomSheet(loungeKey: item!.loungeKey!,);
+                                },
+                              );
+                            }else{
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return CommunityReportBottomSheet(
+                                    communityKey: item!.loungeKey!,
+                                    communityType: 1,
+                                  );
+                                },
+                              );
+                            }
+                          }
+                        },
+                        child: SvgPicture.asset('assets/images/myicon/dot.svg',height: 15,)),
                     SizedBox(width: 15  ,)]),
               body: item ==null ?Container(
                 width: Get.width,
@@ -282,7 +340,15 @@ class _LoungeDetailPageState extends State<LoungeDetailPage> {
                           ),
                           Divider(thickness: 15,color: Color(0xFFf9f9f9),),
                           //댓글
-                          Container(
+                          _commentLoading
+                              ?Container(
+                            width: Get.width,
+                            height: 100,
+                            color: Colors.white.withOpacity(0.5),
+                            child: Center(child: CustomProgressIndicator()),
+                          )
+                              : (_commentList == null )
+                              ? Container(
                             constraints: BoxConstraints(minHeight: Get.height/3),
                             child: Column(
                               children: [
@@ -291,11 +357,28 @@ class _LoungeDetailPageState extends State<LoungeDetailPage> {
                                 Text("등록된 댓글이 없습니다.\n제일 먼저 댓글을 남겨보세요!",textAlign: TextAlign.center,)
                               ],
                             ),
+                          )
+                              :Container(
+                            padding: EdgeInsets.symmetric(horizontal: 16,vertical: 10),
+                            height: _commentList!.length*150,
+                            constraints: BoxConstraints(maxHeight: Get.height/2),
+
+                            child: ListView.separated(
+                              physics: ClampingScrollPhysics(),
+                              itemCount: _commentList!.length,
+                              itemBuilder: (context, index) {
+                                return CommentCard(item: _commentList![index],);
+                              },
+                              separatorBuilder: (context, index) {
+                                return Divider();
+                              },
+                            ),
                           ),
                         ],
                       ),
                     ),
                   ),
+
                   Container(
                     width: Get.width,
                     color: Colors.white,
@@ -342,19 +425,33 @@ class _LoungeDetailPageState extends State<LoungeDetailPage> {
                                 width: 10,
                               ),
                               if(_focusNode.hasFocus)
-                              GestureDetector(
-                                  onTap: () async {
-
-                                    FocusScope.of(context).unfocus();
-                                  },
-                                  child: Icon(Icons.send))
+                                GestureDetector(
+                                    onTap: () async {
+                                      try{
+                                        CommentVo newComment = CommentVo();
+                                        newComment.targetCommunityKey = item!.loungeKey;
+                                        newComment.replyDepth = 1;
+                                        newComment.writerUid = authController.myInfo!.memberUid;
+                                        newComment.writerGender = authController.myInfo!.memberGender;
+                                        newComment.commentDescription = commentController.text;
+                                        newComment.commentStatus = 1;
+                                        await dataController.addComment(newComment);
+                                        _lastComment = null;
+                                        await getCommentList();
+                                      }catch(e){
+                                        logger.e(e);
+                                      }
+                                      commentController.clear();
+                                      FocusScope.of(context).unfocus();
+                                    },
+                                    child: Icon(Icons.send))
                             ],
                           ),
                         ),
 
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             );

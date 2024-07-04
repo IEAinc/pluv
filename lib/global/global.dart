@@ -14,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 String loadingProgress ='assets/lottie/loading.json';
 String logoPath = "assets/images/pluvlogo.png";
+int maxLimit = 20; //파이어스토어 리밋
 ///icon
 
 String calender = "🗓";
@@ -183,6 +184,9 @@ void getCommonSnackbar(String title , String subTitle){
     backgroundColor: Colors.black54,
     colorText: Colors.white,
     duration: Duration(seconds: 2),
+    onTap: (f){
+      Get.closeAllSnackbars();
+    },
   );
 }
 

@@ -24,7 +24,7 @@ class _CustomProgressIndicatorState extends State<CustomProgressIndicator> {
   @override
   void initState() {
     super.initState();
-    logger.i("CustomProgressIndicator");
+
   }
 
   @override

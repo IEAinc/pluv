@@ -29,7 +29,7 @@ class _RectangleButtonState extends State<RectangleButton> {
   @override
   void initState() {
     super.initState();
-    logger.i("RectangleButton");
+
   }
 
 

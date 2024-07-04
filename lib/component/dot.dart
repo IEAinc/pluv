@@ -26,7 +26,7 @@ class _DotState extends State<Dot> {
       margin: EdgeInsets.symmetric(horizontal: 7),
       width: 2,
       height: 2,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),color: appColorBlack),
     );
   }
 }

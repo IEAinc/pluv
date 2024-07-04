@@ -86,7 +86,6 @@ class _CustomInputFiledState extends State<CustomInputFiled> {
   @override
   void initState() {
     super.initState();
-    logger.i("CustomInputFiled");
 
     setState(() {
       obscureText = widget.obscureText??false;

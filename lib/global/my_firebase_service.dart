@@ -18,7 +18,9 @@ import 'package:pluv/model/vo/request_approval_vo.dart';
 import '../model/dto/lounge_dto.dart';
 import '../model/vo/admin_vo.dart';
 import '../model/vo/appInfo_vo.dart';
+import '../model/vo/comment_report_vo.dart';
 import '../model/vo/comment_vo.dart';
+import '../model/vo/community_report_vo.dart';
 import 'global.dart';
 
 
@@ -40,6 +42,10 @@ CollectionReference commentCollection = firestore.collection('COMMUNITY_COMMENT'
 CollectionReference memberCollection = firestore.collection('MEMBER');
 CollectionReference requestMemberApprovalCollection = firestore.collection('REQUEST_MEMBER_APPROVAL');
 CollectionReference adminCollection = firestore.collection('ADMIN');
+
+CollectionReference communityReportCollection = firestore.collection('COMMUNITY_REPORT');
+CollectionReference commentReportCollection = firestore.collection('COMMENT_REPORT');
+
 
 
 
@@ -337,7 +343,7 @@ class MyFirebaseService{
       Map<String,dynamic> searchMap = {
         "categoryType" : categoryType,
         "searchKey" : keyword,
-        "limit" : 20,
+        "limit" : maxLimit,
         "page" : page,
       };
       List<LoungeVo> loungeList = <LoungeVo>[];
@@ -358,7 +364,7 @@ class MyFirebaseService{
         Query query = loungeCollection
             .where("loungeStatus" , isEqualTo: 1)
             .orderBy('loungeCreateDate', descending: true)
-            .limit(20);
+            .limit(maxLimit);
         if (categoryType == "전체" ||  categoryType == "best") {
         }else{
           query = query.where("loungeCategoryCode" , isEqualTo: categoryType);
@@ -397,12 +403,16 @@ class MyFirebaseService{
   //라운지 1개불러오기
   Future<LoungeVo> getLounge(String loungeKey) async {
     try {
-      //사용자 가져오기
+
       DocumentSnapshot documentSnapshot = await loungeCollection.doc(loungeKey).get();
+
+      if(documentSnapshot.get("loungeStatus")!=1){
+        throw Exception('삭제 또는 차단된 컨텐츠');
+      }
       return LoungeVo.fromSnapshot(documentSnapshot);
 
     } catch (error) {
-      throw Exception('Error : $error');
+      throw Exception(error);
     }
   }
 
@@ -429,21 +439,16 @@ class MyFirebaseService{
     }
   }
 
-  //라운지 댓글 등록
-  Future<void> addComment(CommentVo commentVo) async {
+  //라운지 논리삭제
+  Future<void> removeLounge(String key) async {
     try {
-      // AuthController authController = Get.find<AuthController>();
-      // if(authController.myInfo==null){
-      //   throw Exception('No auth');
-      // }
 
-      final DocumentReference docReference = commentCollection.doc();
-      String docId = docReference.id;
-      commentVo.commentKey = docId;
-      // loungeVo.writerUid = authController.myInfo!.docId;
+      DocumentReference docRef = loungeCollection.doc(key);
 
+      return docRef.update({
+        'loungeStatus': 3
+      });
 
-      await docReference.set(commentVo.toJson());
 
 
     } catch (error) {
@@ -451,7 +456,88 @@ class MyFirebaseService{
     }
   }
 
-  //라운지 like 등록
+
+  //라운지 댓글 등록
+  Future<void> addComment(CommentVo commentVo) async {
+    try {
+
+      final DocumentReference docReference = commentCollection.doc();
+      String docId = docReference.id;
+      commentVo.commentKey = docId;
+
+
+      // 트랜잭션 시작
+      await firestore.runTransaction((transaction) async {
+        //댓글등록
+        transaction.set(docReference, commentVo.toJson());
+        //커뮤니티글에 댓글정보 추가 (갯수수집을 위함)
+        if(commentVo.replyDepth==1){
+          transaction.update(loungeCollection.doc(commentVo.targetCommunityKey), {
+            'commentList': FieldValue.arrayUnion([commentVo.commentKey]),
+          });
+        }
+        if(commentVo.replyDepth==2){
+          transaction.update(loungeCollection.doc(commentVo.targetCommunityKey), {
+            'comment2List': FieldValue.arrayUnion([commentVo.commentKey]),
+          });
+          //1번댓글에도 넣어줌
+          transaction.update(commentCollection.doc(commentVo.upperReplyKey), {
+            'underCommentList': FieldValue.arrayUnion([commentVo.commentKey]),
+          });
+        }
+      });
+
+
+    } catch (error) {
+      throw Exception('Error : $error');
+    }
+  }
+
+  //댓글 얻기
+  Future<Map<String,dynamic>> getCommentList(
+      String communityKey,
+      String upperReplyKey ,
+      int replyDepth,
+      DocumentSnapshot? lastDocument) async {
+    Map<String,dynamic> valueModel = {
+      "commentList" :[],
+      "lastDocument":null
+    };
+    List<CommentVo> commentList = <CommentVo>[];
+    try {
+
+      Query query = commentCollection
+          .where("targetCommunityKey" , isEqualTo: communityKey)
+          .where("commentStatus" , isEqualTo: 1)
+          .where("upperReplyKey" , isEqualTo: upperReplyKey)
+          .where("replyDepth" , isEqualTo: replyDepth)
+          .orderBy('commentCreateDate', descending: true)
+          .limit(maxLimit);
+
+      if (lastDocument != null ) {
+        query = query.startAfterDocument(lastDocument);
+      }
+      QuerySnapshot querySnapshot = await query.get();
+      if(querySnapshot.docs.isEmpty){
+        valueModel["commentList"] = null;
+        valueModel["lastDocument"] = lastDocument;
+      }else{
+        for (DocumentSnapshot document in querySnapshot.docs) {
+          commentList.add(CommentVo.fromSnapshot(document));
+        }
+        valueModel["commentList"] = commentList;
+        valueModel["lastDocument"] = querySnapshot.docs.last;
+      }
+
+      return valueModel;
+
+    } catch (error) {
+      throw Exception('Error : $error');
+    }
+  }
+
+
+  //라운지 like 등록,제거
   Future<void> updateLoungeLike(String loungeKey,String userUid,bool add ) async {
     try {
       DocumentReference docRef = loungeCollection.doc(loungeKey);
@@ -459,6 +545,34 @@ class MyFirebaseService{
       return docRef.update({
         'likeList': add?FieldValue.arrayUnion([userUid]):FieldValue.arrayRemove([userUid])
       });
+
+    } catch (error) {
+      throw Exception('Error : $error');
+    }
+  }
+
+  //커뮤니티 신고리포트
+  Future<void> reportCommunity(CommunityReportVo communityReportVo) async {
+    try {
+
+      final DocumentReference docReference = communityReportCollection.doc();
+      String docId = docReference.id;
+      communityReportVo.communityReportKey = docId;
+      await docReference.set(communityReportVo.toJson());
+
+    } catch (error) {
+      throw Exception('Error : $error');
+    }
+  }
+
+  //댓글 신고리포트
+  Future<void> reportComment(CommentReportVo commentReportVo) async {
+    try {
+
+      final DocumentReference docReference = commentReportCollection.doc();
+      String docId = docReference.id;
+      commentReportVo.commentReportKey = docId;
+      await docReference.set(commentReportVo.toJson());
 
     } catch (error) {
       throw Exception('Error : $error');
