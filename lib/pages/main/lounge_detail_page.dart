@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pluv/component/comment_card.dart';
-import 'package:pluv/component/edit_delete_bottom_sheet.dart';
+import 'package:pluv/component/lounge_edit_delete_bottom_sheet.dart';
 
 import 'package:pluv/component/rectangle_button.dart';
 import 'package:pluv/component/view_status.dart';
@@ -82,12 +82,7 @@ class _LoungeDetailPageState extends State<LoungeDetailPage> {
   DocumentSnapshot? _lastComment;
   bool _commentLoading= false;
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    FocusScope.of(context).unfocus();
-  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -112,7 +107,7 @@ class _LoungeDetailPageState extends State<LoungeDetailPage> {
                               showModalBottomSheet(
                                 context: context,
                                 builder: (context) {
-                                  return EditDeleteBottomSheet(loungeKey: item!.loungeKey!,);
+                                  return LoungeEditDeleteBottomSheet(item: item!,);
                                 },
                               );
                             }else{
@@ -141,12 +136,12 @@ class _LoungeDetailPageState extends State<LoungeDetailPage> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
+
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Column(
                               children: [
                                 SizedBox(height: 20,),
-
                                 Container(
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -174,8 +169,16 @@ class _LoungeDetailPageState extends State<LoungeDetailPage> {
                                     child: SingleChildScrollView(
                                       physics: ClampingScrollPhysics(),
                                       child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
 
+                                          Row(),//양옆 최대로 벌리기위함
+                                          if(item!.loungeCreateDate != item!.loungeUpdateDate)
+                                            Row(
+                                              children: [
+                                                Text("*수정된 게시글",style: TextStyles.sub_title12_g1,),
+                                              ],
+                                            ),
                                           //텍스트영역
                                           GestureDetector(
                                             onTap: (){
@@ -367,7 +370,7 @@ class _LoungeDetailPageState extends State<LoungeDetailPage> {
                               physics: ClampingScrollPhysics(),
                               itemCount: _commentList!.length,
                               itemBuilder: (context, index) {
-                                return CommentCard(item: _commentList![index],);
+                                return CommentCard(item: _commentList![index],canBottomSheet: true,);
                               },
                               separatorBuilder: (context, index) {
                                 return Divider();

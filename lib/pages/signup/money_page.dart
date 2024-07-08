@@ -1,20 +1,16 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:pluv/templete/paper_template.dart';
-
 import '../../component/custom_progress_indicator.dart';
-import '../../component/rectangle_button.dart';
 import '../../global/global.dart';
 import '../../global/text_styles.dart';
-import '../../model/vo/member_vo.dart';
 
 
 ///MoneyPage
-///담당자 : ---
+///담당자 : saran
+///설명 : 자산인증 페이지
 
 class MoneyPage extends StatefulWidget {
   const MoneyPage({Key? key}) : super(key: key);
@@ -29,6 +25,7 @@ class _MoneyPageState extends PaperTemplate<MoneyPage> {
   void initState() {
     super.initState();
     logger.i("MoneyPage");
+    //기존 업로드했던 자산 서류 이미지 가져오기
     findImageList("PAPER_ASSET");
   }
 

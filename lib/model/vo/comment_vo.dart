@@ -12,6 +12,7 @@ class CommentVo {
   String? commentDescription; //	댓글내용
   num? commentStatus; //	댓글상태
   Timestamp? commentCreateDate; //	댓글생성날짜
+  Timestamp? commentUpdateDate; //	댓글생성날짜
   bool? test; // 테스트 여부
 
   CommentVo({
@@ -25,6 +26,7 @@ class CommentVo {
     this.commentDescription,
     this.commentStatus,
     this.commentCreateDate,
+    this.commentUpdateDate,
     this.test,
   });
 
@@ -40,40 +42,27 @@ class CommentVo {
     commentDescription = data['commentDescription']??"";
     commentStatus = data['commentStatus']??1;
     commentCreateDate = data['commentCreateDate']??Timestamp.now();
+    commentUpdateDate = data['commentUpdateDate']??commentCreateDate;
     test = data['test']??true;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
 
-    data['commentKey'] = this.commentKey??"";
-    data['targetCommunityKey'] = this.targetCommunityKey??"";
-    data['replyDepth'] = this.replyDepth??1;
-    data['upperReplyKey'] = this.upperReplyKey??"";
-    data['underCommentList'] = this.underCommentList??[];
-    data['writerUid'] = this.writerUid??"";
-    data['writerGender'] = this.writerGender??false;
-    data['commentDescription'] = this.commentDescription??"";
-    data['commentStatus'] = this.commentStatus??1;
-    data['commentCreateDate'] = this.commentCreateDate??Timestamp.now();
-    data['test'] = this.test??true;
+    data['commentKey'] = commentKey??"";
+    data['targetCommunityKey'] = targetCommunityKey??"";
+    data['replyDepth'] = replyDepth??1;
+    data['upperReplyKey'] = upperReplyKey??"";
+    data['underCommentList'] = underCommentList??[];
+    data['writerUid'] = writerUid??"";
+    data['writerGender'] = writerGender??false;
+    data['commentDescription'] = commentDescription??"";
+    data['commentStatus'] = commentStatus??1;
+    data['commentCreateDate'] = commentCreateDate??Timestamp.now();
+    data['commentUpdateDate'] = commentUpdateDate??commentCreateDate;
+    data['test'] = test??true;
 
     return data;
-  }
-
-
-
-  CommentVo.sample() {
-
-    commentKey = "";
-    targetCommunityKey = "targetCommunityKey";
-    replyDepth = 1;
-    upperReplyKey = "";
-    writerUid = "writerUid";
-    commentDescription = "commentDescription";
-    commentStatus = 1;
-    commentCreateDate = Timestamp.now();
-    test = true;
   }
 
 

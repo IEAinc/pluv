@@ -37,7 +37,7 @@ abstract class PaperTemplate<T extends StatefulWidget> extends State<T> {
 
   Future<void> _addImage() async {
     XFile? file = await pickImage();
-    if(this.imageList.length<5){
+    if(this.imageList.length<3){
       if (file != null) {
         setState(() {
           this.imageList.add(File(file.path));

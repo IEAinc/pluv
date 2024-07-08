@@ -14,7 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 String loadingProgress ='assets/lottie/loading.json';
 String logoPath = "assets/images/pluvlogo.png";
-int maxLimit = 20; //파이어스토어 리밋
+int maxLimit = 10; //파이어스토어 리밋
 ///icon
 
 String calender = "🗓";

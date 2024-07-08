@@ -1,9 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:get/get.dart';
+import 'package:pdf_viewer_plugin/pdf_viewer_plugin.dart';
 import 'package:pluv/global/text_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+import '../../component/custom_progress_indicator.dart';
 import '../../global/global.dart';
 
 ///TermDetailPage
@@ -24,66 +30,49 @@ class _TermDetailPageState extends State<TermDetailPage> {
   void initState() {
     super.initState();
     logger.i("TermDetailPage");
+    loadPdf();
 
-    setState(() {
-      url = widget.url;
-    });
   }
 
-  String url = "";
-  bool isLoading = true;
 
-  InAppWebViewController? webViewController;
-  InAppWebViewSettings settings = InAppWebViewSettings(
-      useShouldOverrideUrlLoading: true,
-      useHybridComposition: true,
-      isInspectable: kDebugMode,
-      mediaPlaybackRequiresUserGesture: false,
-      allowsInlineMediaPlayback: true,
-      iframeAllow: "camera; microphone",
-      iframeAllowFullscreen: true);
+
+  String? pdfFlePath;
+
+  Future<String> downloadAndSavePdf() async {
+
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/sample.pdf');
+    final response = await http.get(Uri.parse(widget.url));
+    logger.e(response);
+    await file.writeAsBytes(response.bodyBytes);
+    return file.path;
+  }
+  void loadPdf() async {
+    pdfFlePath = await downloadAndSavePdf();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(title: "약관"),
-      body: Expanded(
-        child: InAppWebView(
-          initialUrlRequest: URLRequest(url: WebUri(url)),
-          initialSettings: settings,
-          onWebViewCreated: (controller) {
-            webViewController = controller;},
-          onPermissionRequest: (controller, request) async {
-            return PermissionResponse(
-                resources: request.resources,
-                action: PermissionResponseAction.GRANT);
-          },
-          shouldOverrideUrlLoading:
-              (controller, navigationAction) async {
-            var uri = navigationAction.request.url!;
-            if (![
-              "http",
-              "https",
-              "file",
-              "chrome",
-              "data",
-              "javascript",
-              "about"
-            ].contains(uri.scheme)) {
-              if (await canLaunchUrl(uri)) {
-                // Launch the App
-                await launchUrl(
-                  uri,
-                );
-                // and cancel the request
-                return NavigationActionPolicy.CANCEL;
-              }
-            }
+      body: Column(
+        children: [
+          pdfFlePath==null?Expanded(
+            child: Container(
+              color: Colors.white.withOpacity(0.5),
+              child: Center(child: CustomProgressIndicator()),
+            ),
+          ):
+          Expanded(
+            child: Container(
+              width: Get.width,
+              height: Get.height,
+              child: PdfView(path: pdfFlePath!),
+            ),
+          )
 
-            return NavigationActionPolicy.ALLOW;
-          },
-
-        ),
+        ],
       ),
     );
   }

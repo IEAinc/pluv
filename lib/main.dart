@@ -17,20 +17,26 @@ import 'global/global.dart';
 void main() async{
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  //파이어베이스
+  //파이어베이스 세팅
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  //처음에 prefs를 세팅함. 이건 global에 만들어둠
   prefs = await SharedPreferences.getInstance();
+  //겟엑스 컨트롤러들 의존성 등록 및 주입
   Get.put(StatusController());
   Get.put(DataController());
   Get.put(AuthController());
   StatusController _statusController = Get.find<StatusController>();
   AuthController _authController = Get.find<AuthController>();
+  //앱 정보 가져오기
   await _statusController.getAppInfo();
+  //온보딩을 보여줄것인지 여부를 판단하는건데 앱 깔고 처음인사람만 온보딩 보여주기위함
   bool? onBoarding =  prefs.getBool('onBoarding');
+
   if(onBoarding == true){
     try{
+      //자동 로그인 시도
       bool success = await _authController.autoLogin();
       if(success){
         mode = 1;
@@ -47,6 +53,9 @@ void main() async{
   runApp(const MyApp());
 }
 
+// 1: 앱 처음은 아닌데 오토로그인이 아니라 로그인페이지로 가야함
+// 2: 오토로그인 성공이라 메인페이지로 가야함.
+// 3: 앱처음이라서 온보딩으로 가야함
 int mode = 3;
 
 class MyApp extends StatelessWidget {
@@ -67,6 +76,7 @@ class MyApp extends StatelessWidget {
 
       ),
       home: mode==1?MainPage(initialPage: 0,):mode==2?LoginPage():OnboardingPage()
+
     );
   }
 }

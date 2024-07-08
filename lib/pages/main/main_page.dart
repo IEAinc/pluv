@@ -14,7 +14,8 @@ import 'history_screen.dart';
 import 'home_screen.dart';
 
 ///MainPage
-///담당자 : ---
+///담당자 : saran
+///설명 : 메인페이지
 
 class MainPage extends StatefulWidget {
   final int initialPage;
@@ -36,6 +37,7 @@ class _MainPageState extends State<MainPage> {
       _pageController = PageController(initialPage: widget.initialPage);
     });
   }
+  //일단 디폴트로 인덱스는 0임. 메인페이지의 홈 스크린을 가르킴
   int _currentIndex = 0;
   PageController _pageController = PageController(initialPage: 0);
   @override
@@ -64,10 +66,15 @@ class _MainPageState extends State<MainPage> {
 
                   controller: _pageController,
                   children: <Widget>[
+                    //홈
                     HomeScreen(),
+                    //사람평가 하는 스크린
                     RatingScreen(),
+                    //히스토리 스크린
                     HistoryScreen(),
+                    //라운지, 파티등 커뮤니티 스크린
                     CommunityScreen(),
+                    //마이 스크린
                     MyScreen()
 
                   ],

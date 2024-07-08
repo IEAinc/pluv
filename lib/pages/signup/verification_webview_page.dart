@@ -1,4 +1,3 @@
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -6,13 +5,13 @@ import 'package:get/get.dart';
 import 'package:pluv/controller/auth_controller.dart';
 import 'package:pluv/pages/signup/sign_up_page.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../component/custom_progress_indicator.dart';
 import '../../global/global.dart';
-import '../../global/my_firebase_service.dart';
+
 
 ///VerificationWebviewPage
-///담당자 : ---
+///담당자 : saran
+///설명 : 본인인증 웹뷰
 
 class VerificationWebviewPage extends StatefulWidget {
   const VerificationWebviewPage({Key? key}) : super(key: key);
@@ -32,6 +31,7 @@ class _VerificationWebviewPageState extends State<VerificationWebviewPage> {
 
   AuthController authController = Get.find<AuthController>();
 
+  //functions에 등록한 api주소
   String url = "https://us-central1-pluv-16c7b.cloudfunctions.net/api/verification/ready";
   bool isLoading = true;
 

@@ -1,18 +1,15 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:pluv/component/rectangle_button.dart';
-
 import '../../component/custom_progress_indicator.dart';
 import '../../global/global.dart';
 import '../../global/text_styles.dart';
 import '../../templete/paper_template.dart';
 
 ///CarPage
-///담당자 : ---
+///담당자 : saran
+///설명 : 자동차 인증 페이지
 
 class CarPage extends StatefulWidget {
   const CarPage({Key? key}) : super(key: key);
@@ -27,6 +24,7 @@ class _CarPageState extends PaperTemplate<CarPage> {
   void initState() {
     super.initState();
     logger.i("CarPage");
+    //자동차 인증 서류 정보 불러오기
     findImageList("PAPER_CAR");
   }
 

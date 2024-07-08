@@ -10,7 +10,8 @@ import '../../global/global.dart';
 import '../../global/text_styles.dart';
 
 ///ProfileInfoPage
-///담당자 : ---
+///담당자 : saran
+///설명 : 정보입력 2단계인 프로필 입력페이지
 
 class ProfileInfoPage extends StatefulWidget {
   const ProfileInfoPage({Key? key}) : super(key: key);
@@ -25,6 +26,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
   void initState() {
     super.initState();
     logger.i("ProfileInfoPage");
+    //기존 등록했던 정보가 있으면 들고옴
     memberInfo['personalityCode'] = prefs.getStringList('tmp_personalityCode')??[];
     memberInfo['interestCode'] = prefs.getStringList('tmp_interestCode')??[];
     memberInfo['attractionCode'] = prefs.getStringList('tmp_attractionCode')??[];
@@ -43,12 +45,15 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
   AuthController authController = Get.find<AuthController>();
   int _currentIndex = 0;
 
+  //멤버인포
   Map<String,List<String>> memberInfo = {
     "personalityCode" : [],
     "interestCode" : [],
     "attractionCode" : [],
     "dateStyleCode" : [],
   };
+
+  //mbti
   Map<String,dynamic> mbti={
     "a":null,
     "b":null,
@@ -56,6 +61,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
     "d":null,
   };
 
+  //map의 내용물이 하나라도 null이 있는지 없는지 체크
   bool areAllValuesNonNull(Map<String, dynamic> map) {
     for (var value in map.values) {
       if (value == null) {
@@ -65,6 +71,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
     return true;
   }
 
+  //다음 페이지로 넘어감
   void nextPage() async{
 
     if(_currentIndex==0){
@@ -113,6 +120,8 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
       Get.back();
     } else{}
   }
+
+  //_pageController 조절하여 다음페이지로 넘어감
   void goNext(){
     if (_pageController.hasClients) {
       _pageController.nextPage(
@@ -121,6 +130,8 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
       );
     }
   }
+
+  //_pageController 조절하여 이전페이지로 돌아감
   void goPrev(){
     if (_pageController.hasClients) {
       _pageController.previousPage(
@@ -147,8 +158,6 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
               }else{
                 goPrev();
               }
-
-
             }
         ),
         body: Column(

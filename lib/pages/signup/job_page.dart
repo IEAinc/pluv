@@ -9,7 +9,8 @@ import '../../global/text_styles.dart';
 import '../../templete/paper_template.dart';
 
 ///JobPage
-///담당자 : ---
+///담당자 : saran
+///설명 : 직업 인증 페이지
 
 class JobPage extends StatefulWidget {
   const JobPage({Key? key}) : super(key: key);
@@ -24,6 +25,7 @@ class _JobPageState extends PaperTemplate<JobPage> {
   void initState() {
     super.initState();
     logger.i("JobPage");
+    //기존 업로드했던 직업 서류 이미지 가져오기
     findImageList("PAPER_JOB");
   }
 

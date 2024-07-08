@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:pluv/component/basic_botton.dart';
 import 'package:pluv/component/signup_bottom_sheet.dart';
 import 'package:pluv/model/vo/member_vo.dart';
-
-import '../../component/custom_input_filed.dart';
 import '../../component/rectangle_button.dart';
 import '../../controller/auth_controller.dart';
 import '../../global/global.dart';
 import '../../global/text_styles.dart';
 
 ///SignUpPage
-///담당자 : ---
+///담당자 : saran
+///설명 : 기본 회원가입 페이지. 일단 여기서 가입하면 데이터베이스에 아주 기초 정보 등록됨
 
 class SignUpPage extends StatefulWidget {
+  //앞의 본인인증 페이지에서 정보가 넘어와야함
   final Map<String,dynamic> result;
   const SignUpPage({Key? key , required this.result}) : super(key: key);
 
@@ -40,14 +39,14 @@ class _SignUpPageState extends State<SignUpPage> {
 
   final _formKey = GlobalKey<FormState>();
   AuthController authController = Get.find<AuthController>();
-  String memberEmail = '';
-  String password = '';
-  String memberName = "";
-  bool memberGender = true;
-  String memberBirth = "";
-  String memberPhone = "";
-  String memberCi = "";
-  String memberDi = "";
+  String memberEmail = ''; //이메일
+  String password = ''; //비밀번호
+  String memberName = ""; //이름(본인인증에서 넘어옴)
+  bool memberGender = true; //성별(본인인증에서 넘어옴)
+  String memberBirth = ""; //생년월일(본인인증에서 넘어옴)
+  String memberPhone = ""; //폰번호(본인인증에서 넘어옴)
+  String memberCi = ""; //CI(본인인증에서 넘어옴)
+  String memberDi = ""; //DI(본인인증에서 넘어옴)
 
   int emailDuplicated = 0; //0 = 중복체크안함 , 1 = 이메일중복임 , 2= 이메일중복아님
 
@@ -263,6 +262,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       action: (){
                         if(_formKey.currentState!.validate()){
                           _formKey.currentState!.save();
+
+                          //통과되면 memberVo를 만들고 SignupBottomSheet에 member전달
 
                           MemberVo member = MemberVo(
                             memberEmail:memberEmail,

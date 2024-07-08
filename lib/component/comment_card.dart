@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pluv/component/comment_bottom_sheet.dart';
+import 'package:pluv/component/comment_edit_delete_bottom_sheet.dart';
 import 'package:pluv/component/signup_bottom_sheet.dart';
 import 'package:pluv/controller/auth_controller.dart';
 import 'package:pluv/model/vo/member_vo.dart';
@@ -23,7 +24,8 @@ class CommentCard extends StatefulWidget {
   final Color? backgroundColor;
   final EdgeInsetsGeometry? padding;
   final bool? hideUnderCommentCount;
-  const CommentCard({Key? key ,required this.item , this.backgroundColor , this.padding, this.hideUnderCommentCount}) : super(key: key);
+  final bool? canBottomSheet;
+  const CommentCard({Key? key ,required this.item , this.backgroundColor , this.padding, this.hideUnderCommentCount , this.canBottomSheet}) : super(key: key);
 
   @override
   State<CommentCard> createState() => _CommentCardState();
@@ -69,7 +71,7 @@ class _CommentCardState extends State<CommentCard> {
                       showModalBottomSheet(
                         context: context,
                         builder: (context) {
-                          return CommentReportBottomSheet(
+                          return CommentEditDeleteBottomSheet(
                             item: widget.item,
                           );
                         },
@@ -89,23 +91,29 @@ class _CommentCardState extends State<CommentCard> {
             ],
           ),
           SizedBox(height: 10,),
+          if(widget.item.commentCreateDate != widget.item.commentUpdateDate)
+          Text("*수정된 댓글",style: TextStyles.sub_title12_g1,),
           Row(
             children: [
               Expanded(child: GestureDetector(
                   onTap: (){
+    if(widget.canBottomSheet==true){
 
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      builder: (BuildContext context) {
-                        return CommentBottomSheet(item: widget.item);
-                      },
-                    ).whenComplete((){
-                        Timer(Duration(milliseconds: 100), () {
-                          FocusScope.of(context).unfocus();
-                        });
-                    });
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (BuildContext context) {
+          return CommentBottomSheet(item: widget.item);
+        },
+      ).whenComplete((){
+        Timer(Duration(milliseconds: 100), () {
+          FocusScope.of(context).unfocus();
+        });
+      });
+    }
+
+
                   },
                   child: Text(widget.item.commentDescription! , maxLines: 3, overflow: TextOverflow.ellipsis,))),
               SizedBox(width: 10,),
@@ -118,14 +126,21 @@ class _CommentCardState extends State<CommentCard> {
                 SizedBox(height: 10,),
                 GestureDetector(
                   onTap: (){
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      builder: (BuildContext context) {
-                        return CommentBottomSheet(item: widget.item);
-                      },
-                    );
+                    if(widget.canBottomSheet==true){
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        builder: (BuildContext context) {
+                          return CommentBottomSheet(item: widget.item);
+                        },
+                      ).whenComplete((){
+                        Timer(Duration(milliseconds: 100), () {
+                          FocusScope.of(context).unfocus();
+                        });
+                      });
+                    }
+
                   },
                   child: Row(
                     children: [

@@ -19,6 +19,7 @@ class LoungeVo {
   List<dynamic>?	commentList; // 댓글리스트
   List<dynamic>?	comment2List; // 대댓글리스트
   Timestamp? loungeCreateDate; //	라운지생성날짜
+  Timestamp? loungeUpdateDate; //	라운지수정날짜
   num? loungeStatus; // 라운지 상태 1:정상,2:어드민블록,3:삭제
   bool? best;
   bool? test;
@@ -38,6 +39,7 @@ class LoungeVo {
     this.commentList,
     this.comment2List,
     this.loungeCreateDate,
+    this.loungeUpdateDate,
     this.loungeStatus,
     this.best,
     this.test,
@@ -59,7 +61,8 @@ class LoungeVo {
     loungeKeywordList = data['loungeKeywordList']??[];
     commentList = data['commentList']??[];
     comment2List = data['comment2List']??[];
-    loungeCreateDate = data['loungeCreateDate']??"";
+    loungeCreateDate = data['loungeCreateDate']??Timestamp.now();
+    loungeUpdateDate = data['loungeUpdateDate']??loungeCreateDate;
     loungeStatus = data['loungeStatus']??1;
     best = data['best']??false;
     test = data['test']??false;
@@ -90,8 +93,18 @@ class LoungeVo {
     }else{
       loungeCreateDate = Timestamp.now();
     }
+    if(data['loungeUpdateDate']!=null){
+      // millisecondsSinceEpoch로부터 DateTime 생성
+      int millisecondsSinceEpoch = int.parse(data['loungeUpdateDate'])*1000;
+      DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);
+      // DateTime을 TimeStamp로 변환 (UTC 기준)
+      Timestamp timestamp = Timestamp.fromDate(dateTime.toLocal());
+      loungeUpdateDate = timestamp;
+    }else{
+      loungeUpdateDate = loungeCreateDate;
+    }
 
-    loungeStatus = data['loungeStatus']==null?0:int.parse(data['loungeStatus']);
+    loungeStatus = data['loungeStatus']==null?1:int.parse(data['loungeStatus']);
 
     best = data['best'] == "true"?true:false;
     test = data['test'] == "true"?true:false;
@@ -100,22 +113,23 @@ class LoungeVo {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
 
-    data['loungeKey'] = this.loungeKey??"";
-    data['writerUid'] = this.writerUid??"";
-    data['writerGender'] = this.writerGender??false;
-    data['loungeCategoryCode'] = this.loungeCategoryCode??"";
-    data['loungeTitle'] = this.loungeTitle??"";
-    data['loungeDescription'] = this.loungeDescription??"";
-    data['viewCount'] = this.viewCount??0;
-    data['likeList'] = this.likeList??[""];
-    data['loungeImageList'] = this.loungeImageList??[""];
-    data['loungeKeywordList'] = this.loungeKeywordList??[""];
-    data['commentList'] = this.loungeImageList??[];
-    data['comment2List'] = this.loungeKeywordList??[];
-    data['loungeCreateDate'] = this.loungeCreateDate??"";
-    data['loungeStatus'] = this.loungeStatus??1;
-    data['best'] = this.best??false;
-    data['test'] = this.test??false;
+    data['loungeKey'] = loungeKey??"";
+    data['writerUid'] = writerUid??"";
+    data['writerGender'] = writerGender??false;
+    data['loungeCategoryCode'] = loungeCategoryCode??"";
+    data['loungeTitle'] = loungeTitle??"";
+    data['loungeDescription'] = loungeDescription??"";
+    data['viewCount'] = viewCount??0;
+    data['likeList'] = likeList??[];
+    data['loungeImageList'] = loungeImageList??[""];
+    data['loungeKeywordList'] = loungeKeywordList??[""];
+    data['commentList'] = commentList??[];
+    data['comment2List'] = comment2List??[];
+    data['loungeCreateDate'] = loungeCreateDate??Timestamp.now();
+    data['loungeUpdateDate'] = loungeUpdateDate??loungeCreateDate;
+    data['loungeStatus'] = loungeStatus??1;
+    data['best'] = best??false;
+    data['test'] = test??false;
 
     return data;
   }

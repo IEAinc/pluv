@@ -3,13 +3,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pluv/component/rectangle_button.dart';
 import 'package:pluv/global/text_styles.dart';
-import 'package:pluv/pages/signup/sign_up_page.dart';
 import 'package:pluv/pages/signup/verification_webview_page.dart';
-
 import '../../global/global.dart';
 
 ///IdentityVerificationPage
-///담당자 : ---
+///담당자 : saran
+///설명 : 본인인증설명 페이지
 
 class IdentityVerificationPage extends StatefulWidget {
   const IdentityVerificationPage({Key? key}) : super(key: key);
@@ -73,12 +72,11 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
             Column(
               children: [
                 RectangleButton(action: (){
+                  //본인인증 웹뷰 페이지로 이동
                   Get.to(()=>VerificationWebviewPage());
-                  // Get.to(()=>SignUpPage());
                 },
                   name: "본인인증 하기",
                   mode: 1,
-
                 ),
 
                 SizedBox(height: 30,)

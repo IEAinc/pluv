@@ -11,7 +11,8 @@ import '../../global/global.dart';
 import '../signup/sign_up_condition_page.dart';
 
 ///OnboardingPage
-///담당자 : ---
+///담당자 : saran
+///설명 : 온보딩 페이지
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({Key? key}) : super(key: key);
@@ -26,10 +27,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
   void initState() {
     super.initState();
     logger.i("OnboardingPage");
+    //일단 이 페이지에 한번이라도 들어오면 onBoarding을 true로 바꿔서 다음부터는 안들어오게함
     prefs.setBool('onBoarding', true);
-
   }
 
+  //앱상태 컨트롤러 의존성 주입
   StatusController statusController = Get.find<StatusController>();
   @override
   Widget build(BuildContext context) {

@@ -1,18 +1,17 @@
-import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pluv/component/rectangle_button.dart';
 import 'package:pluv/global/text_styles.dart';
 import 'package:pluv/model/vo/appInfo_vo.dart';
-
-import '../../component/custom_dialog.dart';
 import '../../controller/auth_controller.dart';
 import '../../controller/status_controller.dart';
 import '../../global/global.dart';
-import 'dart:developer';
+
 ///BasicInfoPage
-///담당자 : ---
+///담당자 : saran
+///설명 : 기본정보 페이지
 
 class BasicInfoPage extends StatefulWidget {
   const BasicInfoPage({Key? key}) : super(key: key);
@@ -27,9 +26,10 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
   void initState() {
     super.initState();
     logger.i("BasicInfoPage");
+    //일단 맨처음 지역구세부 내용 불러오기 위함
     areaDetailList = statusController.getAreaDetail(prefs.getString('tmp_areaDetailCode')??'RE_GU_SE');
 
-
+    //회원들이 기존에 작성했었던 내용들을 저장하고있다가 불러옴.
     memberInfo['nickName'] = prefs.getString('tmp_nickName')??"";
     memberInfo['areaCode'] = prefs.getString('tmp_areaCode')??"";
     memberInfo['areaDetailCode'] = prefs.getString('tmp_areaDetailCode')??"";
@@ -47,19 +47,27 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
 
     });
   }
+  //기본 회원가입은 페이지뷰로 이루어져있음
   final PageController _pageController = PageController(initialPage: 0);
-
+  //상태관리 의존성
   StatusController statusController = Get.find<StatusController>();
   AuthController authController = Get.find<AuthController>();
+  //닉네임
   TextEditingController nickNameController = TextEditingController();
+  //키
   TextEditingController tallController = TextEditingController();
+  //직업
   TextEditingController jobController = TextEditingController();
+  //각 내역에 맞는 폼키. validation 을 위함
   final _nickNameFormKey = GlobalKey<FormState>();
   final _tallFormKey = GlobalKey<FormState>();
   final _jobFormKey = GlobalKey<FormState>();
 
+  // 0 닉네임 작성부터
   int _currentIndex = 0;
+  // 지역구 디테일
   List<CodeInfoVo> areaDetailList = [];
+  //멤버 정보 더미. 이곳에 하나하나 입력될것임
   Map<String,dynamic> memberInfo = {
     "nickName" : "",
     "areaCode" : "RE_GU_SE",
@@ -71,33 +79,27 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
     "smoke":false,
     "religionCode" : ""
   };
+  //닉네임 중복여부. 0 = 중복확인 시도조차 안함 , 1 = 중복, 2= 중복아님
   int nickNameDuplicated = 0;
 
 
-
-
-
+  //기본정보를 저장하고 완료로 넘어가는 메소드 _currentIndex 에 따라 함수 내용을 나눔
   void nextPage() async{
 
-
+    //일단 다음페이지 넘어가면 모든 포커스 종료
+    FocusScope.of(context).unfocus();
     //닉네임
     if(_currentIndex==0){
 
-      if(memberInfo["nickName"]!.length >= 2 && memberInfo["nickName"]!.length <= 8) {
-
-      }else{
-        getCautionSnackbar("닉네임을 바르게 입력해주세요");
-      }
-
+      //닉네임 validation 체크
       if(_nickNameFormKey.currentState!.validate()){
         _nickNameFormKey.currentState!.save();
-        //shared 임시저장
+        //통과하면 shared 임시저장후 다음 스크린으로
         prefs.setString('tmp_nickName', memberInfo["nickName"]);
         goNext();
       }else{
         getCautionSnackbar("닉네임을 바르게 입력해주세요.");
       }
-
     }
     //지역
     else if(_currentIndex==1){
@@ -105,7 +107,6 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
         //shared 임시저장
         prefs.setString('tmp_areaCode', memberInfo["areaCode"]);
         prefs.setString('tmp_areaDetailCode', memberInfo["areaDetailCode"]);
-
         goNext();
       }else{
         getCautionSnackbar("지역을 선택해 주세요");
@@ -116,14 +117,11 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
 
       if(_tallFormKey.currentState!.validate()){
         _tallFormKey.currentState!.save();
-
         prefs.setString('tmp_memberHeight', memberInfo["memberHeight"]);
         goNext();
       }else{
         getCautionSnackbar("키를 바르게 입력해주세요.");
       }
-
-
 
     }
     //직업
@@ -170,6 +168,8 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
     //종교
     else if(_currentIndex==7){
 
+      //마지막 스크린이 종교이고, 종교작성 통과하면 모든 정보를 상태관리로 관리되는 내 정보 에도 저장,
+      //반면 이 단계까지 안오면 상태관리에는 저장이 안됨
       try{
         if(memberInfo["religionCode"] != null && memberInfo["religionCode"] != ""){
           prefs.setString('tmp_religionCode', memberInfo["religionCode"]);
@@ -196,14 +196,13 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
 
     }
     else if(_currentIndex==8){
-      logger.e(8);
+      //완료페이지임 이때 다음누르면 getback 으로 종료됨
       Get.back();
     }else{}
 
-
-
-
   }
+
+  //_pageController 를 건드려 다음으로 넘어가는 메소드
   void goNext(){
     if (_pageController.hasClients) {
       _pageController.nextPage(
@@ -212,6 +211,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
       );
     }
   }
+  //_pageController 를 건드려 이전으로 돌아가는 메소드
   void goPrev(){
     if (_pageController.hasClients) {
       _pageController.previousPage(

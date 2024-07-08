@@ -1,18 +1,15 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:pluv/component/rectangle_button.dart';
-
 import '../../component/custom_progress_indicator.dart';
 import '../../global/global.dart';
 import '../../global/text_styles.dart';
 import '../../templete/paper_template.dart';
 
 ///IncomePage
-///담당자 : ---
+///담당자 : saran
+///설명 : 소득 인증 페이지
 
 class IncomePage extends StatefulWidget {
   const IncomePage({Key? key}) : super(key: key);
@@ -27,6 +24,7 @@ class _IncomePageState extends PaperTemplate<IncomePage> {
   void initState() {
     super.initState();
     logger.i("IncomePage");
+    //기존 업로드했던 소득 서류 이미지 가져오기
     findImageList("PAPER_INCOME");
   }
 

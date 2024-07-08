@@ -13,7 +13,8 @@ import 'job_page.dart';
 import 'money_page.dart';
 
 ///PaperEnrollPage
-///담당자 : ---
+///담당자 : saran
+///설명 : 서류 인증 대기페이지.
 
 class PaperEnrollPage extends StatefulWidget {
   const PaperEnrollPage({Key? key}) : super(key: key);
@@ -30,6 +31,7 @@ class _PaperEnrollPageState extends State<PaperEnrollPage> {
     logger.i("PaperEnrollPage");
   }
 
+  //해당 종류의 서류에 대해 인증되었는지 여부 확인 메소드
   bool getCertificate(String paperCode){
     int index = _authController.myInfo!.paperInfo!.indexWhere((element) => element.paperCode == paperCode);
     if(index ==-1){
@@ -179,6 +181,7 @@ class _PaperEnrollPageState extends State<PaperEnrollPage> {
                           ],
                         ),
                       ),
+                      //인증된 종류면 인증완료 도장
                       if(certificate)
                       Center(child: Container(
                         width: 100,

@@ -8,7 +8,8 @@ import '../../global/global.dart';
 import '../../global/text_styles.dart';
 
 ///IntroduceEnrollPage
-///담당자 : ---
+///담당자 : saran
+///설명 : 자기소개 등록 페이지
 
 class IntroduceEnrollPage extends StatefulWidget {
   const IntroduceEnrollPage({Key? key}) : super(key: key);
@@ -23,6 +24,7 @@ class _IntroduceEnrollPageState extends State<IntroduceEnrollPage> {
   void initState() {
     super.initState();
     logger.i("IntroduceEnrollPage");
+    //이전 등록했던 정보가 있으면 가져옴
     selfIntroduce = prefs.getString('tmp_selfIntroduce')??"";
     selfIntroduceController = TextEditingController(text: selfIntroduce);
   }

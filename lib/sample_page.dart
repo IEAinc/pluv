@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'global/global.dart';
 
 ///SamplePage
-///담당자 : ---
+///담당자 : saran
+///설명 : 그냥 페이지 이동 실험용으로 만든 샘플페이지
 
 class SamplePage extends StatefulWidget {
   const SamplePage({Key? key}) : super(key: key);

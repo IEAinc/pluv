@@ -10,7 +10,8 @@ import '../../global/global.dart';
 import '../signup/sign_up_condition_page.dart';
 
 ///LoginPage
-///담당자 : ---
+///담당자 : saran
+///설명 : 이메일 비밀번호를 치고 로그인하는 페이지
 
 class LoginPage extends StatefulWidget {
   const    LoginPage({Key? key}) : super(key: key);
@@ -29,12 +30,11 @@ class _LoginPageState extends State<LoginPage> {
 
 
   AuthController authController = Get.find<AuthController>();
-  final _formKey = GlobalKey<FormState>();
-  String email = '';
-  String password = '';
+  final _formKey = GlobalKey<FormState>(); //form키 validation을 위함
 
-  bool isLoading=false;
-
+  String email = ''; //이메일
+  String password = ''; //비밀번호
+  bool isLoading=false; //로그인 진행중일때 앞에 progress띄어주기 위함
 
 
   @override
@@ -54,35 +54,6 @@ class _LoginPageState extends State<LoginPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-                    // GestureDetector(
-                    //   onTap: () async{
-                    //
-                    //     setState(() {
-                    //       isLoading = true;
-                    //     });
-                    //     try{
-                    //       bool result = await authController.login(
-                    //           "matoda4113@gmail.com",
-                    //           "12341234"
-                    //       );
-                    //       if(result){
-                    //         getCommonSnackbar('반갑습니다. ${"어드민사마"}님',"");
-                    //         Get.offAll(MainPage(initialPage: 0,));
-                    //       }else{
-                    //         getCommonSnackbar('로그인 실패','탈퇴한 회원입니다');
-                    //       }
-                    //
-                    //     }catch(error){
-                    //       logger.e(error);
-                    //       getCommonSnackbar('로그인에 실패 하였습니다',error.toString());
-                    //     }finally{
-                    //       setState(() {
-                    //         isLoading = false;
-                    //       });
-                    //     }
-                    //   },
-                    //   child: Text("어드민 로그인 임시"),
-                    // ),
                     SizedBox(height: 30,),
                     //form
                     Form(
@@ -105,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                               if(val.length < 1) {
                                 return '이메일은 필수사항입니다.';
                               }
-
+                              //global.dart에 정의한 이메일 매칭판단 함수를 통해 판단
                               if(!RegExpEmail.hasMatch(val)){
                                 return '잘못된 이메일 형식입니다.';
                               }
@@ -150,16 +121,19 @@ class _LoginPageState extends State<LoginPage> {
                       mode: 1,
                       action: () async{
 
-                        // 1.값 validate
+                        // validate 를 먼저 체크함
                         if(this._formKey.currentState!.validate()){
                           this._formKey.currentState!.save();
 
+                          // 빙글빙글이 발동
                           setState(() {
                             isLoading = true;
                           });
                           try{
+                            // 로그인 시도
                             bool result = await authController.login(email, password);
                             if(result){
+                              //성공하면 스넥바 띄어주고 메인 페이지로 이동.
                               getCommonSnackbar('반갑습니다. ${email}님',"");
                               Get.offAll(MainPage(initialPage: 0,));
                             }else{
@@ -167,9 +141,11 @@ class _LoginPageState extends State<LoginPage> {
                             }
 
                           }catch(error){
+                            //실패하면 스넥바
                             logger.e(error);
                             getCommonSnackbar('로그인에 실패 하였습니다',error.toString());
                           }finally{
+                            //동글동글이 종료
                             setState(() {
                               isLoading = false;
                             });
@@ -184,6 +160,7 @@ class _LoginPageState extends State<LoginPage> {
                     //회원가입
                     Center(child: Text("회원가입하기")),
                     SizedBox(height: 20,),
+                    //이메일 회원가입할수있는 페이지로 이동
                     Center(
                         child: RectangleButton(
                           mode: 1,
@@ -193,6 +170,7 @@ class _LoginPageState extends State<LoginPage> {
 
                         )),
                     SizedBox(height: 20,),
+                    //로그인안해도 일단 앱이 어떤지 한번 둘러보기위해 만든 기능인데,의견 수렴후 빼든,하든 결정
                     Center(child: GestureDetector(
                         onTap: (){
                           Get.offAll(()=>MainPage(initialPage: 4));
@@ -202,6 +180,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
+            //동글동글이
             if(isLoading)
               Container(
                 width: Get.width,

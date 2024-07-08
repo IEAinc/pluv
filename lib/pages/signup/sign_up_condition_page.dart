@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
 import 'package:pluv/component/rectangle_button.dart';
 import 'package:pluv/global/text_styles.dart';
-
 import '../../component/custom_dialog.dart';
 import '../../global/global.dart';
 import 'identity_verification_page.dart';
 
 ///SignUpConditionPage
-///담당자 : ---
+///담당자 : saran
+///설명 : 회원가입하기 위한 조건을 알려주는 페이지. 특별한 기능없는 대기페이지 성격
 
 class SignUpConditionPage extends StatefulWidget {
   const SignUpConditionPage({Key? key}) : super(key: key);

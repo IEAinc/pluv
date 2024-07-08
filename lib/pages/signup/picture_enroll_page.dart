@@ -4,8 +4,6 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:reorderables/reorderables.dart';
-
 import '../../component/custom_progress_indicator.dart';
 import '../../component/rectangle_button.dart';
 import '../../controller/auth_controller.dart';
@@ -13,7 +11,8 @@ import '../../global/global.dart';
 import '../../global/text_styles.dart';
 
 ///PictureEnrollPage
-///담당자 : ---
+///담당자 : saran
+///설명 : 내 얼굴사진 등록 페이지
 
 class PictureEnrollPage extends StatefulWidget {
   const PictureEnrollPage({Key? key}) : super(key: key);
@@ -28,17 +27,20 @@ class _PictureEnrollPageState extends State<PictureEnrollPage> {
   void initState() {
     super.initState();
     logger.i("PictureEnrollPage");
+    //기존에 등록되어있던 사진정보를 가져온다
     _imageList = [...(authController.myInfo!.profileImageList!)];
     setState(() {
     });
 
   }
 
+  //이미지 리스트는 file일수도 있고 string 일수도 있다. string 인경우는 링크라는 뜻
   List<dynamic> _imageList = [];
   bool _loading = false;
 
 
 
+  //이미지 넣기
   Future<void> _addImage() async {
     XFile? file = await pickImage(compressWidth: 500);
     if(_imageList.length<5){
@@ -50,6 +52,7 @@ class _PictureEnrollPageState extends State<PictureEnrollPage> {
     }
   }
 
+  //이미지 수정
   Future<void> _editImage(int index) async {
 
     XFile? file = await pickImage(compressWidth: 500);
@@ -198,6 +201,8 @@ class _PictureEnrollPageState extends State<PictureEnrollPage> {
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
+
+                                //사진 확대 할수있음
                                 return AlertDialog(
                                   contentPadding: EdgeInsets.zero,
                                   backgroundColor: Colors.black,
@@ -269,8 +274,10 @@ class _PictureEnrollPageState extends State<PictureEnrollPage> {
                             );
                           },
                           onLongPress: (){
+                            //길게누르면 사진 수정
                             _editImage(index);
                           },
+                          //file형태인지 string(link) 형태인지 에 따라 image 위젯 다름
                           child: (_imageList[index] is String)?ExtendedImage.network(
                             _imageList[index],
                             cache: true,
@@ -292,4 +299,3 @@ class _PictureEnrollPageState extends State<PictureEnrollPage> {
 
 
 
-// Image.network(_imageList[index],fit: BoxFit.cover,)

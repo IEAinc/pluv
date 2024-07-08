@@ -1,18 +1,15 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:pluv/component/rectangle_button.dart';
-
 import '../../component/custom_progress_indicator.dart';
 import '../../global/global.dart';
 import '../../global/text_styles.dart';
 import '../../templete/paper_template.dart';
 
 ///FamilyPage
-///담당자 : ---
+///담당자 : saran
+///설명 : 가족인증페이지
 
 class FamilyPage extends StatefulWidget {
   const FamilyPage({Key? key}) : super(key: key);
@@ -27,6 +24,7 @@ class _FamilyPageState extends PaperTemplate<FamilyPage> {
   void initState() {
     super.initState();
     logger.i("FamilyPage");
+    //집안 인증 서류 불러오기
     findImageList("PAPER_HOME");
   }
 

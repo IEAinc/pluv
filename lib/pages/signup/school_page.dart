@@ -1,18 +1,15 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:pluv/component/rectangle_button.dart';
-
 import '../../component/custom_progress_indicator.dart';
 import '../../global/global.dart';
 import '../../global/text_styles.dart';
 import '../../templete/paper_template.dart';
 
 ///SchoolPage
-///담당자 : ---
+///담당자 : saran
+///설명 : 학교 인증 페이지
 
 class SchoolPage extends StatefulWidget {
   const SchoolPage({Key? key}) : super(key: key);
@@ -27,6 +24,7 @@ class _SchoolPageState extends PaperTemplate<SchoolPage> {
   void initState() {
     super.initState();
     logger.i("SchoolPage");
+    //기존에 올려둔 학교 인증서류 이미지 불러오기
     findImageList("PAPER_SCHOOL");
   }
 

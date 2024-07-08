@@ -2,28 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluv/component/rectangle_button.dart';
 import 'package:pluv/controller/data_controller.dart';
+import 'package:pluv/model/vo/lounge_vo.dart';
+import 'package:pluv/pages/main/lounge_write_page.dart';
 
 import '../global/global.dart';
 import '../global/text_styles.dart';
 import 'custom_dialog.dart';
 
-///EditDeleteBottomSheet
+///LoungeEditDeleteBottomSheet
 ///담당자 : ---
 
-class EditDeleteBottomSheet extends StatefulWidget {
-  final String loungeKey;
-  const EditDeleteBottomSheet({Key? key , required this.loungeKey}) : super(key: key);
+class LoungeEditDeleteBottomSheet extends StatefulWidget {
+  final LoungeVo item;
+  const LoungeEditDeleteBottomSheet({Key? key , required this.item}) : super(key: key);
 
   @override
-  State<EditDeleteBottomSheet> createState() => _EditDeleteBottomSheetState();
+  State<LoungeEditDeleteBottomSheet> createState() => _LoungeEditDeleteBottomSheetState();
 }
 
-class _EditDeleteBottomSheetState extends State<EditDeleteBottomSheet> {
+class _LoungeEditDeleteBottomSheetState extends State<LoungeEditDeleteBottomSheet> {
 
   @override
   void initState() {
     super.initState();
-    logger.i("EditDeleteBottomSheet");
+    logger.i("LoungeEditDeleteBottomSheet");
   }
 
   DataController dataController =Get.find<DataController>();
@@ -38,7 +40,8 @@ class _EditDeleteBottomSheetState extends State<EditDeleteBottomSheet> {
             title: Text('게시글 수정'),
             onTap: () {
               // Edit post logic here
-              Get.back();
+              Get.to(()=>LoungeWritePage(item: widget.item,));
+
             },
           ),
           ListTile(
@@ -78,7 +81,7 @@ class _EditDeleteBottomSheetState extends State<EditDeleteBottomSheet> {
                               action: () async{
 
                                 try{
-                                  await dataController.removeLounge(widget.loungeKey);
+                                  await dataController.removeLounge(widget.item.loungeKey!);
                                 }catch(e){
 
                                 }

@@ -420,18 +420,22 @@ class MyFirebaseService{
   //라운지 게시글 등록
   Future<void> addLounge(LoungeVo loungeVo) async {
     try {
-      // AuthController authController = Get.find<AuthController>();
-      // if(authController.myInfo==null){
-      //   throw Exception('No auth');
-      // }
 
       final DocumentReference docReference = loungeCollection.doc();
       String docId = docReference.id;
       loungeVo.loungeKey = docId;
-      // loungeVo.writerUid = authController.myInfo!.docId;
-
-
       await docReference.set(loungeVo.toJson());
+
+    } catch (error) {
+      throw Exception('Error : $error');
+    }
+  }
+
+  //라운지 게시글 업데이트
+  Future<void> updateLounge(LoungeVo loungeVo) async {
+    try {
+
+      await loungeCollection.doc(loungeVo.loungeKey).update(loungeVo.toJson());
 
 
     } catch (error) {
@@ -488,6 +492,33 @@ class MyFirebaseService{
       });
 
 
+    } catch (error) {
+      throw Exception('Error : $error');
+    }
+  }
+
+  //라운지 댓글 논리삭제
+  Future<void> removeComment(String key) async {
+    try {
+      DocumentReference docRef = commentCollection.doc(key);
+      return docRef.update({
+        'commentStatus': 3
+      });
+    } catch (error) {
+      throw Exception('Error : $error');
+    }
+  }
+
+  //라운지 댓글 수정
+  Future<void> updateComment(CommentVo commentVo,String newComment) async {
+    try {
+      DocumentReference docRef = commentCollection.doc(commentVo.commentKey);
+      return docRef.update({
+
+        ...commentVo.toJson(),
+        "commentDescription":newComment,
+        "commentUpdateDate":Timestamp.now()
+      });
     } catch (error) {
       throw Exception('Error : $error');
     }
