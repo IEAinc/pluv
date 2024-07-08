@@ -5,7 +5,8 @@ import 'package:extended_image/extended_image.dart';
 import '../global/global.dart';
 
 ///AvatarImage
-///담당자 : ---
+///담당자 : saran
+///설명 : 아바타 이미지
 
 class AvatarImage extends StatefulWidget {
   final double? size;

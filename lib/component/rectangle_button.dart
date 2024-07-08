@@ -12,11 +12,10 @@ class RectangleButton extends StatefulWidget {
   final String name;
   void Function()? action;
   Color? backgroundColor;
-
   double? radius;
   TextStyle? textStyle;
-  int? mode;
-  bool? able;
+  int? mode; // 1 = 가장 많이 사용되는 primary2 색상의 사각버튼
+  bool? able; // 버튼 사용가능한지 여부
 
   RectangleButton({Key? key , required this.name , this.action , this.backgroundColor ,this.radius , this.textStyle ,this.mode , this.able}) : super(key: key);
 

@@ -22,6 +22,7 @@ abstract class PaperTemplate<T extends StatefulWidget> extends State<T> {
   List<dynamic> imageList = []; // 직업 인증 자료
 
 
+  //기존 올렸던 해당 서류에대한 사진 불러오기
   void findImageList(String paperCode) {
     if (authController.myInfo!.paperInfo != null) {
       for (PaperInfoVo paperInfo in authController.myInfo!.paperInfo!) {
@@ -56,6 +57,7 @@ abstract class PaperTemplate<T extends StatefulWidget> extends State<T> {
 
   }
 
+  //더보기 토글
   bool moreToggle = false;
   bool loading = false;
   AuthController authController = Get.find<AuthController>();

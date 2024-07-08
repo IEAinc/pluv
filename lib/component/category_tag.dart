@@ -33,13 +33,13 @@ class _CategoryTagState extends State<CategoryTag> {
           margin: EdgeInsets.only(bottom: 5),
           padding: EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
-              border: Border.all(width: 1,),
+              border: Border.all(width: 1,color: appColorPrimary2),
               borderRadius: BorderRadius.circular(50)
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(widget.text,style:TextStyles.sub_title10_b.copyWith(color: appColorPrimary)),
+              Text(widget.text,style:TextStyles.sub_title10_b.copyWith(color: appColorPrimary2)),
             ],
           ),
         ),

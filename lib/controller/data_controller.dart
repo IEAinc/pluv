@@ -22,14 +22,23 @@ class DataController extends GetxController {
 
 
   ///라운지 리스트 조회
-  //빅쿼리에서
-  Future<Map<String,dynamic>> searchLoungeList({required bigQuery,required String categoryType, String? keyword,required int page,DocumentSnapshot? lastDocument}) async{
-    // bigQuery -> true->function 통해 빅쿼리호출, false ->firestore에서 직접 가져옴
-    // categoryType -> ""(전체) , best(베스트), 나머지는 카테고리 코드
-    // keyword -> 검색어
-    // page -> 페이징, 0이 디폴트
+
+  Future<Map<String,dynamic>> searchLoungeList({required String categoryType,DocumentSnapshot? lastDocument}) async{
+
     try{
-      Map<String,dynamic> data = await myFirebaseService.searchLoungeList(bigQuery,categoryType,keyword??"",page,lastDocument);
+      Map<String,dynamic> data = await myFirebaseService.searchLoungeList(categoryType,lastDocument);
+      return data;
+    }catch(error){
+      throw Exception('Error : $error');
+    }
+  }
+
+  ///특정 멤버 라운지 리스트 조회
+
+  Future<Map<String,dynamic>> getMemberLoungeList({required String writerUid,DocumentSnapshot? lastDocument}) async{
+
+    try{
+      Map<String,dynamic> data = await myFirebaseService.getMemberLoungeList(writerUid,lastDocument);
       return data;
     }catch(error){
       throw Exception('Error : $error');

@@ -332,7 +332,7 @@ class MyFirebaseService{
   ///----라운지 -----
 
   //라운지 리스트 불러오기
-  Future<Map<String,dynamic>> searchLoungeList(bigQuery,categoryType,keyword,page,DocumentSnapshot? lastDocument) async {
+  Future<Map<String,dynamic>> searchLoungeList(categoryType,DocumentSnapshot? lastDocument) async {
 
     Map<String,dynamic> valueModel = {
       "loungeList" :[],
@@ -340,27 +340,8 @@ class MyFirebaseService{
     };
 
     try {
-      Map<String,dynamic> searchMap = {
-        "categoryType" : categoryType,
-        "searchKey" : keyword,
-        "limit" : maxLimit,
-        "page" : page,
-      };
+
       List<LoungeVo> loungeList = <LoungeVo>[];
-      if(bigQuery){
-        final HttpsCallableResult result = await functions
-            .httpsCallable("searchLoungeList")
-            .call(<String, dynamic>{'searchMap': searchMap});
-        result.data["result"].forEach((v) {
-          LoungeVo item = LoungeVo.fromJson(v);
-          loungeList!.add(item);
-        });
-        valueModel["loungeList"] = loungeList;
-
-        return valueModel;
-
-      }else{
-
         Query query = loungeCollection
             .where("loungeStatus" , isEqualTo: 1)
             .orderBy('loungeCreateDate', descending: true)
@@ -387,18 +368,53 @@ class MyFirebaseService{
           valueModel["loungeList"] = loungeList;
           valueModel["lastDocument"] = querySnapshot.docs.last;
         }
-
-
         return valueModel;
-      }
-
-
 
 
     } catch (error) {
       throw Exception('Error : $error');
     }
   }
+
+  //특정유저가 작성한 라운지 리스트 불러오기
+  Future<Map<String,dynamic>> getMemberLoungeList(String uid,DocumentSnapshot? lastDocument) async {
+
+    Map<String,dynamic> valueModel = {
+      "loungeList" :[],
+      "lastDocument":null
+    };
+
+    try {
+
+      List<LoungeVo> loungeList = <LoungeVo>[];
+      Query query = loungeCollection
+          .where("writerUid" , isEqualTo: uid)
+          .where("loungeStatus" , isEqualTo: 1)
+          .orderBy('loungeCreateDate', descending: true)
+          .limit(maxLimit);
+
+      if (lastDocument != null ) {
+        query = query.startAfterDocument(lastDocument);
+      }
+      QuerySnapshot querySnapshot = await query.get();
+      if(querySnapshot.docs.isEmpty){
+        valueModel["loungeList"] = null;
+        valueModel["lastDocument"] = lastDocument;
+      }else{
+        for (DocumentSnapshot document in querySnapshot.docs) {
+          loungeList.add(LoungeVo.fromSnapshot(document));
+        }
+        valueModel["loungeList"] = loungeList;
+        valueModel["lastDocument"] = querySnapshot.docs.last;
+      }
+      return valueModel;
+
+
+    } catch (error) {
+      throw Exception('Error : $error');
+    }
+  }
+
 
   //라운지 1개불러오기
   Future<LoungeVo> getLounge(String loungeKey) async {
@@ -415,7 +431,6 @@ class MyFirebaseService{
       throw Exception(error);
     }
   }
-
 
   //라운지 게시글 등록
   Future<void> addLounge(LoungeVo loungeVo) async {

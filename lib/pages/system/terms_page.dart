@@ -8,7 +8,8 @@ import '../../global/global.dart';
 import '../../global/text_styles.dart';
 
 ///TermsPage
-///담당자 : ---
+///담당자 : saran
+///설명 : 약관 리스트 보여주는 페이지
 
 class TermsPage extends StatefulWidget {
   const TermsPage({Key? key}) : super(key: key);

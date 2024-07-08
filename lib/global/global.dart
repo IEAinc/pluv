@@ -162,6 +162,33 @@ String timeAgo(DateTime timestamp) {
   }
 }
 
+//calculateAge 만 나이 계산
+int calculateAge(String birthDate) {
+  // 생년월일을 파싱
+  int year = int.parse(birthDate.substring(0, 2));
+  int month = int.parse(birthDate.substring(2, 4));
+  int day = int.parse(birthDate.substring(4, 6));
+
+  // 2000년 이후 출생자와 이전 출생자 구분
+  if (year <= DateTime.now().year % 100) {
+    year += 2000;
+  } else {
+    year += 1900;
+  }
+
+  // 현재 날짜 가져오기
+  DateTime today = DateTime.now();
+  DateTime birthday = DateTime(year, month, day);
+
+  // 나이 계산
+  int age = today.year - birthday.year;
+  if (today.month < birthday.month || (today.month == birthday.month && today.day < birthday.day)) {
+    age--;
+  }
+
+  return age;
+}
+
 //timestamp to yyyy-mm-dd
 String commonDate(Timestamp timestamp){
   DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp.millisecondsSinceEpoch);

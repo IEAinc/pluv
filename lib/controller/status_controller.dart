@@ -69,6 +69,22 @@ class StatusController extends GetxController {
     }
   }
 
+  //코드에서 title list 뽑아내기
+  List<String> findTitleListByCode(List<CodeInfoVo> list, List<dynamic> codeToFind) {
+    try {
+      List<String> titleList = [];
+
+      for(var item in codeToFind){
+        CodeInfoVo result = list.firstWhere((obj) => obj.code == item, orElse: () => CodeInfoVo(code: "", title: ""));
+        titleList.add(result.title!);
+      }
+
+      return titleList;
+    } catch (e) {
+      return [];
+    }
+  }
+
 
 
 

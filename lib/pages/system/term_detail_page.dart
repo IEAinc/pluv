@@ -2,18 +2,16 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 import 'package:pdf_viewer_plugin/pdf_viewer_plugin.dart';
-import 'package:pluv/global/text_styles.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import '../../component/custom_progress_indicator.dart';
 import '../../global/global.dart';
 
 ///TermDetailPage
-///담당자 : ---
+///담당자 : saran
+///설명 : 약관페이지
 
 class TermDetailPage extends StatefulWidget {
   final String url;
@@ -30,14 +28,13 @@ class _TermDetailPageState extends State<TermDetailPage> {
   void initState() {
     super.initState();
     logger.i("TermDetailPage");
+    //pdf부르기
     loadPdf();
-
   }
-
-
 
   String? pdfFlePath;
 
+  //url로 pdf약관이 올라가있는 곧에 접근하여 정보를 얻은다음 다운로드하여 file로 만들고 그걸 PdfView로 보여줌
   Future<String> downloadAndSavePdf() async {
 
     final directory = await getApplicationDocumentsDirectory();

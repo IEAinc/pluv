@@ -31,7 +31,7 @@ class _RoungeScreenState extends State<LoungeScreen> {
   void initState() {
     super.initState();
     //라운지 정보를 가져옴
-    getLoungeList(bigQuery: false ,categoryType: "전체",page: 0);
+    getLoungeList(categoryType: "전체");
     logger.i("LoungeScreen");
     //카테고리 리스트에 전체와 best를 포함하면서 어드민에서 정의한 카테고리 정보를 불러와 담음
     loungeCategoryList =[
@@ -51,13 +51,13 @@ class _RoungeScreenState extends State<LoungeScreen> {
   bool _loading = false;
 
   //조건에 맞는 라운지글 호출 메소드
-  Future<void> getLoungeList({required bool bigQuery,required String categoryType,required int page ,DocumentSnapshot? lastDocument}) async{
+  Future<void> getLoungeList({required String categoryType,DocumentSnapshot? lastDocument}) async{
     setState(() {
       _loading = true;
     });
     try{
 
-      Map<String,dynamic> result = await _dataController.searchLoungeList(bigQuery: bigQuery,categoryType: categoryType, page: page ,lastDocument: lastDocument);
+      Map<String,dynamic> result = await _dataController.searchLoungeList(categoryType: categoryType,lastDocument: lastDocument);
       if(lastDocument==null){
 
         items =result["loungeList"] ;
@@ -70,7 +70,6 @@ class _RoungeScreenState extends State<LoungeScreen> {
         }
 
       }
-      logger.e("4");
       _lastDocument =result["lastDocument"] ;
     }catch(e){
       logger.e(e);
@@ -87,13 +86,13 @@ class _RoungeScreenState extends State<LoungeScreen> {
 
   //스크롤 상단에서 새로고침용
   void _onRefresh() async{
-     await getLoungeList(bigQuery: false ,categoryType: loungeCategoryList[_currentIndex].code!,page: 0);
+     await getLoungeList(categoryType: loungeCategoryList[_currentIndex].code!);
     _refreshController.refreshCompleted();
   }
 
   //아래 스크롤 시 페이징으로 더 불러올때용
   void _onLoading() async{
-    await getLoungeList(bigQuery: false ,categoryType: loungeCategoryList[_currentIndex].code!,page: 0,lastDocument: _lastDocument);
+    await getLoungeList(categoryType: loungeCategoryList[_currentIndex].code!,lastDocument: _lastDocument);
     _refreshController.loadComplete();
   }
   @override
@@ -115,7 +114,7 @@ class _RoungeScreenState extends State<LoungeScreen> {
                   onTap: (){
                     setState(() {
                       _currentIndex = index;
-                      getLoungeList(bigQuery: false ,categoryType: loungeCategoryList[index].code!,page: 0);
+                      getLoungeList(categoryType: loungeCategoryList[index].code!);
                     });
                   },
                   child: Column(

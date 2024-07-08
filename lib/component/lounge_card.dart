@@ -1,21 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pluv/component/category_tag.dart';
 import 'package:pluv/component/view_status.dart';
 import 'package:pluv/controller/status_controller.dart';
-
 import '../global/global.dart';
 import '../global/text_styles.dart';
-import '../model/dto/lounge_dto.dart';
 import '../model/vo/lounge_vo.dart';
 import '../pages/main/lounge_detail_page.dart';
-import 'dot.dart';
+
 
 ///LoungeCard
-///담당자 : ---
+///담당자 : saran
+///설명 : 라운지 카드
 
 class LoungeCard extends StatefulWidget {
   final LoungeVo item;

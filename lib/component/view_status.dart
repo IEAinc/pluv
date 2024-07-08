@@ -50,7 +50,7 @@ class _ViewStatusState extends State<ViewStatus> {
         Dot(),
         Row(
           children: [
-            SvgPicture.asset('assets/images/myicon/eye.svg',width: 13,colorFilter: ColorFilter.mode(appColorPrimary2, BlendMode.srcIn)),
+            SvgPicture.asset('assets/images/myicon/eye.svg',width: 13,colorFilter: ColorFilter.mode(appColorGray1, BlendMode.srcIn)),
             SizedBox(width: 5,),
             Text(formatCommaNumber(widget.viewCount),style: TextStyles.sub_title12_g1,),
 
@@ -59,7 +59,7 @@ class _ViewStatusState extends State<ViewStatus> {
         Dot(),
         Row(
           children: [
-            SvgPicture.asset('assets/images/icon/chatbubble.svg',colorFilter: ColorFilter.mode(appColorPrimary2, BlendMode.srcIn)),
+            SvgPicture.asset('assets/images/icon/chatbubble.svg',colorFilter: ColorFilter.mode(appColorGray1, BlendMode.srcIn)),
             SizedBox(width: 5,),
             Text(formatCommaNumber(widget.commentCount),style: TextStyles.sub_title12_g1,),
           ],

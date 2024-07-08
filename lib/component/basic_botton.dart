@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-
 import '../global/global.dart';
 import '../global/text_styles.dart';
 
 ///BasicButton
-///담당자 : ---
+///담당자 : saran
+///설명 : ElevatedButton위젯으로 만들어진 기본 버튼
 
 class BasicButton extends StatefulWidget {
   final String name;
